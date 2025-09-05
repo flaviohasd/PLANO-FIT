@@ -3,6 +3,4 @@ Programa para definição de metas, planejamento de alimentação e acompanhamen
 
 (1) Excel - base/motivação
 
-(2) Jupyter notebook/Python - desenvolvimento
-
-(3) Streamlit - app web
+(2) Streamlit - app web
