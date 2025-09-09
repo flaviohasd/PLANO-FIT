@@ -99,17 +99,20 @@ A organização do código foi pensada para ser modular e escalável.
 
 Para executar o PLANO FIT em sua máquina local, siga os passos abaixo:
 
-1.  **Clone o repositório:**
+1.  [**Clone o repositório:**](https://github.com/flaviohasd/plano-fit.git)
     ```bash
-    git clone [https://github.com/flaviohasd/plano-fit.git](https://github.com/flaviohasd/plano-fit.git)
+    git clone https://github.com/flaviohasd/plano-fit.git
     cd plano-fit
     ```
+
 
 2.  **Crie e ative um ambiente virtual (recomendado):**
     ```bash
     python -m venv venv
+    
     # Windows
     venv\Scripts\activate
+    
     # macOS/Linux
     source venv/bin/activate
     ```
