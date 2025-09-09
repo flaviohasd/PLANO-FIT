@@ -1,0 +1,60 @@
+Geral:
+-(X) Modularização do código.
+-(X) Implementar criação do banco de dados vazio caso não exista.
+-(X) Incluir aba inicial "Visão Geral". Exibindo um resumo de todo o aplicativo, apenas com indicadores e cards.
+-(X) Fix UserWarning no console (acredito que é pq o gráfico 2 não tem dados).
+-(X) Eliminar .csv's desnecessários (se houver).
+-(X) Fazer com que todo input (dados pessoais e objetivo) de data abra o calendário para auxiliar (como é no input de treino e evolução.
+-() Avaliar criação de um banco de dados SQL.
+
+
+Dados pessoais:
+-(X) Adicionar controle de usuário (perfil) com senha e redefinição.
+-(X) Colocar Dados pessoais apenas no cadastro.
+
+Alimentação:
+-(X) Gráficos de piza para mostrar distribuição de nutrientes entre refeições ao longo do dia.
+-(X) Calorias por refeição mostra em ordem decrescente (mais -> menos).
+-(X) Colorização da % do alvo no "Totais do dia". Verde se 90 <= % <= 110, vermelho caso contrário.
+-(X) Possibilidade de salvar planos de alimentação (cafe+almoço+janta pré-definidos).
+-(X) Excluir plano de alimentação salvo
+-(X) Corrigir coluna "alimentos" só aceitando valores numéricos.
+-(X) Melhoria na busca por alimento para preenchimento da tabela.
+-() Avaliar se vale a pena pesquisar em banco de dados como "https://world.openfoodfacts.org".
+
+Treino:
+-(Cancelado) Gráfico exibindo regiões do corpo treinadas na semana atual, estilo do boneco de app com musculo pintado de laranja;
+-(X) Incluir um calendário mensal, ilustrando os dias do mês atual em que treinei.
+-(X) Apagar planejamento semanal de uma só vez (mesociclos) (com confirmação).
+-(X) Apagar Macrociclo (com confirmação).
+-(X) Apagar planejamento do treino (treino A, B, C...) (com confirmação).
+-(X) Inlcuir semana e mesociclo atual na visão geral.
+-(X) Incluir linha indicadora no gráfico de Gantt.
+-(X) Personalizar linha tracejada no Gantt. (revisar a cada atualização)
+-(X) Remover excesso de cabeçalho na visão geral. (revisar a cada atualização)
+-(X) Incluir o treino realizado (Treino A - blablabla).
+-(X) Excluir treino realizado.
+-(X) Identificar se o treino possui "cardio" no nome. Se tiver, marcar automaticamente o botão "Cardio?".
+-(X) Gráfico "Heat Map" estilo github sumiu. Reimplementar (talvez incluir na nova aba visão geral).
+-(X) Ajustar visualização da aba "Registrar Treino Realizado": KPI em cima e título para baixo.
+-(X) Criar uma nova aba com o treino do dia com um clone do app Boostcamp.
+-(X) Possibilidade de incluir gif para o exercício.
+-(X) Lista de exercício com GIFs durante o cadastro do plano de treino.
+-(X) Conseguir GIFS.
+-() Adicionar descrição (instrução) ao lado da imagem.
+-() Fazer um mapa de exercício trabalhado.
+
+Objetivos e metas:
+-(X) Gráfico de barra lateral exibindo toda a composição energética do dia com o TBM + TDEE (partes de uma barra total) + ALVO CALÓRICO (como um traço exibindo a diferença na energia do dia.
+-(X) Gráfico de barra lateral exibindo as regiões de normalidade e faixa atual de gorduras e massa muscular.
+-(X) Implementar correção do range de gordura e músculo com base na idade e sexo.
+-(X) Corrigir o cálculo do objetivo.
+-(X) Checar cálculo de água.
+-(X) Adicionar notas "(?)" sobre o nível de atividade e ambiente.
+
+Evolução:
+-(X) Fazer com que os gráficos não exibam valores "0".
+-(X) Deixar o histórico de medições editável como é o da alimentação.
+
+Testes:
+-(X) Deletar todo banco de dados e ver se o código roda.
