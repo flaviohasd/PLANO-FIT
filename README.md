@@ -22,7 +22,7 @@ O PLANO FIT foi desenvolvido com uma arquitetura modular e robusta, oferecendo u
 
 * **🍽️ Planejamento Nutricional:**
     * Registre suas refeições diárias de forma simples e rápida.
-    * Busque alimentos em uma base de dados nutricionais (TACO) para adicionar às suas refeições.
+    * Busque alimentos em uma base de dados nutricionais ([TACO](https://www.cfn.org.br/wp-content/uploads/2017/03/taco_4_edicao_ampliada_e_revisada.pdf)) para adicionar às suas refeições.
     * Crie, salve e edite múltiplos **Planos Alimentares** (ex: "Dia de Treino Intenso", "Final de Semana").
     * Carregue um plano alimentar completo para o dia atual com um único clique.
     * Acompanhe em tempo real seus totais de calorias e macronutrientes, comparando com suas metas.
