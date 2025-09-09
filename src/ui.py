@@ -849,7 +849,7 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
     path_meso = utils.get_user_data_path(username, config.FILE_MESOCICLOS)
     path_plano_sem = utils.get_user_data_path(username, config.FILE_PLANO_SEMANAL)
     
-    path_exercicios_db = config.DATA_DIR / "exercicios.json"
+    path_exercicios_db = config.DATA_DIR / "assets" / "exercises" / "exercicios.json"
     exercisedb = utils.carregar_banco_exercicios(path_exercicios_db)
 
     with st.expander("Modelos de Treino", expanded=True):
@@ -1554,3 +1554,4 @@ def render_evolucao_tab(user_data: Dict[str, Any]):
                 st.rerun()
     else:
         st.info("Adicione sua primeira medida para começar a ver a evolução.")
+
