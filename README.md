@@ -4,7 +4,9 @@
 
 PLANO FIT é uma aplicação web, construída com Streamlit, projetada para ser a ferramenta definitiva no gerenciamento da sua jornada de saúde e bem-estar. Centralize seu planejamento de treinos, monitore sua alimentação, acompanhe sua evolução corporal e atinja seus objetivos de forma inteligente e baseada em dados.
 
-![GIF do App Plano FIT em Ação](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWZwcXZqdDlnM2M1eWt0ZnZ5cThsaDA4NnhvZWZlN3BvMXdoend6bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/5g6ijNORnMoqoJ2o1X/giphy.gif)
+  <p align="center">
+  <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWZwcXZqdDlnM2M1eWt0ZnZ5cThsaDA4NnhvZWZlN3BvMXdoend6bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/5g6ijNORnMoqoJ2o1X/giphy.gif" alt="-Finja que há uma imagem motivadora aqui" width="500" />
+  </p>
 
 ## ✨ Funcionalidades Principais
 
