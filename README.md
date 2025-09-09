@@ -119,9 +119,9 @@ Para executar o PLANO FIT em sua máquina local, siga os passos abaixo:
     pip install -r requirements.txt
 
 4.  **Execute a aplicação:**
-    O ponto de entrada principal está dentro da pasta `app`.
+    O ponto de entrada principal está dentro da pasta `src`.
     ```bash
-    streamlit run app/app.py
+    streamlit run src/app.py
     ```
 
 5.  Abra seu navegador e acesse o endereço `http://localhost:8501`.
