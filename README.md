@@ -148,3 +148,11 @@ Este projeto foi possível graças ao trabalho incrível de desenvolvedores e co
 * [GitHub](https://github.com/flaviohasd)
 * [LinkedIn](https://linkedin.com/in/flaviohasd)
 * [E-mail](mailto:flaviohasd@hotmail.com)
+
+## ⚠️ Aviso Importante (Disclaimer)
+
+As informações e cálculos apresentados neste aplicativo, incluindo metas calóricas, macronutrientes, peso ideal e consumo de água, são **estimativas** baseadas em fórmulas e recomendações gerais.
+
+O desenvolvedor deste projeto é um entusiasta de tecnologia e fitness, com formação em Engenharia Mecânica, e **não é um nutricionista, educador físico ou profissional da área da saúde.** O PLANO FIT foi originalmente criado como uma ferramenta para auxiliar na jornada de fitness **pessoal** do autor e é compartilhado com a comunidade no espírito do código aberto.
+
+Portanto, o conteúdo aqui apresentado não deve, em hipótese alguma, substituir a orientação de um profissional qualificado. Antes de iniciar qualquer plano de dieta ou treino, **consulte sempre um médico, nutricionista e/ou educador físico.** Utilize esta ferramenta como um auxílio para sua organização, mas sempre com o acompanhamento e a validação de profissionais da saúde.
