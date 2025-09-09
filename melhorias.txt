@@ -4,8 +4,8 @@ Geral:
 -(X) Incluir aba inicial "Visão Geral". Exibindo um resumo de todo o aplicativo, apenas com indicadores e cards.
 -(X) Fix UserWarning no console (acredito que é pq o gráfico 2 não tem dados).
 -(X) Eliminar .csv's desnecessários (se houver).
--(X) Fazer com que todo input (dados pessoais e objetivo) de data abra o calendário para auxiliar (como é no input de treino e evolução.
--() Avaliar criação de um banco de dados SQL.
+-(X) Fazer com que todo input (dados pessoais e objetivo) de data abra o calendário para auxiliar (como é no input de treino e evolução).
+
 
 
 Dados pessoais:
@@ -20,7 +20,6 @@ Alimentação:
 -(X) Excluir plano de alimentação salvo
 -(X) Corrigir coluna "alimentos" só aceitando valores numéricos.
 -(X) Melhoria na busca por alimento para preenchimento da tabela.
--() Avaliar se vale a pena pesquisar em banco de dados como "https://world.openfoodfacts.org".
 
 Treino:
 -(Cancelado) Gráfico exibindo regiões do corpo treinadas na semana atual, estilo do boneco de app com musculo pintado de laranja;
@@ -41,8 +40,8 @@ Treino:
 -(X) Possibilidade de incluir gif para o exercício.
 -(X) Lista de exercício com GIFs durante o cadastro do plano de treino.
 -(X) Conseguir GIFS.
--() Adicionar descrição (instrução) ao lado da imagem.
--() Fazer um mapa de exercício trabalhado.
+-(X) Adicionar descrição (instrução) ao lado da imagem.
+-(X) Fazer um mapa de exercício trabalhado.
 
 Objetivos e metas:
 -(X) Gráfico de barra lateral exibindo toda a composição energética do dia com o TBM + TDEE (partes de uma barra total) + ALVO CALÓRICO (como um traço exibindo a diferença na energia do dia.
@@ -57,4 +56,5 @@ Evolução:
 -(X) Deixar o histórico de medições editável como é o da alimentação.
 
 Testes:
+
 -(X) Deletar todo banco de dados e ver se o código roda.
