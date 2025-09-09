@@ -61,6 +61,7 @@ O PLANO FIT foi desenvolvido com uma arquitetura modular e robusta, oferecendo u
 A organização do código foi pensada para ser modular e escalável.
 
     plano-fit/
+    ├── app.bat                 # Atalho para rxecutar o app (streamlit run)
     ├── src/
     │   ├── app.py              # Ponto de entrada principal da aplicação Streamlit
     │   ├── ui.py               # Módulo da Interface do Usuário (renderiza todas as telas e abas)
@@ -72,16 +73,22 @@ A organização do código foi pensada para ser modular e escalável.
     │
     ├── assets/
     │   ├── exercises/
-    │   │   ├── 3_4_Sit-Up/
-    │   │   │   ├── 0.jpg
-    │   │   │   └── 1.jpg
-    │   │   └── ... (outras pastas de exercícios)
+    │   |   ├── exercicios.json                  # Arquivo JSON dos exercícios
+    │   |   ├── 3_4_Sit-Up/
+    │   |   │   ├── 0.jpg
+    │   |   │   └── 1.jpg
+    │   |   └── ... (outras pastas de exercícios)
+    |   |
     │   └── muscle_diagram/
-    │       ├── main/
-    │       ├── secondary/
-    │       ├── muscular_system_front.svg
-    │       └── muscular_system_back.svg
-    │
+    │   |   ├── main/
+    │   |   ├── secondary/
+    │   |   ├── muscular_system_front.svg
+    │   │   └── muscular_system_back.svg
+    |   |
+    │   └── utils
+    │        ├── tabela_alimentacao.csv         # Tabela TACO
+    |        └── recomendacao_diaria.csv        # Recomendações nutricionais diárias
+    |
     ├── data/
     │   ├── exercises.json
     │   ├── tabela_alimentacao.csv
