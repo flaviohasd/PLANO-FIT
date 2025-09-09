@@ -1,3 +1,11 @@
+'''
+
+ESSE ARQUIVO É EXCLUSIVAMENTE PARA A CRIAÇÃO DE ARQUIVOS .SVG, VISANDO A INCLUSÃO DE OUTROS MÚSCULOS QUE NÃO POSSUIAM IMAGEM.
+ESSA FERRAMENTA AINDA ESTÁ EM CONSTRUÇÃO.
+
+(PENDÊNCIA): Deixar a imagem do mapa muscular como background da tela de desenho.
+
+'''
 import streamlit as st
 from streamlit_drawable_canvas import st_canvas
 import re
@@ -136,3 +144,4 @@ with st.sidebar:
             )
         else:
             st.error("Nenhum músculo foi desenhado.")
+
