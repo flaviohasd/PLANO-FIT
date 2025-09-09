@@ -27,8 +27,8 @@ ASSETS_DIR = APP_DIR / "assets"
 # Manter os nomes dos arquivos como constantes evita erros de digitação.
 
 # Arquivos Globais (na raiz de data/)
-FILE_TABELA_ALIM = "tabela_alimentacao.csv"
-FILE_RECOMEND = "recomendacao_diaria.csv"
+FILE_TABELA_ALIM = APP_DIR / "assets" / "utils" / "tabela_alimentacao.csv"
+FILE_RECOMEND = APP_DIR / "assets" / "utils" / "recomendacao_diaria.csv"
 FILE_USERS = "users.csv"
 FILE_SESSION_INFO = "session_info.csv"
 
@@ -119,4 +119,5 @@ FRONT_MUSCLES = {
 BACK_MUSCLES = {
     "panturrilhas", "glúteos", "isquiotibiais", "dorsais", "lombar", "meio das costas",
     "trapézio", "tríceps", "antebraços", "ombros", "pescoço" # alguns são visíveis de ambos os lados
+
 }
