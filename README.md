@@ -59,7 +59,7 @@ O PLANO FIT foi desenvolvido com uma arquitetura modular e robusta, oferecendo u
 A organização do código foi pensada para ser modular e escalável.
 
     plano-fit/
-    ├── app/
+    ├── src/
     │   ├── app.py              # Ponto de entrada principal da aplicação Streamlit
     │   ├── ui.py               # Módulo da Interface do Usuário (renderiza todas as telas e abas)
     │   ├── logic.py            # Módulo da Lógica de Negócio (todos os cálculos e análises)
