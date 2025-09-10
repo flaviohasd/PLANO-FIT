@@ -19,35 +19,65 @@ O PLANO FIT foi desenvolvido com uma arquitetura modular e robusta, oferecendo u
     * Visualize a periodização do seu treino (Macrociclos e Mesociclos) em um gráfico de Gantt interativo.
     * Consulte seu plano de treino para a semana atual.
     * Analise sua frequência de treinos com um *heatmap* de atividade anual.
-
+     
+      <details closed>
+        <summary>Exemplo</summary>
+        IMAGEM
+      </details>
+      
 * **🍽️ Planejamento Nutricional:**
     * Registre suas refeições diárias de forma simples e rápida.
     * Busque alimentos em uma base de dados nutricionais ([TACO](https://www.cfn.org.br/wp-content/uploads/2017/03/taco_4_edicao_ampliada_e_revisada.pdf)) para adicionar às suas refeições.
     * Crie, salve e edite múltiplos **Planos Alimentares** (ex: "Dia de Treino Intenso", "Final de Semana").
     * Carregue um plano alimentar completo para o dia atual com um único clique.
     * Acompanhe em tempo real seus totais de calorias e macronutrientes, comparando com suas metas.
-
+     
+      <details closed>
+        <summary>Exemplo</summary>
+        IMAGEM
+      </details>
+      
 * **🏋️‍♀️ Periodização de Treino Avançada:**
     * **Macrociclos:** Defina objetivos de longo prazo (ex: "Preparação Verão 2025").
     * **Mesociclos:** Divida seu macrociclo em fases com focos específicos (ex: "Fase de Adaptação", "Fase de Hipertrofia").
     * **Plano Semanal:** Atribua modelos de treino específicos para cada dia da semana, dentro de cada mesociclo.
-
+     
+      <details closed>
+        <summary>Exemplo</summary>
+        IMAGEM
+      </details>
+      
 * **💪 Registro de Treino Detalhado:**
     * Crie **Modelos de Treino** reutilizáveis (ex: "Treino A - Peito e Tríceps", "Cardio HIIT").
     * Navegue por um vasto banco de dados com mais de 900 exercícios, com animações, instruções e diagramas musculares detalhados.
     * Registre seus treinos diários de forma guiada, com base no seu planejamento.
     * Utilize um painel de controle com **cronômetro de treino e timer de descanso** integrados.
     * Consulte o desempenho anterior para cada exercício (`kg x reps` ou `minutos`) diretamente na tela de registro para incentivar a progressão.
-
+     
+      <details closed>
+        <summary>Exemplo</summary>
+        IMAGEM
+      </details>
+      
 * **📈 Acompanhamento de Evolução:**
     * Registre seu peso, medidas corporais e percentuais de gordura e músculo.
     * Visualize seu progresso através de gráficos interativos que mostram a evolução do seu peso e composição corporal ao longo do tempo.
     * Receba classificações sobre seu IMC e percentuais de gordura, ajudando a contextualizar seus resultados.
-
+     
+      <details closed>
+        <summary>Exemplo</summary>
+        IMAGEM
+      </details>
+      
 * **👤 Gerenciamento de Perfis:**
     * Sistema de múltiplos perfis com proteção por senha (opcional).
     * Funcionalidade "Permanecer conectado" para um acesso rápido e fácil.
-
+     
+      <details closed>
+        <summary>Exemplo</summary>
+        IMAGEM
+      </details>
+      
 ## 🚀 Vantagens e Diferenciais
 
 * **Centralização Total:** Esqueça as planilhas e múltiplos apps. O PLANO FIT integra planejamento, registro e análise em um único lugar.
@@ -91,8 +121,6 @@ A organização do código foi pensada para ser modular e escalável.
     |
     ├── data/
     │   ├── exercises.json
-    │   ├── tabela_alimentacao.csv
-    │   ├── recomendacao_diaria.csv
     │   ├── users.csv
     │   ├── session_info.csv
     │   └── {username}/
