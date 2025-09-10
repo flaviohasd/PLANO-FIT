@@ -1,6 +1,6 @@
 # PLANO FIT 🏋️‍♂️🍽️
 
-**Seu Assistente Pessoal Completo de Fitness e Nutrição**
+**A Ferramenta Completa de Fitness e Nutrição**
 
 PLANO FIT é uma aplicação web, construída com Streamlit, projetada para ser a ferramenta definitiva no gerenciamento da sua jornada de saúde e bem-estar. Centralize seu planejamento de treinos, monitore sua alimentação, acompanhe sua evolução corporal e atinja seus objetivos de forma inteligente e baseada em dados.
 
@@ -22,7 +22,9 @@ O PLANO FIT foi desenvolvido com uma arquitetura modular e robusta, oferecendo u
      
       <details closed>
         <summary>Exemplo</summary>
-        IMAGEM
+        <img width="1319" height="557" alt="image" src="https://github.com/user-attachments/assets/e513bf1e-f580-45b6-8583-d4bc2902e7f9" />
+        <img width="1314" height="555" alt="image" src="https://github.com/user-attachments/assets/ba0c15af-8130-4339-9cf5-0a373755d810" />
+        <img width="1331" height="560" alt="image" src="https://github.com/user-attachments/assets/786207fa-b4d3-49e8-8372-dea129598920" />
       </details>
       
 * **🍽️ Planejamento Nutricional:**
@@ -34,7 +36,11 @@ O PLANO FIT foi desenvolvido com uma arquitetura modular e robusta, oferecendo u
      
       <details closed>
         <summary>Exemplo</summary>
-        IMAGEM
+        <img width="1342" height="362" alt="image" src="https://github.com/user-attachments/assets/c675ab66-e24d-4b39-9142-35fdfdca6187" />
+        <img width="1330" height="390" alt="image" src="https://github.com/user-attachments/assets/76bc9530-6671-4f18-b0d0-b11591ad9a10" />
+        <img width="1319" height="341" alt="image" src="https://github.com/user-attachments/assets/1db5354d-04aa-4d33-91f3-f6b4dd7f8016" />
+        <img width="1305" height="321" alt="image" src="https://github.com/user-attachments/assets/5924e8e1-72fb-4028-a1f2-69db26a21cf7" />
+
       </details>
       
 * **🏋️‍♀️ Periodização de Treino Avançada:**
@@ -44,7 +50,11 @@ O PLANO FIT foi desenvolvido com uma arquitetura modular e robusta, oferecendo u
      
       <details closed>
         <summary>Exemplo</summary>
-        IMAGEM
+        <img width="1333" height="573" alt="image" src="https://github.com/user-attachments/assets/c6814ec7-be56-40ea-907b-732ef65de4bd" />
+        <img width="1337" height="534" alt="image" src="https://github.com/user-attachments/assets/b21f6463-a859-44a6-8cee-72d9565c1492" />
+        <img width="1348" height="89" alt="image" src="https://github.com/user-attachments/assets/bec05198-413a-49fd-a9cf-6be0bacfc525" />
+        <img width="1344" height="461" alt="image" src="https://github.com/user-attachments/assets/d7d301b6-5260-44e5-b33a-26e298bdb706" />
+        <img width="1340" height="538" alt="image" src="https://github.com/user-attachments/assets/c4bae227-9515-42ed-8d86-b6b7f648b877" />
       </details>
       
 * **💪 Registro de Treino Detalhado:**
@@ -56,7 +66,11 @@ O PLANO FIT foi desenvolvido com uma arquitetura modular e robusta, oferecendo u
      
       <details closed>
         <summary>Exemplo</summary>
-        IMAGEM
+        <img width="1351" height="464" alt="image" src="https://github.com/user-attachments/assets/3bfcbc80-17d4-4a7b-b608-e14559cbed09" />
+        <img width="1343" height="422" alt="image" src="https://github.com/user-attachments/assets/beecac80-1e9e-4d38-a44a-6151121782d3" />
+        <img width="1348" height="354" alt="image" src="https://github.com/user-attachments/assets/cf354a56-bee5-4fcf-9859-c97ae859d92b" />
+        <img width="1340" height="302" alt="image" src="https://github.com/user-attachments/assets/5901b6d7-102b-46e4-9dcc-fdc167b5936e" />
+        <img width="1341" height="495" alt="image" src="https://github.com/user-attachments/assets/76231c95-35ab-49f3-8478-075b31cdcee9" />
       </details>
       
 * **📈 Acompanhamento de Evolução:**
@@ -66,7 +80,11 @@ O PLANO FIT foi desenvolvido com uma arquitetura modular e robusta, oferecendo u
      
       <details closed>
         <summary>Exemplo</summary>
-        IMAGEM
+        <img width="1342" height="444" alt="image" src="https://github.com/user-attachments/assets/f9bae8ec-6c0c-42aa-a80e-c486c9bbee0e" />
+        <img width="1339" height="313" alt="image" src="https://github.com/user-attachments/assets/eab24345-6cc8-450d-9541-e0ceb2cc359d" />
+        <img width="1334" height="338" alt="image" src="https://github.com/user-attachments/assets/cfed0249-14f9-4055-8c95-9bc948bbf96e" />
+        <img width="1345" height="311" alt="image" src="https://github.com/user-attachments/assets/21d62cda-0179-40b1-8c20-66f94bc4736d" />
+        <img width="1337" height="504" alt="image" src="https://github.com/user-attachments/assets/e64b077d-3cb9-4752-bb68-9fabcfebe05b" />
       </details>
       
 * **👤 Gerenciamento de Perfis:**
@@ -75,7 +93,7 @@ O PLANO FIT foi desenvolvido com uma arquitetura modular e robusta, oferecendo u
      
       <details closed>
         <summary>Exemplo</summary>
-        IMAGEM
+        <img width="1215" height="617" alt="image" src="https://github.com/user-attachments/assets/e2a827a1-0d97-4dba-a926-1191c3529cd7" />
       </details>
       
 ## 🚀 Vantagens e Diferenciais
@@ -103,7 +121,7 @@ A organização do código foi pensada para ser modular e escalável.
     │
     ├── assets/
     │   ├── exercises/
-    │   |   ├── exercicios.json                  # Arquivo JSON dos exercícios
+    │   |   ├── exercicios.json
     │   |   ├── 3_4_Sit-Up/
     │   |   │   ├── 0.jpg
     │   |   │   └── 1.jpg
@@ -120,7 +138,6 @@ A organização do código foi pensada para ser modular e escalável.
     |        └── recomendacao_diaria.csv        # Recomendações nutricionais diárias
     |
     ├── data/
-    │   ├── exercises.json
     │   ├── users.csv
     │   ├── session_info.csv
     │   └── {username}/
