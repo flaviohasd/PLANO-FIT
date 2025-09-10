@@ -1,0 +1,29 @@
+id_mesociclo,id_macrociclo,nome,ordem,duracao_semanas,foco_principal
+1,1,Adaptação,1,4,"Objetivo: Preparar músculos e articulações. Melhorar a técnica.	
+Frequência: 3-4x por semana (Full Body ou A/B).	
+Séries: 3 por exercício.	
+Repetições: 12 a 15.	
+Carga: Leve a Moderada (60-65% de 1RM*).	
+Descanso: 60 segundos.	
+Sensação:Consegue completar as séries sem chegar à falha total.	"
+2,1,Hipertrofia,2,4,"Objetivo: Maximizar o ganho de massa muscular.	
+Frequência: 4x por semana (Superior/Inferior).	
+Séries: 3-4 por exercício.	
+Repetições: 8 a 12.	
+Carga: Moderada a Alta (70-80% de 1RM*).	
+Descanso: 60 a 90 segundos.	
+Sensação: Chegar próximo ou até a falha nas últimas séries.	"
+3,1,Força,3,3,"Objetivo: Aumentar a força máxima para levantar mais peso no futuro.	
+Frequência: 3-4x por semana (Push/Pull/Legs ou A/B).	
+Séries: 4-5 por exercício.	
+Repetições: 4 a 6.	
+Carga: Alta (85-95% de 1RM*).	
+Descanso: 2 a 3 minutos.	
+Sensação: Foco total na execução com carga máxima.	"
+4,1,Descanso,4,1,"Objetivo: Recuperação ativa e supercompensação.	
+Frequência: 3x por semana (Full Body).	
+Séries: 2-3 por exercício.	
+Repetições: 10 a 12.	
+Carga: Leve (50% da carga da fase de força).	
+Descanso: 60 segundos.	
+Sensação: Leve, sem esforço excessivo.	"
