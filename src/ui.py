@@ -387,7 +387,7 @@ def render_visao_geral_tab(user_data: Dict[str, Any], RECOMEND: pd.DataFrame):
             if gantt_data:
                 fig = ff.create_gantt(gantt_data, index_col='Resource', show_colorbar=True, group_tasks=True, title='Fases do Treino (Mesociclos)')
                 fig.add_vline(x=today, line_width=3, line_dash="dash", line_color="red", name="Hoje")
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width="stretch")
     else:
         st.info("Nenhum macrociclo de treino ativo para o período atual. Crie um na aba 'Treino'.")
 
@@ -440,7 +440,7 @@ def render_visao_geral_tab(user_data: Dict[str, Any], RECOMEND: pd.DataFrame):
         fig = go.Figure(data=go.Heatmap(z=heatmap_z, text=heatmap_text, hoverinfo='text', colorscale='YlGnBu', showscale=False, xgap=3, ygap=3))
         font_color = 'white' if st.get_option("theme.base") == "dark" else 'black'
         fig.update_layout(plot_bgcolor='rgba(0,0,0,0)', paper_bgcolor='rgba(0,0,0,0)', yaxis=dict(showgrid=False, zeroline=False, autorange='reversed', tickmode='array', ticktext=['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'], tickvals=list(range(7))), xaxis=dict(showgrid=False, zeroline=False, tickmode='array', ticktext=list(month_labels.keys()), tickvals=list(month_labels.values())), font=dict(color=font_color), height=250, margin=dict(l=30, r=10, t=50, b=10))
-        st.plotly_chart(fig, use_container_width=True, key="heatmap_geral")
+        st.plotly_chart(fig, width="stretch", key="heatmap_geral")
 
 def render_dados_pessoais_tab(user_data: Dict[str, Any]):
     """
@@ -718,7 +718,7 @@ def render_alimentacao_tab(user_data: Dict[str, Any], TABELA_ALIM: pd.DataFrame,
                 plot_bgcolor='rgba(0,0,0,0)',
                 legend_traceorder="reversed"
             )
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
         else:
             st.info("Adicione refeições para visualizar a análise gráfica.")
 
@@ -739,7 +739,7 @@ def render_alimentacao_tab(user_data: Dict[str, Any], TABELA_ALIM: pd.DataFrame,
         edited_df = st.data_editor(
             df_refeicoes,
             num_rows="dynamic",
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
             column_config={
                 "Refeicao": st.column_config.SelectboxColumn("Refeição", options=config.OPCOES_REFEICOES, required=True),
@@ -789,7 +789,7 @@ def render_alimentacao_tab(user_data: Dict[str, Any], TABELA_ALIM: pd.DataFrame,
                 alimento_selecionado = resultados_df.loc[selected_index][config.COL_ALIMENTO]
                 quantidade = st.number_input("Quantidade (g):", min_value=1, value=100, step=10, key="qtd_alimento_busca")
 
-                if st.button("➕ Adicionar Alimento", type="primary", use_container_width=True):
+                if st.button("➕ Adicionar Alimento", type="primary", width="stretch"):
                     if alvo_adicao == "Refeições do Dia":
                         nova_refeicao = pd.DataFrame([{"Refeicao": refeicao_escolhida, "Alimento": alimento_selecionado, "Quantidade": quantidade}])
                         utils.adicionar_registro_df(nova_refeicao, path_refeicoes)
@@ -852,7 +852,7 @@ def render_alimentacao_tab(user_data: Dict[str, Any], TABELA_ALIM: pd.DataFrame,
             itens_editados = st.data_editor(
                 itens_plano, 
                 num_rows="dynamic", 
-                use_container_width=True, 
+                width="stretch", 
                 key=f"editor_plano_{plano_selecionado}",
                 column_config={
                     "nome_plano": None,
@@ -1087,7 +1087,7 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
                                         for inst in instruction:
                                             st.markdown(f"- {inst}")
                                 
-                                if st.button("Adicionar ao plano", key=f"add_local_{i}_{ex.get('id', ex_name)}", use_container_width=True):
+                                if st.button("Adicionar ao plano", key=f"add_local_{i}_{ex.get('id', ex_name)}", width="stretch"):
                                     id_plano_selecionado = df_planos_treino[df_planos_treino['nome_plano'] == opcao_plano]['id_plano'].iloc[0]
                                     exercicios_atuais_plano = df_exercicios_todos[df_exercicios_todos['id_plano'] == id_plano_selecionado]
                                     nova_ordem = len(exercicios_atuais_plano)
@@ -1130,7 +1130,7 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
                 exercicios_editados = st.data_editor(
                     df_exercicios_plano,
                     num_rows="dynamic",
-                    use_container_width=True,
+                    width="stretch",
                     key=f"editor_exercicios_tab",
                     hide_index=True,
                     column_order=("ordem", "nome_exercicio", "tipo_exercicio", "series_planejadas", "repeticoes_planejadas"),
@@ -1158,6 +1158,8 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
     st.subheader("Passo 2: Estruture a Periodização dos Treinos")
     
     st.markdown("##### 1. Macrociclo")
+    if 'nome' not in df_macro.columns:
+        df_macro = pd.DataFrame(columns=['nome']).sort_values('nome')
     df_macro = df_macro.sort_values('nome')
     lista_macros = ["-- Criar Novo Macrociclo --"] + df_macro['nome'].tolist() if 'nome' in df_macro.columns else ["-- Criar Novo Macrociclo --"]
     macro_selecionado_nome = st.selectbox("Selecione um Macrociclo para gerenciar ou crie um novo", options=lista_macros, key="macro_select_planning")
@@ -1215,7 +1217,7 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
                 mesos_do_macro[col] = dtype_series
         mesos_do_macro['duracao_semanas'] = mesos_do_macro['duracao_semanas'].fillna(4)
         mesos_do_macro = mesos_do_macro.astype({'nome': str, 'foco_principal': str, 'ordem': 'Int64', 'duracao_semanas': 'Int64'})
-        mesos_editados = st.data_editor(mesos_do_macro, num_rows="dynamic", use_container_width=True, key="editor_meso", column_config={"id_mesociclo": None, "id_macrociclo": None, "nome": st.column_config.TextColumn("Nome do Mesociclo", required=True), "ordem": st.column_config.NumberColumn("Ordem", min_value=1, required=True), "duracao_semanas": st.column_config.NumberColumn("Duração (Semanas)", min_value=1, required=True, default=4), "foco_principal": st.column_config.TextColumn("Foco Principal")})
+        mesos_editados = st.data_editor(mesos_do_macro, num_rows="dynamic", width="stretch", key="editor_meso", column_config={"id_mesociclo": None, "id_macrociclo": None, "nome": st.column_config.TextColumn("Nome do Mesociclo", required=True), "ordem": st.column_config.NumberColumn("Ordem", min_value=1, required=True), "duracao_semanas": st.column_config.NumberColumn("Duração (Semanas)", min_value=1, required=True, default=4), "foco_principal": st.column_config.TextColumn("Foco Principal")})
         if st.button("Salvar Mesociclos"):
             df_meso_outros = df_meso[df_meso['id_macrociclo'] != id_macro_ativo] if 'id_macrociclo' in df_meso.columns else pd.DataFrame(columns=df_meso.columns)
             max_id = df_meso['id_mesociclo'].max() if not df_meso.empty and 'id_mesociclo' in df_meso.columns else 0
@@ -1252,7 +1254,7 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
                     plano_semanal_atual = pd.DataFrame({'dia_da_semana': dias_semana, 'plano_treino': ["Descanso"]*7})
                 else:
                     plano_semanal_atual = plano_semanal_salvo[['dia_da_semana', 'plano_treino']].set_index('dia_da_semana').reindex(dias_semana).fillna("Descanso").reset_index()
-                plano_semanal_editado = st.data_editor(plano_semanal_atual, use_container_width=True, hide_index=True, key=f"editor_semana_{id_meso_ativo}_{semana_num}", column_config={"dia_da_semana": st.column_config.TextColumn("Dia da Semana", disabled=True), "plano_treino": st.column_config.SelectboxColumn("Modelo de Treino", options=planos_disponiveis, required=True)})
+                plano_semanal_editado = st.data_editor(plano_semanal_atual, width="stretch", hide_index=True, key=f"editor_semana_{id_meso_ativo}_{semana_num}", column_config={"dia_da_semana": st.column_config.TextColumn("Dia da Semana", disabled=True), "plano_treino": st.column_config.SelectboxColumn("Modelo de Treino", options=planos_disponiveis, required=True)})
                 
                 col_save, col_clear = st.columns(2)
                 with col_save:
@@ -1344,17 +1346,17 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
             st.markdown("<p style='font-size: 0.9rem; color: rgba(250, 250, 250, 0.7);'>Tempo Total</p>", unsafe_allow_html=True)
             st.markdown(f"<p style='font-size: 2.5rem; font-weight: bold; margin-top: -10px;'>{time_str}</p>", unsafe_allow_html=True)
             btn_c1, btn_c2, btn_c3 = st.columns(3)
-            if btn_c1.button("▶️ Iniciar", use_container_width=True, disabled=st.session_state.timer_started):
+            if btn_c1.button("▶️ Iniciar", width="stretch", disabled=st.session_state.timer_started):
                 st.session_state.timer_started = True
                 st.session_state.start_time = datetime.now()
                 st.rerun()
-            if btn_c2.button("⏸️ Parar", use_container_width=True, disabled=not st.session_state.timer_started):
+            if btn_c2.button("⏸️ Parar", width="stretch", disabled=not st.session_state.timer_started):
                 if st.session_state.start_time:
                     elapsed_time = datetime.now() - st.session_state.start_time
                     st.session_state.elapsed_minutes = elapsed_time.total_seconds() / 60
                 st.session_state.timer_started = False
                 st.rerun()
-            if btn_c3.button("🔄 Zerar", use_container_width=True):
+            if btn_c3.button("🔄 Zerar", width="stretch"):
                 st.session_state.timer_started = False
                 st.session_state.start_time = None
                 st.session_state.elapsed_minutes = 0.0
@@ -1374,7 +1376,7 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
             with rest_controls_col:
                 st.markdown("<p style='font-size: 0.9rem; color: rgba(250, 250, 250, 0.7);'>Timer de Descanso</p>", unsafe_allow_html=True)
                 default_rest_time = st.number_input("Segundos", min_value=10, max_value=300, value=60, step=5, label_visibility="collapsed")
-                if st.button("Iniciar Descanso", use_container_width=True, disabled=st.session_state.rest_timer_running, key="start_rest_button_final_v3"):
+                if st.button("Iniciar Descanso", width="stretch", disabled=st.session_state.rest_timer_running, key="start_rest_button_final_v3"):
                     st.session_state.rest_timer_running = True
                     st.session_state.rest_end_time = time.time() + default_rest_time
                     st.session_state.total_rest_seconds += default_rest_time
@@ -1481,14 +1483,14 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                     is_first = (index == 0)
                     is_last = (index == len(exercicios_df) - 1)
                     
-                    if st.button("🔼", key=f"up_{index}", help="Mover para cima", use_container_width=True, disabled=is_first):
+                    if st.button("🔼", key=f"up_{index}", help="Mover para cima", width="stretch", disabled=is_first):
                         df = st.session_state.todays_workout_df
                         a, b = df.iloc[index-1].copy(), df.iloc[index].copy()
                         df.iloc[index-1], df.iloc[index] = b, a
                         st.session_state.todays_workout_df = df
                         st.rerun()
 
-                    if st.button("🔽", key=f"down_{index}", help="Mover para baixo", use_container_width=True, disabled=is_last):
+                    if st.button("🔽", key=f"down_{index}", help="Mover para baixo", width="stretch", disabled=is_last):
                         df = st.session_state.todays_workout_df
                         a, b = df.iloc[index+1].copy(), df.iloc[index].copy()
                         df.iloc[index+1], df.iloc[index] = b, a
@@ -1501,7 +1503,7 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
         intensidade_tr = c2_sum.selectbox("Intensidade Percebida", config.OPCOES_INTENSIDADE_TREINO, index=1)
         data_treino = c3_sum.date_input("Data do treino", value=date.today(), key="date_input_main_log")
 
-        if st.button("Salvar Treino", type="primary", use_container_width=True):
+        if st.button("Salvar Treino", type="primary", width="stretch"):
             new_log_entries = []
             total_carga = 0
             is_cardio_session = True
@@ -1557,7 +1559,7 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
         if not dft_simples.empty:
             dft_simples[config.COL_DATA] = pd.to_datetime(dft_simples[config.COL_DATA], format="%d/%m/%Y")
             dft_simples_sorted = dft_simples.sort_values(by=config.COL_DATA, ascending=False)
-            dft_editado = st.data_editor(dft_simples_sorted, num_rows="dynamic", use_container_width=True, key="editor_treinos_realizados")
+            dft_editado = st.data_editor(dft_simples_sorted, num_rows="dynamic", width="stretch", key="editor_treinos_realizados")
             
             if st.button("💾 Salvar Alterações no Histórico", key="salvar_historico_treino"):
                 dft_editado[config.COL_DATA] = pd.to_datetime(dft_editado[config.COL_DATA]).dt.strftime('%d/%m/%Y')
@@ -1569,9 +1571,12 @@ def render_registro_avulso_form(username: str, user_data: Dict[str, Any]):
     """Renderiza o formulário simples para registrar um treino avulso."""
     # st.subheader("Registrar Treino Avulso")
     df_planos_treino = user_data.get("df_planos_treino", pd.DataFrame())
+    if 'nome_plano' not in df_planos_treino.columns:
+        df_planos_treino = pd.DataFrame(columns=['nome_plano']).sort_values('nome_plano')
+    df_planos_treino = df_planos_treino.sort_values('nome_plano')
+    
     dados_pessoais = user_data.get("dados_pessoais", {})
     path_treinos = utils.get_user_data_path(username, config.FILE_LOG_TREINOS_SIMPLES)
-    df_planos_treino = df_planos_treino.sort_values('nome_plano')
     lista_planos = ["Nenhum (Avulso)"] + (df_planos_treino['nome_plano'].tolist() if 'nome_plano' in df_planos_treino.columns else [])
     plano_executado = st.selectbox("Qual plano de treino você executou?", options=lista_planos, key="plano_avulso")
 
@@ -1598,7 +1603,7 @@ def render_registro_avulso_form(username: str, user_data: Dict[str, Any]):
     gasto_est = logic.calcular_gasto_treino(cardio, intensidade_tr, duracao_min, carga_total, dados_pessoais.get(config.COL_PESO, 70.0))
     st.metric("Gasto calórico estimado", f"{gasto_est:.0f} kcal")
 
-    if st.button("Salvar Treino Avulso", type="primary", use_container_width=True):
+    if st.button("Salvar Treino Avulso", type="primary", width="stretch"):
         novo_treino = pd.DataFrame([{
             config.COL_DATA: data_treino.strftime("%d/%m/%Y"),
             "plano_executado": plano_executado if plano_executado != "Nenhum (Avulso)" else "Avulso",
@@ -1730,16 +1735,16 @@ def render_evolucao_tab(user_data: Dict[str, Any]):
         fig1, fig2 = _get_cached_evolution_charts(dfe_final, dados_pessoais, objetivo_info)
 
         if fig1:
-            st.plotly_chart(fig1, use_container_width=True)
+            st.plotly_chart(fig1, width="stretch")
         if fig2:
-            st.plotly_chart(fig2, use_container_width=True)
+            st.plotly_chart(fig2, width="stretch")
 
         # Editor do histórico — ao salvar, atualiza dados pessoais somente quando valores são > 0
         with st.expander("Histórico de medições", expanded=False):
             dfe_editado = st.data_editor(
                 dfe_final.sort_values("semana", ascending=False),
                 num_rows="dynamic",
-                use_container_width=True,
+                width="stretch",
                 hide_index=True,
                 key="editor_evolucao"
             )
