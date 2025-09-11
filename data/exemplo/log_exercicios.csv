@@ -1,4 +1,4 @@
-data,nome_exercicio,set,minutos_realizados,kg_realizado,reps_realizadas
+Data,nome_exercicio,set,minutos_realizados,kg_realizado,reps_realizadas
 09/09/2025,Aquecimento,1,0,0.0,0
 09/09/2025,Cadeira Extensora,1,0,30.0,15
 09/09/2025,Cadeira Extensora,2,0,30.0,15
@@ -25,3 +25,4 @@ data,nome_exercicio,set,minutos_realizados,kg_realizado,reps_realizadas
 09/09/2025,Elevação de Panturrilha em Pé,1,0,92.2,20
 09/09/2025,Elevação de Panturrilha em Pé,2,0,92.2,20
 09/09/2025,Elevação de Panturrilha em Pé,3,0,92.2,20
+
