@@ -416,14 +416,14 @@ def render_visao_geral_tab(user_data: Dict[str, Any], RECOMEND: pd.DataFrame):
     st.markdown("---")
     
     st.subheader("🔥 Heatmap de Atividade")
-    if not dft_log.empty and 'data' in dft_log.columns and 'calorias' in dft_log.columns:
+    if not dft_log.empty and 'Data' in dft_log.columns and 'Calorias Gastas' in dft_log.columns:
         dft_heat = dft_log.copy()
         dft_heat['date'] = pd.to_datetime(dft_heat[config.COL_DATA], format="%d/%m/%Y")
         today_ts = pd.Timestamp.now().normalize()
         start_date = pd.Timestamp(date(today_ts.year, 1, 1))
-        daily_activity = dft_heat.groupby(dft_heat['date'].dt.date)['calorias'].sum()
+        daily_activity = dft_heat.groupby(dft_heat['date'].dt.date)['Calorias Gastas'].sum()
         all_days = pd.date_range(start=start_date, end=today_ts, freq='D')
-        activity_values = all_days.to_series(index=all_days, name='calorias').dt.date.map(daily_activity).fillna(0)
+        activity_values = all_days.to_series(index=all_days, name='Calorias Gastas').dt.date.map(daily_activity).fillna(0)
         first_day_of_year_weekday = start_date.weekday()
         total_weeks = ((all_days.max() - all_days.min()).days + first_day_of_year_weekday) // 7 + 2
         heatmap_z = np.full((7, total_weeks), np.nan)
@@ -509,7 +509,7 @@ def render_dados_pessoais_tab(user_data: Dict[str, Any]):
                 primeira_medida = pd.DataFrame([{"semana": 1, "data": date.today().strftime("%d/%m/%Y"), "peso": peso, "var": 0.0, "gordura_corporal": gord_corp, "gordura_visceral": gord_visc, "musculos_esqueleticos": musculo, "cintura": 0, "peito": 0, "braco": 0, "coxa": 0}])
                 utils.salvar_df(primeira_medida, utils.get_user_data_path(username, config.FILE_EVOLUCAO))
 
-            st.toast("Dados pessoais salvos!", icon="✅")
+            st.toast("Dados pessoais salvos!", icon="📋")
             st.rerun()
 
     # Lógica principal: decide se mostra o formulário ou o resumo
@@ -744,7 +744,7 @@ def render_alimentacao_tab(user_data: Dict[str, Any], TABELA_ALIM: pd.DataFrame,
             column_config={
                 "Refeicao": st.column_config.SelectboxColumn("Refeição", options=config.OPCOES_REFEICOES, required=True),
                 "Alimento": st.column_config.TextColumn("Alimento", required=True),
-                "Quantidade": st.column_config.NumberColumn("Qtd (g)", min_value=0.0, step=1.0)
+                "Quantidade": st.column_config.NumberColumn("Quantidade (g)", min_value=0.0, step=1.0)
             },
             key="editor_refeicoes_dia"
         )
@@ -810,7 +810,7 @@ def render_alimentacao_tab(user_data: Dict[str, Any], TABELA_ALIM: pd.DataFrame,
             novo_plano_df = pd.DataFrame([{'nome_plano': new_plan_name, 'Refeicao': config.OPCOES_REFEICOES[0], 'Alimento': 'Exemplo (edite)', 'Quantidade': 100.0}])
             utils.adicionar_registro_df(novo_plano_df, path_planos)
             st.session_state.sb_planos_alim = new_plan_name
-            st.toast(f"Plano '{new_plan_name}' criado!", icon="🎉")
+            st.toast(f"Plano '{new_plan_name}' criado!", icon="📅")
         else:
             st.session_state.form_error = "Nome de plano inválido ou já existente."
 
@@ -858,7 +858,7 @@ def render_alimentacao_tab(user_data: Dict[str, Any], TABELA_ALIM: pd.DataFrame,
                     "nome_plano": None,
                     "Refeicao": st.column_config.SelectboxColumn("Refeição", options=config.OPCOES_REFEICOES, required=True),
                     "Alimento": st.column_config.TextColumn("Alimento", required=True),
-                    "Quantidade": st.column_config.NumberColumn("Qtd (g)", min_value=0.0, step=1.0)
+                    "Quantidade": st.column_config.NumberColumn("Quantidade (g)", min_value=0.0, step=1.0)
                 }
             )
             c1, c2, c3 = st.columns([1, 1, 1.2])
@@ -909,6 +909,46 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
     """
     Renderiza a sub-aba de planejamento, com a adição do tipo de exercício.
     """
+    # --- RESTAURAÇÃO MANUAL DE ESTADO PÓS-RERUN PROBLEMÁTICO ---
+    if "_preserve_macro_selection_on_rerun" in st.session_state:
+        st.session_state.macro_select_planning = st.session_state._preserve_macro_selection_on_rerun
+        del st.session_state._preserve_macro_selection_on_rerun
+
+    # --- FUNÇÕES DE CALLBACK PARA MANIPULAÇÃO DE ESTADO ---
+    def callback_criar_plano():
+        novo_nome_plano = st.session_state.get("novo_nome_plano_input", "")
+        df_planos_treino = user_data.get("df_planos_treino", pd.DataFrame())
+        path_planos_treino = utils.get_user_data_path(username, config.FILE_PLANOS_TREINO)
+
+        if novo_nome_plano and novo_nome_plano not in df_planos_treino['nome_plano'].tolist():
+            novo_id = df_planos_treino['id_plano'].max() + 1 if not df_planos_treino.empty else 1
+            novo_plano_df = pd.DataFrame([{'id_plano': novo_id, 'nome_plano': novo_nome_plano}])
+            df_planos_treino_atualizado = pd.concat([df_planos_treino, novo_plano_df], ignore_index=True)
+            utils.salvar_df(df_planos_treino_atualizado, path_planos_treino)
+            st.toast(f"Modelo '{novo_nome_plano}' criado!", icon="✅")
+            st.session_state.sb_planos_unificado = novo_nome_plano
+            st.session_state.novo_nome_plano_input = "" 
+        else:
+            st.error("Nome de modelo inválido ou já existente.")
+
+    def callback_criar_macro():
+        nome_macro = st.session_state.get("nome_macro_input", "")
+        objetivo_macro = st.session_state.get("objetivo_macro_input", "")
+        data_inicio = st.session_state.get("data_inicio_macro_input", date.today())
+        data_fim = st.session_state.get("data_fim_macro_input", date.today())
+        df_macro = user_data.get("df_macrociclos", pd.DataFrame())
+        path_macro = utils.get_user_data_path(username, config.FILE_MACROCICLOS)
+
+        if nome_macro and data_inicio < data_fim:
+            max_id = df_macro['id_macrociclo'].max() if not df_macro.empty and 'id_macrociclo' in df_macro.columns else 0
+            novo_macro = pd.DataFrame([{'id_macrociclo': max_id + 1, 'nome': nome_macro, 'objetivo_principal': objetivo_macro, 'data_inicio': data_inicio.strftime('%Y-%m-%d'), 'data_fim': data_fim.strftime('%Y-%m-%d')}])
+            df_macro_atualizado = pd.concat([df_macro, novo_macro], ignore_index=True)
+            utils.salvar_df(df_macro_atualizado, path_macro)
+            st.toast("Macrociclo criado!", icon="✅")
+            st.session_state.macro_select_planning = nome_macro
+        else:
+            st.error("Preencha o nome e garanta que a data de início seja anterior à data de fim.")
+
     st.subheader("Passo 1: Crie seus Treinos")
 
     # --- CARREGAMENTO DE DADOS ---
@@ -919,12 +959,9 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
     df_plano_sem = user_data.get("df_plano_semanal", pd.DataFrame())
 
     colunas_exercicios_necessarias = {
-        'id_plano': pd.Series(dtype='int'),
-        'nome_exercicio': pd.Series(dtype='str'),
-        'tipo_exercicio': pd.Series(dtype='str'),
-        'series_planejadas': pd.Series(dtype='int'),
-        'repeticoes_planejadas': pd.Series(dtype='str'),
-        'ordem': pd.Series(dtype='int')
+        'id_plano': pd.Series(dtype='int'), 'nome_exercicio': pd.Series(dtype='str'),
+        'tipo_exercicio': pd.Series(dtype='str'), 'series_planejadas': pd.Series(dtype='int'),
+        'repeticoes_planejadas': pd.Series(dtype='str'), 'ordem': pd.Series(dtype='int')
     }
     for col, dtype_series in colunas_exercicios_necessarias.items():
         if col not in df_exercicios_todos.columns:
@@ -935,7 +972,6 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
     path_macro = utils.get_user_data_path(username, config.FILE_MACROCICLOS)
     path_meso = utils.get_user_data_path(username, config.FILE_MESOCICLOS)
     path_plano_sem = utils.get_user_data_path(username, config.FILE_PLANO_SEMANAL)
-    
     path_exercicios_db = config.ASSETS_DIR / "exercises" / "exercicios.json"
     exercisedb = utils.carregar_banco_exercicios(path_exercicios_db)
 
@@ -946,20 +982,13 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
                 df_planos_treino = pd.DataFrame(columns=['id_plano', 'nome_plano']).sort_values('nome_plano')
             df_planos_treino = df_planos_treino.sort_values('nome_plano')
             lista_planos = ["-- Criar Novo Plano --"] + df_planos_treino['nome_plano'].tolist()
+            
             opcao_plano = st.selectbox("Selecione para editar ou crie um novo:", options=lista_planos, key="sb_planos_unificado")
 
             if opcao_plano == "-- Criar Novo Plano --":
-                novo_nome_plano = st.text_input("Nome do Novo Modelo de Treino")
-                if st.button("Criar Modelo"):
-                    if novo_nome_plano and novo_nome_plano not in df_planos_treino['nome_plano'].tolist():
-                        novo_id = df_planos_treino['id_plano'].max() + 1 if not df_planos_treino.empty else 1
-                        novo_plano_df = pd.DataFrame([{'id_plano': novo_id, 'nome_plano': novo_nome_plano}])
-                        df_planos_treino = pd.concat([df_planos_treino, novo_plano_df], ignore_index=True)
-                        utils.salvar_df(df_planos_treino, path_planos_treino)
-                        st.toast(f"Modelo '{novo_nome_plano}' criado!", icon="✅")
-                        st.rerun()
-                    else:
-                        st.error("Nome de modelo inválido ou já existente.")
+                with st.form("form_novo_plano"):
+                    st.text_input("Nome do Novo Modelo de Treino", key="novo_nome_plano_input")
+                    st.form_submit_button("Criar Modelo", on_click=callback_criar_plano)
 
             elif opcao_plano != "-- Criar Novo Plano --":
                 if st.button(f"🗑️ Apagar Modelo '{opcao_plano}'", type="secondary"):
@@ -974,7 +1003,13 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
                         utils.salvar_df(df_planos_treino, path_planos_treino)
                         utils.salvar_df(df_exercicios_todos, path_exercicios)
                         st.session_state[f'confirm_delete_plano_{opcao_plano}'] = False
-                        st.toast(f"Modelo '{opcao_plano}' apagado.", icon="🗑️")
+                        
+                        # PRESERVAÇÃO MANUAL DE ESTADO ANTES DE RERUN PROBLEMÁTICO
+                        if 'macro_select_planning' in st.session_state:
+                            st.session_state._preserve_macro_selection_on_rerun = st.session_state.macro_select_planning
+                        
+                        if 'sb_planos_unificado' in st.session_state:
+                            del st.session_state.sb_planos_unificado
                         st.rerun()
                     if col_conf2.button("Cancelar"):
                         st.session_state[f'confirm_delete_plano_{opcao_plano}'] = False
@@ -989,43 +1024,30 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
                     all_equipment = set()
                     for ex in exercisedb:
                         if isinstance(ex, dict):
-                            for muscle in ex.get("primaryMuscles", []):
-                                all_muscles.add(muscle.title())
+                            for muscle in ex.get("primaryMuscles", []): all_muscles.add(muscle.title())
                             equip = ex.get("equipment")
-                            if equip:
-                                all_equipment.add(equip.title())
+                            if equip: all_equipment.add(equip.title())
                     
                     muscle_options = ["Todos"] + sorted(list(all_muscles))
                     equipment_options = ["Todos"] + sorted(list(all_equipment))
-
                     selected_muscle = st.selectbox("Filtrar por grupo muscular:", options=muscle_options)
                     selected_equipment = st.selectbox("Filtrar por equipamento:", options=equipment_options)
                     search_term = st.text_input("Buscar exercício por nome:").lower()
 
-                    # Lógica para paginação dos resultados
                     current_filter_state = f"{selected_muscle}-{selected_equipment}-{search_term}"
                     if 'last_filter_state' not in st.session_state or st.session_state.last_filter_state != current_filter_state:
                         st.session_state.last_filter_state = current_filter_state
                         st.session_state.exercises_to_show = 5
-                    
                     if 'exercises_to_show' not in st.session_state:
                         st.session_state.exercises_to_show = 5
 
-                    # Lógica para exibir exercícios apenas quando um filtro é aplicado
                     if search_term or selected_muscle != "Todos" or selected_equipment != "Todos":
                         filtered_exercises = []
                         for ex in exercisedb:
                             if not isinstance(ex, dict): continue
-                            
-                            muscle_match = (selected_muscle == "Todos" or 
-                                            any(m.title() == selected_muscle for m in ex.get("primaryMuscles", [])))
-                            
-                            # Correção para o erro AttributeError
-                            equip_match = (selected_equipment == "Todos" or
-                                           (ex.get("equipment") or "").title() == selected_equipment)
-
+                            muscle_match = (selected_muscle == "Todos" or any(m.title() == selected_muscle for m in ex.get("primaryMuscles", [])))
+                            equip_match = (selected_equipment == "Todos" or (ex.get("equipment") or "").title() == selected_equipment)
                             name_match = search_term in ex.get("name", "").lower()
-                            
                             if muscle_match and equip_match and name_match:
                                 filtered_exercises.append(ex)
 
@@ -1033,14 +1055,11 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
                             st.info("Nenhum exercício encontrado com os filtros selecionados.")
                         
                         base_image_path = config.ASSETS_DIR / "exercises"
-                        
-                        # Exibe a quantidade de exercícios definida no session_state
                         exercises_to_display = filtered_exercises[:st.session_state.exercises_to_show]
                         for i, ex in enumerate(exercises_to_display):
                             ex_name = ex.get("name")
                             instruction = ex.get("instructions", [])
                             if not ex_name: continue
-                            
                             with st.container(border=True):
                                 st.markdown(f"**{ex_name}**")
                                 images = ex.get("images", [])
@@ -1052,23 +1071,18 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
                                         st.markdown(anim_html, unsafe_allow_html=True)
                                 elif images:
                                     image_path = base_image_path / Path(images[0])
-                                    if image_path.exists():
-                                        st.image(str(image_path), use_column_width=True)
+                                    if image_path.exists(): st.image(str(image_path), use_column_width=True)
 
                                 st.markdown("<br/>", unsafe_allow_html=True)
-
                                 col_1, col_2 = st.columns([1, 1])
                                 with col_1:
                                     st.markdown(f"**Grupo Muscular:** {', '.join(ex.get('primaryMuscles', []))}")
                                     st.markdown(f"**Músculo Secundário:** {', '.join(ex.get('secondaryMuscles', []))}")
                                     st.markdown(f"**Equipamento:** {ex.get('equipment', 'N/A')}")
                                     st.markdown(f"**Nível:** {ex.get('level', 'N/A')}")
-                                
                                 with col_2:
                                     st.markdown(f"**Músculos Trabalhados:**")
-                                    primary = ex.get("primaryMuscles", [])
-                                    secondary = ex.get("secondaryMuscles", [])
-                                    
+                                    primary, secondary = ex.get("primaryMuscles", []), ex.get("secondaryMuscles", [])
                                     img_col1, img_col2 = st.columns(2)
                                     with img_col1:
                                         front_primary = [m for m in primary if m.lower() in config.FRONT_MUSCLES]
@@ -1081,62 +1095,41 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
                                         html_back = utils.render_muscle_diagram(config.PATH_GRAFICO_MUSCULOS_BACK, back_primary, back_secondary, width=150)
                                         st.markdown(html_back, unsafe_allow_html=True)
                                 st.markdown('')
-                                
                                 if instruction:
                                     with st.expander("Instruções"):
-                                        for inst in instruction:
-                                            st.markdown(f"- {inst}")
+                                        for inst in instruction: st.markdown(f"- {inst}")
                                 
                                 if st.button("Adicionar ao plano", key=f"add_local_{i}_{ex.get('id', ex_name)}", width="stretch"):
                                     id_plano_selecionado = df_planos_treino[df_planos_treino['nome_plano'] == opcao_plano]['id_plano'].iloc[0]
                                     exercicios_atuais_plano = df_exercicios_todos[df_exercicios_todos['id_plano'] == id_plano_selecionado]
                                     nova_ordem = len(exercicios_atuais_plano)
-                                    
-                                    novo_exercicio = pd.DataFrame([{
-                                        'id_plano': id_plano_selecionado,
-                                        'nome_exercicio': ex_name,
-                                        'tipo_exercicio': 'Musculação',
-                                        'series_planejadas': 3,
-                                        'repeticoes_planejadas': '8-12',
-                                        'ordem': nova_ordem
-                                    }])
+                                    novo_exercicio = pd.DataFrame([{'id_plano': id_plano_selecionado, 'nome_exercicio': ex_name, 'tipo_exercicio': 'Musculação', 'series_planejadas': 3, 'repeticoes_planejadas': '8-12', 'ordem': nova_ordem}])
                                     df_exercicios_todos = pd.concat([df_exercicios_todos, novo_exercicio], ignore_index=True)
                                     utils.salvar_df(df_exercicios_todos, path_exercicios)
                                     st.toast(f"'{ex_name}' adicionado ao plano '{opcao_plano}'!")
                                     st.rerun()
 
-                        # Botão para exibir mais resultados
                         if len(filtered_exercises) > st.session_state.exercises_to_show:
                             if st.button("Exibir mais 10"):
                                 st.session_state.exercises_to_show += 10
                                 st.rerun()
-
         with c2:
             if opcao_plano != "-- Criar Novo Plano --":
                 st.markdown(f"##### Exercícios do Treino: **{opcao_plano}**")
                 id_plano_selecionado = df_planos_treino[df_planos_treino['nome_plano'] == opcao_plano]['id_plano'].iloc[0]
-                
                 df_exercicios_plano = df_exercicios_todos[df_exercicios_todos['id_plano'] == id_plano_selecionado].copy()
                 
-                # Garante que exercícios antigos ou sem ordem recebam uma ordem sequencial
                 if 'ordem' not in df_exercicios_plano.columns or df_exercicios_plano['ordem'].isnull().any():
-                    if 'ordem' in df_exercicios_plano.columns:
-                        df_exercicios_plano = df_exercicios_plano.drop(columns=['ordem'])
+                    if 'ordem' in df_exercicios_plano.columns: df_exercicios_plano = df_exercicios_plano.drop(columns=['ordem'])
                     df_exercicios_plano = df_exercicios_plano.reset_index(drop=True).reset_index().rename(columns={'index': 'ordem'})
-
                 df_exercicios_plano = df_exercicios_plano.sort_values('ordem')
                 df_exercicios_plano['repeticoes_planejadas'] = df_exercicios_plano['repeticoes_planejadas'].astype(str)
-
+                
                 exercicios_editados = st.data_editor(
-                    df_exercicios_plano,
-                    num_rows="dynamic",
-                    width="stretch",
-                    key=f"editor_exercicios_tab",
-                    hide_index=True,
+                    df_exercicios_plano, num_rows="dynamic", width="stretch", key=f"editor_exercicios_tab", hide_index=True,
                     column_order=("ordem", "nome_exercicio", "tipo_exercicio", "series_planejadas", "repeticoes_planejadas"),
                     column_config={
-                        "_index": st.column_config.Column(disabled=True),
-                        "id_plano": None,
+                        "_index": st.column_config.Column(disabled=True), "id_plano": None,
                         "ordem": st.column_config.NumberColumn("Ordem", width="small", required=True, help="Edite os números para reordenar os exercícios."),
                         "nome_exercicio": st.column_config.TextColumn("Exercício", required=True),
                         "tipo_exercicio": st.column_config.SelectboxColumn("Tipo", options=["Musculação", "Cardio"], required=True),
@@ -1146,17 +1139,14 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
                 )
                 if st.button("💾 Salvar Exercícios neste Modelo"):
                     df_exercicios_outros = df_exercicios_todos[df_exercicios_todos['id_plano'] != id_plano_selecionado]
-                    
                     novos_exercicios = exercicios_editados.copy()
                     novos_exercicios['id_plano'] = id_plano_selecionado
-                    
                     df_final = pd.concat([df_exercicios_outros, novos_exercicios], ignore_index=True)
                     utils.salvar_df(df_final, path_exercicios)
                     st.toast("Exercícios do modelo salvos com sucesso!", icon="💾")
                     st.rerun()
 
     st.subheader("Passo 2: Estruture a Periodização dos Treinos")
-    
     st.markdown("##### 1. Macrociclo")
     if 'nome' not in df_macro.columns:
         df_macro = pd.DataFrame(columns=['nome']).sort_values('nome')
@@ -1167,25 +1157,15 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
     if macro_selecionado_nome == "-- Criar Novo Macrociclo --":
         with st.form("form_novo_macro"):
             st.write(f"Crie um novo grande ciclo de treino (ex: Preparação Verão {datetime.today().year}).")
-            nome_macro = st.text_input("Nome do Macrociclo")
-            objetivo_macro = st.text_area("Objetivo Principal")
+            st.text_input("Nome do Macrociclo", key="nome_macro_input")
+            st.text_area("Objetivo Principal", key="objetivo_macro_input")
             col1, col2 = st.columns(2)
-            data_inicio_macro = col1.date_input("Data de Início", value=date.today())
-            data_fim_macro = col2.date_input("Data de Fim", value=date.today() + pd.DateOffset(months=3))
-            if st.form_submit_button("Criar Macrociclo"):
-                if nome_macro and data_inicio_macro < data_fim_macro:
-                    max_id = df_macro['id_macrociclo'].max() if not df_macro.empty and 'id_macrociclo' in df_macro.columns else 0
-                    novo_macro = pd.DataFrame([{'id_macrociclo': max_id + 1, 'nome': nome_macro, 'objetivo_principal': objetivo_macro, 'data_inicio': data_inicio_macro.strftime('%Y-%m-%d'), 'data_fim': data_fim_macro.strftime('%Y-%m-%d')}])
-                    df_macro = pd.concat([df_macro, novo_macro], ignore_index=True)
-                    utils.salvar_df(df_macro, path_macro)
-                    st.toast("Macrociclo criado!", icon="🎉")
-                    st.rerun()
-                else:
-                    st.error("Preencha o nome e garanta que a data de início seja anterior à data de fim.")
+            col1.date_input("Data de Início", value=date.today(), key="data_inicio_macro_input")
+            col2.date_input("Data de Fim", value=date.today() + pd.DateOffset(months=3), key="data_fim_macro_input")
+            st.form_submit_button("Criar Macrociclo", on_click=callback_criar_macro)
     
     elif macro_selecionado_nome:
         id_macro_ativo = df_macro[df_macro['nome'] == macro_selecionado_nome]['id_macrociclo'].iloc[0]
-
         if st.button(f"🗑️ Apagar Macrociclo '{macro_selecionado_nome}'", type="secondary"):
             st.session_state[f'confirm_delete_macro_{id_macro_ativo}'] = True
         
@@ -1202,7 +1182,7 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
                 utils.salvar_df(df_meso, path_meso)
                 utils.salvar_df(df_plano_sem, path_plano_sem)
                 st.session_state[f'confirm_delete_macro_{id_macro_ativo}'] = False
-                st.toast(f"Macrociclo apagado.", icon="🗑️")
+                if 'macro_select_planning' in st.session_state: del st.session_state.macro_select_planning
                 st.rerun()
             if col_conf2.button("Cancelar"):
                 st.session_state[f'confirm_delete_macro_{id_macro_ativo}'] = False
@@ -1211,13 +1191,21 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
         st.markdown("---")
         st.markdown(f"##### 2. Mesociclos (As Fases do '{macro_selecionado_nome}')")
         mesos_do_macro = df_meso[df_meso['id_macrociclo'] == id_macro_ativo].copy() if 'id_macrociclo' in df_meso.columns else pd.DataFrame()
-        colunas_meso = {'id_mesociclo': pd.Series(dtype='Int64'), 'id_macrociclo': pd.Series(dtype='Int64'), 'nome': pd.Series(dtype='str'), 'ordem': pd.Series(dtype='Int64'), 'duracao_semanas': pd.Series(dtype='Int64'), 'foco_principal': pd.Series(dtype='str')}
+        colunas_meso = {
+            'id_mesociclo': pd.Series(dtype='Int64'), 'id_macrociclo': pd.Series(dtype='Int64'), 'nome': pd.Series(dtype='str'),
+            'ordem': pd.Series(dtype='Int64'), 'duracao_semanas': pd.Series(dtype='Int64'), 'foco_principal': pd.Series(dtype='str')
+        }
         for col, dtype_series in colunas_meso.items():
-            if col not in mesos_do_macro.columns:
-                mesos_do_macro[col] = dtype_series
+            if col not in mesos_do_macro.columns: mesos_do_macro[col] = dtype_series
         mesos_do_macro['duracao_semanas'] = mesos_do_macro['duracao_semanas'].fillna(4)
         mesos_do_macro = mesos_do_macro.astype({'nome': str, 'foco_principal': str, 'ordem': 'Int64', 'duracao_semanas': 'Int64'})
-        mesos_editados = st.data_editor(mesos_do_macro, num_rows="dynamic", width="stretch", key="editor_meso", column_config={"id_mesociclo": None, "id_macrociclo": None, "nome": st.column_config.TextColumn("Nome do Mesociclo", required=True), "ordem": st.column_config.NumberColumn("Ordem", min_value=1, required=True), "duracao_semanas": st.column_config.NumberColumn("Duração (Semanas)", min_value=1, required=True, default=4), "foco_principal": st.column_config.TextColumn("Foco Principal")})
+        mesos_editados = st.data_editor(mesos_do_macro, num_rows="dynamic", width="stretch", key="editor_meso", column_config={
+            "id_mesociclo": None, "id_macrociclo": None,
+            "nome": st.column_config.TextColumn("Nome do Mesociclo", required=True),
+            "ordem": st.column_config.NumberColumn("Ordem", min_value=1, required=True),
+            "duracao_semanas": st.column_config.NumberColumn("Duração (Semanas)", min_value=1, required=True, default=4),
+            "foco_principal": st.column_config.TextColumn("Foco Principal")
+        })
         if st.button("Salvar Mesociclos"):
             df_meso_outros = df_meso[df_meso['id_macrociclo'] != id_macro_ativo] if 'id_macrociclo' in df_meso.columns else pd.DataFrame(columns=df_meso.columns)
             max_id = df_meso['id_mesociclo'].max() if not df_meso.empty and 'id_mesociclo' in df_meso.columns else 0
@@ -1241,7 +1229,7 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
         mesos_do_macro = mesos_do_macro.sort_values('nome')
         lista_mesos_nomes = mesos_do_macro['nome'].dropna().tolist() if not mesos_do_macro.empty else []
         if lista_mesos_nomes:
-            meso_selecionado_nome = st.selectbox("Selecione um Mesociclo para planejar as semanas", options=lista_mesos_nomes)
+            meso_selecionado_nome = st.selectbox("Selecione um Mesociclo para planejar as semanas", options=lista_mesos_nomes, key=f"meso_select_{id_macro_ativo}")
             meso_selecionado_info = mesos_do_macro[mesos_do_macro['nome'] == meso_selecionado_nome]
             if not meso_selecionado_info.empty:
                 id_meso_ativo = meso_selecionado_info['id_mesociclo'].iloc[0]
@@ -1250,22 +1238,26 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
                 dias_semana = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"]
                 planos_disponiveis = ["Descanso"] + (df_planos_treino['nome_plano'].tolist() if 'nome_plano' in df_planos_treino.columns else [])
                 plano_semanal_salvo = df_plano_sem[(df_plano_sem['id_mesociclo'] == id_meso_ativo) & (df_plano_sem['semana_numero'] == semana_num)] if 'id_mesociclo' in df_plano_sem.columns else pd.DataFrame()
+                
                 if plano_semanal_salvo.empty:
                     plano_semanal_atual = pd.DataFrame({'dia_da_semana': dias_semana, 'plano_treino': ["Descanso"]*7})
                 else:
                     plano_semanal_atual = plano_semanal_salvo[['dia_da_semana', 'plano_treino']].set_index('dia_da_semana').reindex(dias_semana).fillna("Descanso").reset_index()
-                plano_semanal_editado = st.data_editor(plano_semanal_atual, width="stretch", hide_index=True, key=f"editor_semana_{id_meso_ativo}_{semana_num}", column_config={"dia_da_semana": st.column_config.TextColumn("Dia da Semana", disabled=True), "plano_treino": st.column_config.SelectboxColumn("Modelo de Treino", options=planos_disponiveis, required=True)})
+                
+                plano_semanal_editado = st.data_editor(plano_semanal_atual, width="stretch", hide_index=True, key=f"editor_semana_{id_meso_ativo}_{semana_num}", column_config={
+                    "dia_da_semana": st.column_config.TextColumn("Dia da Semana", disabled=True),
+                    "plano_treino": st.column_config.SelectboxColumn("Modelo de Treino", options=planos_disponiveis, required=True)
+                })
                 
                 col_save, col_clear = st.columns(2)
                 with col_save:
                     if st.button("💾 Salvar Plano da Semana"):
                         df_plano_sem_outros = df_plano_sem.drop(plano_semanal_salvo.index) if not plano_semanal_salvo.empty else df_plano_sem
                         novo_plano_semanal = plano_semanal_editado.copy()
-                        novo_plano_semanal['id_mesociclo'] = id_meso_ativo
-                        novo_plano_semanal['semana_numero'] = semana_num
+                        novo_plano_semanal['id_mesociclo'], novo_plano_semanal['semana_numero'] = id_meso_ativo, semana_num
                         df_final_semanal = pd.concat([df_plano_sem_outros, novo_plano_semanal], ignore_index=True)
                         utils.salvar_df(df_final_semanal, path_plano_sem)
-                        st.toast(f"Plano para a Semana {semana_num} salvo!", icon="✅")
+                        st.toast(f"Plano para a Semana {semana_num} salvo!", icon="🗓️")
                         st.rerun()
                 with col_clear:
                     if st.button("🧹 Limpar Plano desta Semana", type="secondary"):
@@ -1325,6 +1317,14 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
         st.session_state.rest_end_time = None
     if 'total_rest_seconds' not in st.session_state:
         st.session_state.total_rest_seconds = 0
+    # -- Novos estados para o tempo híbrido --
+    if 'last_check_time' not in st.session_state:
+        st.session_state.last_check_time = None
+    if 'set_durations' not in st.session_state:
+        st.session_state.set_durations = {}
+    if 'checkbox_states' not in st.session_state:
+        st.session_state.checkbox_states = {}
+
 
     with st.sidebar:
         if st.session_state.timer_started or st.session_state.rest_timer_running:
@@ -1335,32 +1335,42 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
         col1, col2, col3 = st.columns([2.5, 3, 3])
         with col1:
             if st.session_state.timer_started and st.session_state.start_time:
-                elapsed = datetime.now() - st.session_state.start_time
-                hours, remainder = divmod(int(elapsed.total_seconds()), 3600)
+                accumulated_seconds = st.session_state.elapsed_minutes * 60
+                current_elapsed = datetime.now() - st.session_state.start_time
+                total_seconds = accumulated_seconds + current_elapsed.total_seconds()
+                
+                hours, remainder = divmod(int(total_seconds), 3600)
                 minutes, seconds = divmod(remainder, 60)
                 time_str = f"{hours:02}:{minutes:02}:{seconds:02}"
             else:
-                minutes_total = int(st.session_state.elapsed_minutes)
-                seconds_total = int((st.session_state.elapsed_minutes * 60) % 60)
-                time_str = f"00:{minutes_total:02}:{seconds_total:02}"
+                total_seconds = st.session_state.elapsed_minutes * 60
+                hours, remainder = divmod(int(total_seconds), 3600)
+                minutes, seconds = divmod(remainder, 60)
+                time_str = f"{hours:02}:{minutes:02}:{seconds:02}"
             st.markdown("<p style='font-size: 0.9rem; color: rgba(250, 250, 250, 0.7);'>Tempo Total</p>", unsafe_allow_html=True)
             st.markdown(f"<p style='font-size: 2.5rem; font-weight: bold; margin-top: -10px;'>{time_str}</p>", unsafe_allow_html=True)
             btn_c1, btn_c2, btn_c3 = st.columns(3)
             if btn_c1.button("▶️ Iniciar", width="stretch", disabled=st.session_state.timer_started):
                 st.session_state.timer_started = True
                 st.session_state.start_time = datetime.now()
+                st.session_state.last_check_time = time.time() # Inicia o timer para o 1º check
                 st.rerun()
             if btn_c2.button("⏸️ Parar", width="stretch", disabled=not st.session_state.timer_started):
                 if st.session_state.start_time:
                     elapsed_time = datetime.now() - st.session_state.start_time
-                    st.session_state.elapsed_minutes = elapsed_time.total_seconds() / 60
+                    st.session_state.elapsed_minutes += elapsed_time.total_seconds() / 60
+                    st.session_state.start_time = None
                 st.session_state.timer_started = False
+                st.session_state.last_check_time = None # Para o timer de check
                 st.rerun()
             if btn_c3.button("🔄 Zerar", width="stretch"):
                 st.session_state.timer_started = False
                 st.session_state.start_time = None
                 st.session_state.elapsed_minutes = 0.0
                 st.session_state.total_rest_seconds = 0
+                st.session_state.last_check_time = None # Zera o timer de check
+                st.session_state.set_durations = {} # Zera durações gravadas
+                st.session_state.checkbox_states = {} # Zera estado dos checks
                 st.rerun()
         with col2:
             if workout_today:
@@ -1389,7 +1399,7 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                     if remaining_time > 0:
                         minutes, seconds = divmod(int(remaining_time), 60)
                         time_str = f"{minutes:02}:{seconds:02}"
-                        color = "#FF4B4B" if remaining_time <= 11 else "inherit"
+                        color = "#FF4B4B" if remaining_time < 11 else "inherit"
                         st.markdown(f"""
                         <div style='display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;'>
                             <p style='font-size: 3.5rem; color: {color}; font-weight: bold;'>{time_str}</p>
@@ -1417,7 +1427,6 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                 col_main, col_buttons = st.columns([0.9, 0.1])
                 
                 with col_main:
-                    # --- MUDANÇA: POPOVER SIMPLIFICADO APENAS COM EXECUÇÃO E INSTRUÇÕES ---
                     with st.popover(f"**{exercicio['nome_exercicio']}**"):
                         st.markdown(f"##### {exercicio['nome_exercicio']}")
                         nome_normalizado = utils.normalizar_texto(exercicio['nome_exercicio'])
@@ -1442,7 +1451,16 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                                         st.markdown(f"- {inst}")
 
                     tipo_exercicio = exercicio.get('tipo_exercicio', 'Musculação')
-                    previous_performance = logic.get_previous_performance(df_log_exercicios, exercicio['nome_exercicio'])
+                    
+                    # Busca o desempenho anterior (dados brutos)
+                    previous_perf_data = logic.get_previous_performance(df_log_exercicios, exercicio['nome_exercicio'])
+                    
+                    # Formata a string para exibição
+                    if tipo_exercicio == 'Cardio':
+                         previous_performance_str = f"{previous_perf_data.get('minutos', 0)} min" if previous_perf_data.get('minutos') else "N/A"
+                    else:
+                         previous_performance_str = f"{previous_perf_data.get('kg', 0)} kg x {previous_perf_data.get('reps', 0)}" if previous_perf_data.get('kg') is not None else "N/A"
+
 
                     if tipo_exercicio == 'Cardio':
                         col_header = st.columns([0.8, 2, 2, 2.4, 0.8])
@@ -1456,9 +1474,9 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                             cols = st.columns([0.8, 2, 2, 2.4, 0.8])
                             key_base = f"cardio_{exercicio['nome_exercicio']}_{i}_{index}"
                             cols[0].markdown(f"**{i}**")
-                            cols[1].markdown(f"`{previous_performance}`")
+                            cols[1].markdown(f"`{previous_performance_str}`")
                             cols[2].markdown(f"`{exercicio['repeticoes_planejadas']}`")
-                            cols[3].number_input("Min", key=f"min_{key_base}", min_value=0, step=1, label_visibility="collapsed")
+                            cols[3].number_input("Min", key=f"min_{key_base}", min_value=0, step=1, label_visibility="collapsed", value=previous_perf_data.get('minutos', 0))
                             cols[4].checkbox("Feito", key=f"done_{key_base}", label_visibility="collapsed")
                     else: # Musculação
                         col_header = st.columns([0.8, 2, 2, 1.2, 1.2, 0.8])
@@ -1473,11 +1491,27 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                             cols = st.columns([0.8, 2, 2, 1.2, 1.2, 0.8])
                             key_base = f"musc_{exercicio['nome_exercicio']}_{i}_{index}"
                             cols[0].markdown(f"**{i}**")
-                            cols[1].markdown(f"`{previous_performance}`")
+                            cols[1].markdown(f"`{previous_performance_str}`")
                             cols[2].markdown(f"`{exercicio['repeticoes_planejadas']} reps`")
-                            cols[3].number_input("kg", key=f"kg_{key_base}", min_value=0.0, step=0.5, label_visibility="collapsed")
-                            cols[4].number_input("reps", key=f"reps_{key_base}", min_value=0, step=1, label_visibility="collapsed")
-                            cols[5].checkbox("Feito", key=f"done_{key_base}", label_visibility="collapsed")
+                            cols[3].number_input("kg", key=f"kg_{key_base}", min_value=0.0, step=0.5, label_visibility="collapsed", value=previous_perf_data.get('kg', 0.0))
+                            cols[4].number_input("reps", key=f"reps_{key_base}", min_value=0, step=1, label_visibility="collapsed", value=previous_perf_data.get('reps', 0))
+                            
+                            # Lógica de captura de tempo para o checkbox
+                            checkbox_key = f"done_{key_base}"
+                            prev_state = st.session_state.checkbox_states.get(checkbox_key, False)
+                            is_checked = cols[5].checkbox("Feito", key=checkbox_key, label_visibility="collapsed")
+                            
+                            if is_checked and not prev_state: # Se foi marcado agora
+                                if st.session_state.timer_started and st.session_state.last_check_time:
+                                    now = time.time()
+                                    duration_seconds = now - st.session_state.last_check_time
+                                    st.session_state.set_durations[key_base] = duration_seconds / 60
+                                    st.session_state.last_check_time = now
+                            elif not is_checked and prev_state: # Se foi desmarcado agora
+                                st.session_state.set_durations.pop(key_base, None)
+
+                            st.session_state.checkbox_states[checkbox_key] = is_checked
+
 
                 with col_buttons:
                     is_first = (index == 0)
@@ -1499,53 +1533,103 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
 
         st.subheader("Resumo da Sessão")
         c1_sum, c2_sum, c3_sum = st.columns(3)
-        duracao_min_total = c1_sum.number_input("Duração Total do Treino (min)", min_value=0, value=int(round(st.session_state.elapsed_minutes, 0)), step=1)
+        duracao_min_total = c1_sum.number_input("Tempo Total do Treino (min)", min_value=0, value=int(round(st.session_state.elapsed_minutes, 0)), step=1)
         intensidade_tr = c2_sum.selectbox("Intensidade Percebida", config.OPCOES_INTENSIDADE_TREINO, index=1)
         data_treino = c3_sum.date_input("Data do treino", value=date.today(), key="date_input_main_log")
 
         if st.button("Salvar Treino", type="primary", width="stretch"):
             new_log_entries = []
-            total_carga = 0
-            is_cardio_session = True
+            dados_pessoais = user_data.get("dados_pessoais", {})
+            peso_usuario = dados_pessoais.get(config.COL_PESO, 70.0)
+
+            total_calorias_musculacao = 0.0
+            total_calorias_cardio = 0.0
+            total_minutos_cardio = 0
+            
+            untimed_musc_sets = []
+            
             for index, exercicio in exercicios_df.iterrows():
                 tipo_exercicio = exercicio.get('tipo_exercicio', 'Musculação')
                 num_series = int(exercicio.get('series_planejadas', 1))
+
                 for i in range(1, num_series + 1):
                     key_prefix = "cardio" if tipo_exercicio == 'Cardio' else "musc"
                     key_base = f"{key_prefix}_{exercicio['nome_exercicio']}_{i}_{index}"
+                    
                     if st.session_state.get(f'done_{key_base}'):
-                        log_entry = {'data': data_treino.strftime("%d/%m/%Y"), 'nome_exercicio': exercicio['nome_exercicio'], 'set': i}
+                        log_entry = {'Data': data_treino.strftime("%d/%m/%Y"), 'nome_exercicio': exercicio['nome_exercicio'], 'set': i}
+                        
                         if tipo_exercicio == 'Cardio':
-                            log_entry['minutos_realizados'] = st.session_state.get(f'min_{key_base}', 0)
-                            log_entry['kg_realizado'] = 0
-                            log_entry['reps_realizadas'] = 0
+                            minutos = st.session_state.get(f'min_{key_base}', 0)
+                            total_minutos_cardio += minutos
+                            log_entry.update({'minutos_realizados': minutos, 'kg_realizado': 0, 'reps_realizadas': 0})
+                            
+                            gasto_exercicio = logic.calcular_gasto_treino(
+                                cardio=True, intensidade=intensidade_tr, duracao=minutos, carga=0, peso=peso_usuario
+                            )
+                            total_calorias_cardio += gasto_exercicio
                         else: # Musculação
-                            is_cardio_session = False
                             kg = st.session_state.get(f'kg_{key_base}', 0.0)
                             reps = st.session_state.get(f'reps_{key_base}', 0)
-                            log_entry['kg_realizado'] = kg
-                            log_entry['reps_realizadas'] = reps
-                            log_entry['minutos_realizados'] = 0
-                            total_carga += (kg * reps)
+                            carga = kg * reps
+                            log_entry.update({'kg_realizado': kg, 'reps_realizadas': reps, 'minutos_realizados': 0})
+                            
+                            if key_base in st.session_state.set_durations:
+                                duracao = st.session_state.set_durations[key_base]
+                                gasto_exercicio = logic.calcular_gasto_treino(
+                                    cardio=False, intensidade=intensidade_tr, duracao=duracao, carga=carga, peso=peso_usuario
+                                )
+                                total_calorias_musculacao += gasto_exercicio
+                            else:
+                                untimed_musc_sets.append({'carga': carga})
+                        
                         new_log_entries.append(log_entry)
+            
+            # Lógica Híbrida/Fallback: Calcula calorias para séries de musculação não cronometradas
+            if untimed_musc_sets:
+                duracao_musculacao_restante = duracao_min_total - total_minutos_cardio
+                if duracao_musculacao_restante > 0 and len(untimed_musc_sets) > 0:
+                    duracao_por_set_nao_cronometrado = duracao_musculacao_restante / len(untimed_musc_sets)
+                    
+                    for set_data in untimed_musc_sets:
+                        gasto_exercicio = logic.calcular_gasto_treino(
+                            cardio=False, intensidade=intensidade_tr, duracao=duracao_por_set_nao_cronometrado, 
+                            carga=set_data['carga'], peso=peso_usuario
+                        )
+                        total_calorias_musculacao += gasto_exercicio
+
             if not new_log_entries:
                 st.warning("Nenhuma série foi marcada como 'Feito'. O treino não foi salvo.")
             else:
                 path_log_exercicios = utils.get_user_data_path(username, config.FILE_LOG_EXERCICIOS)
                 utils.adicionar_registro_df(pd.DataFrame(new_log_entries), path_log_exercicios)
-                dados_pessoais = user_data.get("dados_pessoais", {})
-                peso_usuario = dados_pessoais.get(config.COL_PESO, 70.0)
-                gasto_est = logic.calcular_gasto_treino(cardio=is_cardio_session, intensidade=intensidade_tr, duracao=duracao_min_total, carga=total_carga, peso=peso_usuario)
+
+                gasto_est_total = total_calorias_musculacao + total_calorias_cardio
+                
                 path_treinos_simples = utils.get_user_data_path(username, config.FILE_LOG_TREINOS_SIMPLES)
-                novo_treino_simples = pd.DataFrame([{'data': data_treino.strftime("%d/%m/%Y"), 'plano_executado': workout_today['nome_plano'], 'tipo treino': "Cardio" if is_cardio_session else "Musculação", 'duracao min': duracao_min_total, 'calorias': round(gasto_est, 2)}])
+                
+                novo_treino_simples = pd.DataFrame([{
+                    'Data': data_treino.strftime("%d/%m/%Y"),
+                    'Plano Executado': workout_today['nome_plano'],
+                    'Tipo de Treino': "Misto" if total_calorias_cardio > 0 and total_calorias_musculacao > 0 else ("Cardio" if total_calorias_cardio > 0 else "Musculação"),
+                    'Tempo (min)': duracao_min_total,
+                    'Calorias Gastas': round(gasto_est_total, 2)
+                }])
+                
                 utils.adicionar_registro_df(novo_treino_simples, path_treinos_simples)
+                
                 st.session_state.timer_started = False
                 st.session_state.start_time = None
                 st.session_state.elapsed_minutes = 0.0
                 st.session_state.rest_timer_running = False
                 st.session_state.rest_end_time = None
-                st.toast("Treino salvo com sucesso!", icon="🎉")
+                st.session_state.last_check_time = None
+                st.session_state.set_durations = {}
+                st.session_state.checkbox_states = {}
+
+                st.toast("Treino salvo com sucesso!", icon="💪")
                 st.rerun()
+
     else:
         st.info("Nenhum treino planejado para hoje.")
 
@@ -1555,17 +1639,19 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
         render_registro_avulso_form(username, user_data)
     
     dft_simples = user_data.get("df_log_treinos", pd.DataFrame())
-    with st.expander("Histórico de Treinos Realizados (clique para editar/apagar)"):
-        if not dft_simples.empty:
+    with st.expander("Histórico de Treinos Realizados"):
+        if not dft_simples.empty:           
             dft_simples[config.COL_DATA] = pd.to_datetime(dft_simples[config.COL_DATA], format="%d/%m/%Y")
-            dft_simples_sorted = dft_simples.sort_values(by=config.COL_DATA, ascending=False)
-            dft_editado = st.data_editor(dft_simples_sorted, num_rows="dynamic", width="stretch", key="editor_treinos_realizados")
+            dft_simples_sorted = dft_simples.sort_values(by=config.COL_DATA, ascending=False).reset_index(drop=True)
+            
+            dft_editado = st.data_editor(dft_simples_sorted, num_rows="dynamic", width="stretch", key="editor_treinos_realizados", hide_index=True)
             
             if st.button("💾 Salvar Alterações no Histórico", key="salvar_historico_treino"):
                 dft_editado[config.COL_DATA] = pd.to_datetime(dft_editado[config.COL_DATA]).dt.strftime('%d/%m/%Y')
                 utils.salvar_df(dft_editado, utils.get_user_data_path(username, config.FILE_LOG_TREINOS_SIMPLES))
                 st.toast("Histórico de treinos atualizado!", icon="💾")
                 st.rerun()
+
 
 def render_registro_avulso_form(username: str, user_data: Dict[str, Any]):
     """Renderiza o formulário simples para registrar um treino avulso."""
@@ -1595,7 +1681,7 @@ def render_registro_avulso_form(username: str, user_data: Dict[str, Any]):
 
     c1, c2, c3, c4 = st.columns(4)
     intensidade_tr = c1.selectbox("Intensidade", config.OPCOES_INTENSIDADE_TREINO, index=1, key="intensidade_reg_avulso")
-    duracao_min = c2.number_input("Duração (min)", 0, 600, 60, 5, key="duracao_reg_avulso")
+    duracao_min = c2.number_input("Tempo (min)", 0, 600, 60, 5, key="duracao_reg_avulso")
     # O campo de carga total agora é desabilitado corretamente quando o toggle muda
     carga_total = c3.number_input("Carga total (kg)", 0.0, step=5.0, value=5000.0, key="carga_reg_avulso", disabled=cardio)
     data_treino = c4.date_input("Data do treino", value=date.today(), key="date_input_avulso")
@@ -1606,10 +1692,10 @@ def render_registro_avulso_form(username: str, user_data: Dict[str, Any]):
     if st.button("Salvar Treino Avulso", type="primary", width="stretch"):
         novo_treino = pd.DataFrame([{
             config.COL_DATA: data_treino.strftime("%d/%m/%Y"),
-            "plano_executado": plano_executado if plano_executado != "Nenhum (Avulso)" else "Avulso",
-            "tipo treino": "Cardio" if cardio else "Musculação",
-            "duracao min": duracao_min,
-            "calorias": round(gasto_est, 2)
+            "Plano Executado": plano_executado if plano_executado != "Nenhum (Avulso)" else "Avulso",
+            "Tipo de Treino": "Cardio" if cardio else "Musculação",
+            "Tempo (min)": duracao_min,
+            "Calorias Gastas": round(gasto_est, 2)
         }])
         utils.adicionar_registro_df(novo_treino, path_treinos)
         st.toast("Treino avulso adicionado com sucesso!", icon="💪")
