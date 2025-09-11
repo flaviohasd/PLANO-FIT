@@ -207,7 +207,7 @@ def analisar_historico_treinos(dft: pd.DataFrame) -> Dict[str, Any]:
     if dft.empty: return {}
     dft[config.COL_DATA] = pd.to_datetime(dft[config.COL_DATA], format="%d/%m/%Y")
     total_treinos = len(dft)
-    total_calorias = dft["calorias"].sum()
+    total_calorias = dft["Calorias Gastas"].sum()
     # Usa `isocalendar().week` para uma definição consistente de semana.
     dft["semana_do_ano"] = dft[config.COL_DATA].dt.isocalendar().week.astype(int)
     semanas_unicas = dft["semana_do_ano"].nunique()
@@ -219,7 +219,7 @@ def analisar_historico_treinos(dft: pd.DataFrame) -> Dict[str, Any]:
 
     semana_atual = date.today().isocalendar()[1]
     treinos_semana_atual = dft[dft["semana_do_ano"] == semana_atual].shape[0]
-    calorias_ultimo_treino = dft["calorias"].iloc[0] if not dft.empty else 0
+    calorias_ultimo_treino = dft["Calorias Gastas"].iloc[0] if not dft.empty else 0
 
     return {
         "total_treinos": total_treinos,
@@ -448,43 +448,36 @@ def get_workout_for_day(user_data: Dict[str, Any], target_date: date) -> Dict[st
         "exercicios": exercicios_do_plano
     }
 
-def get_previous_performance(df_log_exercicios: pd.DataFrame, exercicio_nome: str) -> str:
+def get_previous_performance(df_log_exercicios: pd.DataFrame, exercicio_nome: str) -> dict:
     """
     Encontra o último desempenho registrado para um exercício específico,
-    adaptando o formato para cardio ou musculação.
+    retornando os dados brutos (kg, reps, minutos).
 
     Args:
         df_log_exercicios (pd.DataFrame): O log completo de todos os exercícios.
         exercicio_nome (str): O nome do exercício a ser buscado.
 
     Returns:
-        str: Uma string formatada como "kg x reps" ou "X min" ou "N/A".
+        dict: Um dicionário contendo {'kg': float, 'reps': int, 'minutos': int}. 
+              Retorna zeros se não houver registro anterior.
     """
     if df_log_exercicios.empty or 'nome_exercicio' not in df_log_exercicios.columns:
-        return "N/A"
+        return {'kg': 0.0, 'reps': 0, 'minutos': 0}
 
     log_exercicio = df_log_exercicios[df_log_exercicios['nome_exercicio'] == exercicio_nome].copy()
     
     if log_exercicio.empty:
-        return "N/A"
+        return {'kg': 0.0, 'reps': 0, 'minutos': 0}
 
-    log_exercicio['data'] = pd.to_datetime(log_exercicio['data'], format="%d/%m/%Y")
-    ultimo_treino = log_exercicio.sort_values(by='data', ascending=False).iloc[0]
+    log_exercicio['Data'] = pd.to_datetime(log_exercicio['Data'], format="%d/%m/%Y")
+    ultimo_treino = log_exercicio.sort_values(by='Data', ascending=False).iloc[0]
     
-    # Garante que a coluna 'minutos_realizados' exista para evitar erros
-    if 'minutos_realizados' not in ultimo_treino.index:
-        ultimo_treino['minutos_realizados'] = 0
+    kg = ultimo_treino.get('kg_realizado', 0.0)
+    reps = ultimo_treino.get('reps_realizadas', 0)
+    minutos = ultimo_treino.get('minutos_realizados', 0)
 
-    # **** MUDANÇA PRINCIPAL AQUI ****
-    # Verifica se o último registro foi de tempo (cardio)
-    if pd.notna(ultimo_treino['minutos_realizados']) and ultimo_treino['minutos_realizados'] > 0:
-        minutos = ultimo_treino.get('minutos_realizados', 0)
-        return f"{minutos:.0f} min"
-    else: # Caso contrário, assume que é musculação
-        kg = ultimo_treino.get('kg_realizado', 0)
-        reps = ultimo_treino.get('reps_realizadas', 0)
-        return f"{kg} kg x {reps}"
-    
+    return {'kg': kg, 'reps': reps, 'minutos': minutos}    
+
 
 def get_latest_metrics(dados_pessoais: Dict[str, Any], df_evolucao: pd.DataFrame) -> Dict[str, Any]:
     """
