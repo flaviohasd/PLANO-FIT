@@ -30,10 +30,7 @@ if not st.session_state.logged_in:
         st.rerun()
 
 # --- INTERFACE ---
-
-
 # Background
-
 def set_background(image_path):
     '''
     A function to unpack an image from a file and set as a background.
@@ -104,7 +101,7 @@ else:
         utils.carregar_recomendacao.clear()
         st.toast("Tabela de recomendação atualizada!")
     
-    st.sidebar.write(":open_file_folder: Pasta de dados:", config.DATA_DIR.resolve())
+    st.sidebar.write(":open_file_folder: Pasta de dados:", config.ASSETS_DIR.resolve())
     
     # --- Carregamento de Dados Globais ---
     TABELA_ALIM = utils.carregar_tabela_alimentacao(config.PATH_TABELA_ALIM)
