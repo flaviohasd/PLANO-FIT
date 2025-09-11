@@ -60,7 +60,7 @@ COL_LIPIDEOS = "Lipideos(g)"
 COL_SODIO = "Sodio(mg)"
 COL_ENERGIA = "Energia(kcal)"
 COL_PESO = "peso"
-COL_DATA = "data"
+COL_DATA = "Data"
 
 # --- Listas de Opções para Selectbox e Cálculos ---
 OPCOES_SEXO = ["M", "F"]
