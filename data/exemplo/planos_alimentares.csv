@@ -1,21 +1,21 @@
 nome_plano,Refeicao,Alimento,Quantidade
-"GET LEAN,Cafe da manha,""Pao, trigo, forma, integral"",50.0"
-"GET LEAN,Cafe da manha,""Ovo, de galinha, inteiro, frito"",90.0"
-"GET LEAN,Cafe da manha,""Manteiga, com sal"",15.0"
-"GET LEAN,Cafe da manha,""Cafe, infusao 10pp"",240.0"
-"GET LEAN,Almoco,""Arroz, integral, cozido"",120.0"
-"GET LEAN,Almoco,""Carne, bovina, contra-file, sem gordura, grelhado"",180.0"
-"GET LEAN,Almoco,""Beterraba, cozida"",50.0"
-"GET LEAN,Almoco,""Batata, inglesa, cozida"",50.0"
-"GET LEAN,Almoco,""Cenoura, cozida"",50.0"
-"GET LEAN,Almoco,""Repolho, roxo, refogado"",20.0"
-"GET LEAN,Jantar,""Frango, peito, sem pele, grelhado"",180.0"
-"GET LEAN,Jantar,""Arroz, integral, cozido"",100.0"
-GET LEAN,Lanche da tarde,Whey protein (70pp),30.0
-"GET LEAN,Lanche da manha,""Maca, Fuji, com casca, crua"",180.0"
-"GET LEAN,Lanche da manha,""Banana, prata, crua"",90.0"
-"GET LEAN,Lanche da tarde,""Melao, cru"",100.0"
-"GET LEAN,Cafe da manha,""Queijo, mozarela"",20.0"
-GET LEAN,Lanche da manha,Whey protein (70pp),30.0
-"GET LEAN,Cafe da manha,""Leite, de vaca, integral, po"",6.0"
-"GET LEAN,Lanche da tarde,""Aveia, flocos, crua"",30.0"
+GET LEAN,Cafe da manha,"Pao, trigo, forma, integral",50.0
+GET LEAN,Cafe da manha,"Ovo, de galinha, inteiro, frito",90.0
+GET LEAN,Cafe da manha,"Manteiga, com sal",15.0
+GET LEAN,Cafe da manha,"Cafe, infusao 10pp",240.0
+GET LEAN,Almoco,"Arroz, integral, cozido",120.0
+GET LEAN,Almoco,"Carne, bovina, contra-file, sem gordura, grelhado",180.0
+GET LEAN,Almoco,"Beterraba, cozida",50.0
+GET LEAN,Almoco,"Batata, inglesa, cozida",50.0
+GET LEAN,Almoco,"Cenoura, cozida",50.0
+GET LEAN,Almoco,"Repolho, roxo, refogado",20.0
+GET LEAN,Jantar,"Frango, peito, sem pele, grelhado",180.0
+GET LEAN,Jantar,"Arroz, integral, cozido",100.0
+GET LEAN,Lanche da tarde,"Whey protein (70pp)",30.0
+GET LEAN,Lanche da manha,"Maca, Fuji, com casca, crua",180.0
+GET LEAN,Lanche da manha,"Banana, prata, crua",90.0
+GET LEAN,Lanche da tarde,"Melao, cru",100.0
+GET LEAN,Cafe da manha,"Queijo, mozarela",20.0
+GET LEAN,Lanche da manha,"Whey protein (70pp)",30.0
+GET LEAN,Cafe da manha,"Leite, de vaca, integral, po",6.0
+GET LEAN,Lanche da tarde,"Aveia, flocos, crua",30.0
