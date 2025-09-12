@@ -707,6 +707,9 @@ def render_planejamento_alimentar_sub_tab(user_data: Dict[str, Any], TABELA_ALIM
                         st.markdown(f"**{nome}**")
                         st.markdown(f"<font size='2' color='grey'>{valor:.0f} / {meta:.0f} {unidade}</font>", unsafe_allow_html=True)
                         percentual = (valor / meta) if meta > 0 else 0
+                        # CORREÇÃO: Garante que o valor passado para st.progress não seja NaN
+                        if pd.isna(percentual):
+                            percentual = 0.0
                         st.progress(min(percentual, 1.0))
             else:
                 st.warning("Não foi possível encontrar uma recomendação de macronutrientes para a combinação de sexo, objetivo e nível de atividade definidos na aba 'Objetivos'.")
