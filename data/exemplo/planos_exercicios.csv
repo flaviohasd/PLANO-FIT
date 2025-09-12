@@ -1,0 +1,138 @@
+id_plano,nome_exercicio,tipo_exercicio,series_planejadas,repeticoes_planejadas,ordem
+10,Corrida na Esteira,Cardio,1.0,60,
+16,Corrida na Esteira,Cardio,1.0,60,
+22,Corrida Leve na Esteira (Jogging),Cardio,1.0,60,
+2,Aquecimento,Cardio,1.0,10,0.0
+2,Agachamento Hack,Musculação,3.0,12-15,1.0
+2,Cadeira Extensora,Musculação,3.0,12-15,2.0
+2,Afundo com Halteres,Musculação,3.0,12-15,3.0
+2,Elevação de Panturrilha em Pé,Musculação,3.0,12-15,4.0
+2,Puxada do Rack (Rack Pull),Musculação,3.0,12-15,5.0
+5,Aquecimento,Cardio,1.0,10,0.0
+5,Cadeira Flexora,Musculação,3.0,12-15,1.0
+5,Cadeira Adutora,Musculação,3.0,12-15,2.0
+5,Cadeira Abdutora,Musculação,3.0,12-15,3.0
+5,Elevação Pélvica (Ponte),Musculação,3.0,12-15,4.0
+5,Coice (Glute Kickback),Musculação,3.0,12-15,5.0
+7,Aquecimento,Cardio,1.0,10,0.0
+7,Supino Reto com Barra - Pegada Média,Musculação,3.0,12-15,1.0
+7,Voador (Butterfly),Musculação,3.0,12-15,2.0
+7,Tríceps Pulley com Corda,Musculação,3.0,12-15,3.0
+7,Elevação Lateral,Musculação,3.0,12-15,4.0
+7,Elevação Frontal com Halteres,Musculação,3.0,12-15,5.0
+7,Encolhimento com Halteres,Musculação,3.0,12-15,6.0
+8,Aquecimento,Cardio,1.0,10,0.0
+8,Supino Reto com Barra - Pegada Média,Musculação,3.0,8-12,1.0
+8,Voador (Butterfly),Musculação,3.0,8-12,2.0
+8,Tríceps Pulley com Corda,Musculação,3.0,8-12,3.0
+8,Elevação Lateral,Musculação,3.0,8-12,4.0
+8,Elevação Frontal com Halteres,Musculação,3.0,8-12,5.0
+8,Encolhimento com Halteres,Musculação,3.0,8-12,6.0
+9,Aquecimento,Cardio,1.0,10,0.0
+9,Agachamento Hack,Musculação,3.0,8-12,1.0
+9,Cadeira Extensora,Musculação,3.0,8-12,2.0
+9,Afundo com Halteres,Musculação,3.0,8-12,3.0
+9,Elevação de Panturrilha em Pé,Musculação,3.0,8-12,4.0
+9,Puxada do Rack (Rack Pull),Musculação,3.0,8-12,5.0
+11,Aquecimento,Cardio,1.0,10,0.0
+11,Remada no Cabo com Pés Elevados,Musculação,3.0,8-12,1.0
+11,Remada Isolateral na Máquina Articulada,Musculação,3.0,8-12,2.0
+11,Puxada Frontal (Pegada Aberta),Musculação,3.0,8-12,3.0
+11,Remada Alta na Máquina Articulada,Musculação,3.0,8-12,4.0
+11,Remada Alta no Cabo,Musculação,3.0,8-12,5.0
+11,Puxada no Rosto (Face Pull),Musculação,3.0,8-12,6.0
+11,Rosca Martelo Alternada,Musculação,3.0,8-12,7.0
+12,Aquecimento,Cardio,1.0,10,0.0
+12,Cadeira Flexora,Musculação,3.0,8-12,1.0
+12,Cadeira Adutora,Musculação,3.0,8-12,2.0
+12,Cadeira Abdutora,Musculação,3.0,8-12,3.0
+12,Elevação Pélvica (Ponte),Musculação,3.0,8-12,4.0
+12,Coice (Glute Kickback),Musculação,3.0,8-12,5.0
+13,Aquecimento,Cardio,1.0,10,0.0
+13,Abdominal 3/4,Musculação,3.0,8-12,1.0
+13,Bicicleta no Ar,Musculação,3.0,8-12,2.0
+13,Toque de Calcanhar Alternado,Musculação,3.0,8-12,3.0
+13,Elevação de Quadril com Joelhos Flexionados,Musculação,3.0,8-12,4.0
+13,Elevação de Quadril (Butt-Ups),Musculação,3.0,8-12,5.0
+14,Aquecimento,Cardio,1.0,10,0.0
+14,Supino Reto com Barra - Pegada Média,Musculação,4.0,4-6,1.0
+14,Voador (Butterfly),Musculação,4.0,4-6,2.0
+14,Tríceps Pulley com Corda,Musculação,4.0,4-6,3.0
+14,Elevação Lateral,Musculação,4.0,4-6,4.0
+14,Elevação Frontal com Halteres,Musculação,4.0,4-6,5.0
+14,Encolhimento com Halteres,Musculação,4.0,4-6,6.0
+15,Aquecimento,Cardio,1.0,10,0.0
+15,Agachamento Hack,Musculação,4.0,4-6,1.0
+15,Cadeira Extensora,Musculação,4.0,4-6,2.0
+15,Afundo com Halteres,Musculação,4.0,4-6,3.0
+15,Elevação de Panturrilha em Pé,Musculação,4.0,4-6,4.0
+15,Puxada do Rack (Rack Pull),Musculação,4.0,4-6,5.0
+17,Aquecimento,Cardio,1.0,10,0.0
+17,Remada no Cabo com Pés Elevados,Musculação,4.0,4-6,1.0
+17,Remada Isolateral na Máquina Articulada,Musculação,4.0,4-6,2.0
+17,Puxada Frontal (Pegada Aberta),Musculação,4.0,4-6,3.0
+17,Remada Alta na Máquina Articulada,Musculação,4.0,4-6,4.0
+17,Remada Alta no Cabo,Musculação,4.0,4-6,5.0
+17,Puxada no Rosto (Face Pull),Musculação,4.0,4-6,6.0
+17,Rosca Martelo Alternada,Musculação,4.0,4-6,7.0
+18,Aquecimento,Cardio,1.0,10,0.0
+18,Cadeira Flexora,Musculação,4.0,4-6,1.0
+18,Cadeira Adutora,Musculação,4.0,4-6,2.0
+18,Cadeira Abdutora,Musculação,4.0,4-6,3.0
+18,Elevação Pélvica (Ponte),Musculação,4.0,4-6,4.0
+18,Coice (Glute Kickback),Musculação,4.0,4-6,5.0
+19,Aquecimento,Cardio,1.0,10,0.0
+19,Abdominal 3/4,Musculação,4.0,4-6,1.0
+19,Bicicleta no Ar,Musculação,4.0,4-6,2.0
+19,Toque de Calcanhar Alternado,Musculação,4.0,4-6,3.0
+19,Elevação de Quadril com Joelhos Flexionados,Musculação,4.0,4-6,4.0
+19,Elevação de Quadril (Butt-Ups),Musculação,4.0,4-6,5.0
+20,Aquecimento,Cardio,1.0,10,0.0
+20,Supino Reto com Barra - Pegada Média,Musculação,3.0,10-12,1.0
+20,Voador (Butterfly),Musculação,3.0,10-12,2.0
+20,Tríceps Pulley com Corda,Musculação,3.0,10-12,3.0
+20,Elevação Lateral,Musculação,3.0,10-12,4.0
+20,Elevação Frontal com Halteres,Musculação,3.0,10-12,5.0
+20,Encolhimento com Halteres,Musculação,3.0,10-12,6.0
+21,Aquecimento,Cardio,1.0,10,0.0
+21,Agachamento Hack,Musculação,3.0,10-12,1.0
+21,Cadeira Extensora,Musculação,3.0,10-12,2.0
+21,Afundo com Halteres,Musculação,3.0,10-12,3.0
+21,Elevação de Panturrilha em Pé,Musculação,3.0,10-12,4.0
+21,Puxada do Rack (Rack Pull),Musculação,3.0,10-12,5.0
+23,Aquecimento,Cardio,1.0,10,0.0
+23,Remada no Cabo com Pés Elevados,Musculação,4.0,10-12,1.0
+23,Remada Isolateral na Máquina Articulada,Musculação,4.0,10-12,2.0
+23,Puxada Frontal (Pegada Aberta),Musculação,4.0,10-12,3.0
+23,Remada Alta na Máquina Articulada,Musculação,4.0,10-12,4.0
+23,Remada Alta no Cabo,Musculação,4.0,10-12,5.0
+23,Puxada no Rosto (Face Pull),Musculação,4.0,10-12,6.0
+23,Rosca Martelo Alternada,Musculação,4.0,10-12,7.0
+24,Aquecimento,Cardio,1.0,10,0.0
+24,Cadeira Flexora,Musculação,3.0,10-12,1.0
+24,Cadeira Adutora,Musculação,3.0,10-12,2.0
+24,Cadeira Abdutora,Musculação,3.0,10-12,3.0
+24,Elevação Pélvica (Ponte),Musculação,3.0,10-12,4.0
+24,Coice (Glute Kickback),Musculação,3.0,10-12,5.0
+25,Aquecimento,Cardio,1.0,10,0.0
+25,Abdominal 3/4,Musculação,3.0,10-12,1.0
+25,Bicicleta no Ar,Musculação,3.0,10-12,2.0
+25,Toque de Calcanhar Alternado,Musculação,3.0,10-12,3.0
+25,Elevação de Quadril com Joelhos Flexionados,Musculação,3.0,10-12,4.0
+25,Elevação de Quadril (Butt-Ups),Musculação,3.0,10-12,5.0
+4,Remada no Cabo com Pés Elevados,Musculação,3.0,12-15,1.0
+4,Aquecimento,Cardio,1.0,10,0.0
+4,Remada Isolateral na Máquina Articulada,Musculação,3.0,12-15,2.0
+4,Puxada Frontal (Pegada Aberta),Musculação,3.0,12-15,3.0
+4,Remada Alta na Máquina Articulada,Musculação,3.0,12-15,4.0
+4,Remada Alta no Cabo,Musculação,3.0,12-15,5.0
+4,Puxada no Rosto (Face Pull),Musculação,3.0,12-15,6.0
+4,Rosca Martelo Alternada,Musculação,3.0,12-15,7.0
+3,Corrida na Esteira,Cardio,1.0,60,0.0
+6,Abdominal 3/4,Musculação,3.0,12-15,1.0
+6,Aquecimento,Cardio,1.0,10,0.0
+6,Bicicleta no Ar,Musculação,3.0,12-15,2.0
+6,Toque de Calcanhar Alternado,Musculação,3.0,12-15,3.0
+6,Elevação de Quadril com Joelhos Flexionados,Musculação,3.0,12-15,4.0
+6,Elevação de Quadril (Butt-Ups),Musculação,3.0,12-15,5.0
+27,Corrida/Caminhada em Trilha,Cardio,1.0,30,0.0
