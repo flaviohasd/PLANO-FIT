@@ -1,0 +1,101 @@
+dia_da_semana,plano_treino,id_mesociclo,semana_numero
+"Segunda,""A - Peito, ombro e tríceps"",1,1",,,
+"Segunda,""A - Peito, ombro e tríceps"",1,3",,,
+"Segunda,""A - Peito, ombro e tríceps"",1,4",,,
+"Segunda,""H - Peito, ombro e tríceps"",2,1",,,
+"Terça,""H - Peito, ombro e tríceps"",2,1",,,
+"Segunda,""H - Peito, ombro e tríceps"",2,2",,,
+"Terça,""H - Peito, ombro e tríceps"",2,2",,,
+"Segunda,""H - Peito, ombro e tríceps"",2,3",,,
+"Terça,""H - Peito, ombro e tríceps"",2,3",,,
+"Segunda,""H - Peito, ombro e tríceps"",2,4",,,
+"Terça,""H - Peito, ombro e tríceps"",2,4",,,
+"Segunda,""F - Peito, ombro e tríceps"",3,1",,,
+"Segunda,""F - Peito, ombro e tríceps"",3,2",,,
+"Segunda,""F - Peito, ombro e tríceps"",3,3",,,
+"Segunda,""D - Peito, ombro e tríceps"",4,1",,,
+"Segunda,""A - Peito, ombro e tríceps"",1,2",,,
+Segunda,"A - Peito, ombro e tríceps",1.0,4.0
+Terça,A - Quadríceps e panturrilha,1.0,4.0
+Quarta,A - Cardio HIIT,1.0,4.0
+Quinta,A - Costas e bíceps,1.0,4.0
+Sexta,A - Posteriores e glúteos,1.0,4.0
+Sábado,A - Core,1.0,4.0
+Domingo,Descanso,1.0,4.0
+Segunda,"A - Peito, ombro e tríceps",1.0,3.0
+Terça,A - Quadríceps e panturrilha,1.0,3.0
+Quarta,A - Cardio HIIT,1.0,3.0
+Quinta,A - Costas e bíceps,1.0,3.0
+Sexta,A - Posteriores e glúteos,1.0,3.0
+Sábado,A - Core,1.0,3.0
+Domingo,Descanso,1.0,3.0
+Segunda,"A - Peito, ombro e tríceps",1.0,2.0
+Terça,A - Quadríceps e panturrilha,1.0,2.0
+Quarta,A - Cardio HIIT,1.0,2.0
+Quinta,A - Costas e bíceps,1.0,2.0
+Sexta,A - Posteriores e glúteos,1.0,2.0
+Sábado,A - Core,1.0,2.0
+Domingo,Descanso,1.0,2.0
+Segunda,"A - Peito, ombro e tríceps",1.0,1.0
+Terça,A - Quadríceps e panturrilha,1.0,1.0
+Quarta,A - Cardio HIIT,1.0,1.0
+Quinta,A - Costas e bíceps,1.0,1.0
+Sexta,A - Posteriores e glúteos,1.0,1.0
+Sábado,A - Core,1.0,1.0
+Domingo,Descanso,1.0,1.0
+Segunda,"D - Peito, ombro e tríceps",4.0,1.0
+Terça,D - Quadríceps e panturrilha,4.0,1.0
+Quarta,Descanso,4.0,1.0
+Quinta,D - Costas e bíceps,4.0,1.0
+Sexta,D - Posteriores e glúteos,4.0,1.0
+Sábado,Descanso,4.0,1.0
+Domingo,Descanso,4.0,1.0
+Segunda,"F - Peito, ombro e tríceps",3.0,1.0
+Terça,F - Quadríceps e panturrilha,3.0,1.0
+Quarta,Descanso,3.0,1.0
+Quinta,F - Costas e bíceps,3.0,1.0
+Sexta,F - Costas e bíceps,3.0,1.0
+Sábado,Descanso,3.0,1.0
+Domingo,Descanso,3.0,1.0
+Segunda,"F - Peito, ombro e tríceps",3.0,2.0
+Terça,F - Quadríceps e panturrilha,3.0,2.0
+Quarta,Descanso,3.0,2.0
+Quinta,F - Costas e bíceps,3.0,2.0
+Sexta,F - Costas e bíceps,3.0,2.0
+Sábado,Descanso,3.0,2.0
+Domingo,Descanso,3.0,2.0
+Segunda,"F - Peito, ombro e tríceps",3.0,3.0
+Terça,F - Quadríceps e panturrilha,3.0,3.0
+Quarta,Descanso,3.0,3.0
+Quinta,F - Costas e bíceps,3.0,3.0
+Sexta,F - Costas e bíceps,3.0,3.0
+Sábado,Descanso,3.0,3.0
+Domingo,Descanso,3.0,3.0
+Segunda,"H - Peito, ombro e tríceps",2.0,1.0
+Terça,H - Quadríceps e panturrilha,2.0,1.0
+Quarta,H - Cardio HIIT,2.0,1.0
+Quinta,H - Costas e bíceps,2.0,1.0
+Sexta,H - Posteriores e glúteos,2.0,1.0
+Sábado,H - Core,2.0,1.0
+Domingo,Descanso,2.0,1.0
+Segunda,"H - Peito, ombro e tríceps",2.0,2.0
+Terça,H - Quadríceps e panturrilha,2.0,2.0
+Quarta,H - Cardio HIIT,2.0,2.0
+Quinta,H - Costas e bíceps,2.0,2.0
+Sexta,H - Posteriores e glúteos,2.0,2.0
+Sábado,H - Core,2.0,2.0
+Domingo,Descanso,2.0,2.0
+Segunda,"H - Peito, ombro e tríceps",2.0,3.0
+Terça,H - Quadríceps e panturrilha,2.0,3.0
+Quarta,H - Cardio HIIT,2.0,3.0
+Quinta,H - Costas e bíceps,2.0,3.0
+Sexta,H - Posteriores e glúteos,2.0,3.0
+Sábado,H - Core,2.0,3.0
+Domingo,Descanso,2.0,3.0
+Segunda,"H - Peito, ombro e tríceps",2.0,4.0
+Terça,H - Quadríceps e panturrilha,2.0,4.0
+Quarta,H - Cardio HIIT,2.0,4.0
+Quinta,H - Costas e bíceps,2.0,4.0
+Sexta,H - Posteriores e glúteos,2.0,4.0
+Sábado,H - Core,2.0,4.0
+Domingo,Descanso,2.0,4.0
