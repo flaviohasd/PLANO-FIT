@@ -16,11 +16,15 @@ from datetime import date, datetime, timedelta
 # A configuração da página deve ser a primeira chamada do Streamlit e executada apenas uma vez.
 st.set_page_config(page_title=config.APP_TITLE, layout="wide")
 
-# --- SINCRONIZAÇÃO DE FUSO HORÁRIO (LÓGICA CORRIGIDA) ---
+# --- SINCRONIZAÇÃO DE FUSO HORÁRIO ---
 if 'timezone_offset' not in st.session_state:
     st.session_state.timezone_offset = None
 
 if st.session_state.timezone_offset is None:
+    # Exibe uma mensagem de carregamento enquanto espera a resposta do navegador.
+    # Isso impede a tela em branco.
+    st.info("Sincronizando fuso horário do seu navegador...")
+    
     timezone_value = components.html(
         f"""
         <script>
@@ -36,16 +40,13 @@ if st.session_state.timezone_offset is None:
     
     if timezone_value is not None:
         try:
-            # --- CORREÇÃO AQUI ---
-            # Converte o valor retornado para um inteiro antes de salvar na sessão.
             st.session_state.timezone_offset = int(timezone_value)
             st.rerun()
         except (ValueError, TypeError):
-            # Se a conversão falhar, tenta novamente na próxima execução.
             pass
-
-# --- GERENCIAMENTO DE SESSÃO E LOGIN ---
-if st.session_state.timezone_offset is not None:
+# --- LÓGICA PRINCIPAL DO APP ---
+# O restante do aplicativo só é executado DEPOIS que o fuso horário foi capturado.
+else:
     if 'logged_in' not in st.session_state:
         st.session_state.logged_in = False
     if 'current_user' not in st.session_state:
