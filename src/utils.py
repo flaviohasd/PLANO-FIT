@@ -231,7 +231,7 @@ def render_muscle_diagram(base_svg_path: Path, primary_muscles: list, secondary_
     Gera um HTML que sobrepõe SVGs de músculos sobre uma imagem base do corpo.
     Usa CSS para posicionar as imagens umas sobre as outras.
     """
-    def encode_svg_to_base64(svg_path: Path) -> str or None:
+    def encode_svg_to_base64(svg_path: Path) -> str or None: # type: ignore
         """Lê um arquivo SVG e o codifica em Base64 para embutir em HTML."""
         if not svg_path.exists():
             return None
@@ -271,3 +271,46 @@ def render_muscle_diagram(base_svg_path: Path, primary_muscles: list, secondary_
 
     html_layers.append('</div>')
     return "".join(html_layers)
+
+
+def salvar_banco_exercicios(data: list, path: Path):
+    """
+    Salva a lista de exercícios em um arquivo JSON.
+    """
+    if path is None:
+        st.error("Erro interno: O caminho para salvar o arquivo de exercícios é inválido (None).")
+        return
+    try:
+        # Garante que o diretório pai exista antes de tentar salvar
+        path.parent.mkdir(parents=True, exist_ok=True)
+        # Converte DataFrame para lista de dicts se necessário
+        if isinstance(data, pd.DataFrame):
+            data_to_save = data.to_dict(orient='records')
+        else:
+            data_to_save = data
+            
+        with open(path, 'w', encoding='utf-8') as f:
+            json.dump(data_to_save, f, indent=4, ensure_ascii=False)
+            
+    except Exception as e:
+        st.error(f"""
+        **Erro ao Salvar o Banco de Exercícios!**
+
+        - **Arquivo:** `{path.name}`
+        - **Local:** `{path.parent.resolve()}`
+        - **Erro:** `{e}`
+
+        **Verifique as permissões de escrita na pasta.**
+        """)
+
+def sanitizar_nome_para_id(nome: str) -> str:
+    """
+    Converte um nome de exercício em um ID seguro para pastas e arquivos.
+    Ex: "Arnold Dumbbell Press" -> "Arnold_Dumbbell_Press"
+    Ex: "Anterior Tibialis-SMR" -> "Anterior_Tibialis-SMR"
+    """
+    s = nome.strip() # Remove espaços em branco no início e fim
+    s = s.replace(' ', '_') # Substitui espaços por underscores
+    # Remove caracteres que não sejam letras, números, underscore ou hífen
+    s = re.sub(r'[^\w-]', '', s)
+    return s

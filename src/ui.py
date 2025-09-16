@@ -1090,18 +1090,19 @@ def render_treino_tab(user_data: Dict[str, Any]):
     if user_data.get("dados_pessoais"):
         username = st.session_state.current_user
         
-        sub_tab_reg, sub_tab_plan = st.tabs([
-            "💪 Registrar Treino", "🛠️ Planejamento Completo"
+        sub_tab_reg, sub_tab_plan, sub_tab_gerenciar = st.tabs([
+            "💪 Registrar Treino", "🛠️ Planejamento Completo", "📚 Gerenciar Exercícios"
         ])
 
         with sub_tab_reg:
             render_registro_sub_tab(username, user_data)
         with sub_tab_plan:
             render_planejamento_sub_tab(username, user_data)
+        with sub_tab_gerenciar:
+            render_gerenciar_exercicios_sub_tab()
 
     else:
         st.error("Preencha e salve seus dados pessoais na primeira aba.")
-
 
 def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
     """
@@ -2025,6 +2026,167 @@ def render_registro_avulso_form(username: str, user_data: Dict[str, Any]):
         utils.adicionar_registro_df(novo_treino, path_treinos)
         st.toast("Treino avulso adicionado com sucesso!", icon="💪")
         st.rerun()
+
+def render_gerenciar_exercicios_sub_tab():
+    """
+    Renderiza a sub-aba para cadastro e edição de exercícios na base geral.
+    """
+    st.subheader("Biblioteca de Exercícios")
+    path_exercicios_db = config.ASSETS_DIR / "exercises" / "exercicios.json"
+    exercisedb_list = utils.carregar_banco_exercicios(path_exercicios_db)
+
+    # --- Dicionários para Tradução (UI -> JSON) ---
+    nivel_map = {"Iniciante": "beginner", "Intermediário": "intermediate", "Avançado": "expert"}
+    categoria_map = {"Força": "strength", "Alongamento": "stretching", "Pliometria": "plyometrics", "Strongman": "strongman", "Powerlifting": "powerlifting", "Cardio": "cardio", "Levantamento de Peso Olímpico": "olympic weightlifting"}
+    forca_map = {"Empurrar": "push", "Puxar": "pull", "Estático": "static", "Não Aplicável": None}
+    mecanica_map = {"Composto": "compound", "Isolamento": "isolation", "Não Aplicável": None}
+    
+    # --- Dicionários Reversos para Tradução (JSON -> UI) ---
+    nivel_map_rev = {v: k for k, v in nivel_map.items()}
+    categoria_map_rev = {v: k for k, v in categoria_map.items()}
+    forca_map_rev = {v: k for k, v in forca_map.items()}
+    mecanica_map_rev = {v: k for k, v in mecanica_map.items()}
+
+    with st.expander("Adicionar Novo Exercício à Biblioteca"):
+        with st.form(key="form_novo_exercicio", clear_on_submit=False):
+            st.markdown("##### Informações Gerais")
+            c1, c2 = st.columns(2)
+            nome_exercicio = c1.text_input("Nome do Exercício")
+            equipamento = c2.text_input("Equipamento")
+            
+            c3, c4, c5, c6 = st.columns(4)
+            nivel_pt = c3.selectbox("Nível", options=list(nivel_map.keys()))
+            categoria_pt = c4.selectbox("Categoria", options=list(categoria_map.keys()))
+            forca_pt = c5.selectbox("Força", options=list(forca_map.keys()))
+            mecanica_pt = c6.selectbox("Mecânica", options=list(mecanica_map.keys()))
+
+            st.markdown("##### Músculos")
+            if exercisedb_list:
+                all_muscles = set()
+                for ex in exercisedb_list:
+                    if isinstance(ex, dict):
+                        for muscle in ex.get("primaryMuscles", []): all_muscles.add(muscle)
+                        for muscle in ex.get("secondaryMuscles", []): all_muscles.add(muscle)
+                muscle_options = sorted(list(all_muscles))
+            else:
+                muscle_options = []
+
+            m_c1, m_c2 = st.columns(2)
+            musculos_primarios = m_c1.multiselect("Músculos Primários", options=muscle_options)
+            musculos_secundarios = m_c2.multiselect("Músculos Secundários", options=muscle_options)
+
+            st.markdown("##### Execução e Mídia")
+            instrucoes = st.text_area("Instruções de Execução (um passo por linha)")
+            
+            img_c1, img_c2 = st.columns(2)
+            img1_file = img_c1.file_uploader("Imagem 1 (Posição Inicial)", type=['jpg', 'jpeg'])
+            img2_file = img_c2.file_uploader("Imagem 2 (Posição Final)", type=['jpg', 'jpeg'])
+
+            submitted = st.form_submit_button("Adicionar Exercício à Biblioteca")
+
+            if submitted:
+                if not nome_exercicio: st.warning("O campo 'Nome do Exercício' é obrigatório.")
+                elif not equipamento: st.warning("O campo 'Equipamento' é obrigatório (ex: Peso Corporal).")
+                elif not musculos_primarios: st.warning("Selecione pelo menos um Músculo Primário.")
+                elif not instrucoes: st.warning("O campo 'Instruções de Execução' é obrigatório.")
+                elif not img1_file or not img2_file: st.warning("Ambas as imagens são obrigatórias para a animação.")
+                else:
+                    # --- NOVA LÓGICA DE ID ---
+                    new_id_str = utils.sanitizar_nome_para_id(nome_exercicio)
+                    existing_ids = {ex.get('id', '') for ex in exercisedb_list}
+
+                    if new_id_str in existing_ids:
+                        st.error(f"Erro: Um exercício com o ID '{new_id_str}' (derivado do nome) já existe. Por favor, escolha um nome ligeiramente diferente.")
+                    else:
+                        # --- NOVA LÓGICA DE ARMAZENAMENTO DE IMAGENS ---
+                        exercise_img_dir = config.ASSETS_DIR / "exercises" / new_id_str
+                        exercise_img_dir.mkdir(parents=True, exist_ok=True)
+                        
+                        path1 = exercise_img_dir / "0.jpg"
+                        with open(path1, "wb") as f: f.write(img1_file.getbuffer())
+                        
+                        path2 = exercise_img_dir / "1.jpg"
+                        with open(path2, "wb") as f: f.write(img2_file.getbuffer())
+                        
+                        saved_image_paths = [f"{new_id_str}/0.jpg", f"{new_id_str}/1.jpg"]
+
+                        novo_exercicio_dict = {
+                            "id": new_id_str, # ID baseado no nome
+                            "name": nome_exercicio.strip(),
+                            "force": forca_map[forca_pt],
+                            "level": nivel_map[nivel_pt],
+                            "mechanic": mecanica_map[mecanica_pt],
+                            "equipment": equipamento.strip().lower(),
+                            "primaryMuscles": sorted(list(set(musculos_primarios))),
+                            "secondaryMuscles": sorted(list(set(musculos_secundarios))),
+                            "instructions": [line.strip() for line in instrucoes.split('\n') if line.strip()],
+                            "category": categoria_map[categoria_pt],
+                            "images": saved_image_paths # Caminhos relativos
+                        }
+                        
+                        exercisedb_list.append(novo_exercicio_dict)
+                        utils.salvar_banco_exercicios(exercisedb_list, path_exercicios_db)
+                        
+                        utils.carregar_banco_exercicios.clear()
+                        st.toast(f"Exercício '{nome_exercicio}' adicionado com sucesso!")
+                        st.rerun()
+
+    st.subheader("Tabela Completa de Exercícios")
+    if exercisedb_list:
+        df_exercicios_db = pd.DataFrame(exercisedb_list)
+        df_display = df_exercicios_db.copy()
+
+        # Traduzir colunas para exibição de forma robusta, mantendo o valor original se a tradução falhar
+        df_display['level'] = df_display['level'].apply(lambda x: nivel_map_rev.get(x, x))
+        df_display['category'] = df_display['category'].apply(lambda x: categoria_map_rev.get(x, x))
+        df_display['force'] = df_display['force'].apply(lambda x: forca_map_rev.get(x, x))
+        df_display['mechanic'] = df_display['mechanic'].apply(lambda x: mecanica_map_rev.get(x, x))
+        
+        # Formatar listas para exibição
+        df_display['primaryMuscles'] = df_display['primaryMuscles'].apply(lambda x: ', '.join(x) if isinstance(x, list) else x)
+        df_display['secondaryMuscles'] = df_display['secondaryMuscles'].apply(lambda x: ', '.join(x) if isinstance(x, list) else x)
+        df_display['instructions'] = df_display['instructions'].apply(lambda x: ' | '.join(x) if isinstance(x, list) else x)
+        df_display['images'] = df_display['images'].apply(lambda x: ', '.join(x) if isinstance(x, list) else x)
+
+        # Renomear colunas para o padrão solicitado
+        df_display.rename(columns={
+            'id': 'ID', 'name': 'Nome', 'force': 'Força', 'level': 'Nível', 
+            'mechanic': 'Mecânica', 'equipment': 'Equipamento', 'primaryMuscles': 'Músculos Primários',
+            'secondaryMuscles': 'Músculos Secundários', 'instructions': 'Instruções', 
+            'category': 'Categoria', 'images': 'Imagens'
+        }, inplace=True)
+        
+        df_editado = st.data_editor(
+            df_display, num_rows="dynamic", width='stretch', key="editor_exercicios_db",
+            column_config={'ID': st.column_config.TextColumn("ID", disabled=True)}
+        )
+
+        if st.button("💾 Salvar Alterações na Biblioteca"):
+            df_para_salvar = df_editado.copy()
+            
+            # Renomear colunas de volta para o padrão do JSON
+            df_para_salvar.rename(columns={
+                'ID': 'id', 'Nome': 'name', 'Força': 'force', 'Nível': 'level', 
+                'Mecânica': 'mechanic', 'Equipamento': 'equipment', 'Músculos Primários': 'primaryMuscles',
+                'Músculos Secundários': 'secondaryMuscles', 'Instruções': 'instructions', 
+                'Categoria': 'category', 'Imagens': 'images'
+            }, inplace=True)
+            
+            # Traduzir colunas de volta para inglês e converter strings para listas
+            df_para_salvar['level'] = df_para_salvar['level'].map(nivel_map)
+            df_para_salvar['category'] = df_para_salvar['category'].map(categoria_map)
+            df_para_salvar['force'] = df_para_salvar['force'].map(forca_map)
+            df_para_salvar['mechanic'] = df_para_salvar['mechanic'].map(mecanica_map)
+            for col in ['primaryMuscles', 'secondaryMuscles', 'images']:
+                df_para_salvar[col] = df_para_salvar[col].apply(lambda x: [item.strip() for item in x.split(',')] if isinstance(x, str) and x else [])
+            df_para_salvar['instructions'] = df_para_salvar['instructions'].apply(lambda x: [item.strip() for item in x.split('|')] if isinstance(x, str) and x else [])
+
+            utils.salvar_banco_exercicios(df_para_salvar, path_exercicios_db)
+            utils.carregar_banco_exercicios.clear()
+            st.toast("Biblioteca de exercícios atualizada com sucesso!", icon="✅")
+            st.rerun()
+    else:
+        st.info("Nenhum exercício na base de dados. Adicione o primeiro no formulário acima.")
 
 def render_evolucao_tab(user_data: Dict[str, Any]):
     """
