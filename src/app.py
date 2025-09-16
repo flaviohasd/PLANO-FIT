@@ -14,49 +14,6 @@ import base64
 # A configuração da página deve ser a primeira chamada do Streamlit e executada apenas uma vez.
 st.set_page_config(page_title=config.APP_TITLE, layout="wide")
 
-<<<<<<< HEAD
-# --- SINCRONIZAÇÃO DE FUSO HORÁRIO (MÉTODO ROBUSTO VIA URL PARAM) ---
-if 'timezone_offset' not in st.session_state:
-    st.session_state.timezone_offset = None
-
-# Passo 1: Verifica se o fuso horário foi retornado como um parâmetro na URL.
-if hasattr(st, 'query_params') and 'tz_offset' in st.query_params:
-    try:
-        st.session_state.timezone_offset = int(st.query_params['tz_offset'])
-        st.query_params.clear()
-        st.rerun()
-    except (ValueError, TypeError):
-        st.query_params.clear()
-        st.rerun()
-
-# Passo 2: Se o fuso horário ainda não está na sessão, executa o script no navegador.
-if st.session_state.timezone_offset is None:
-    st.info("Sincronizando fuso horário do seu navegador...")
-    
-    components.html(
-        f"""
-        <script>
-            // Evita um loop infinito, só executa se o parâmetro não existir.
-            if (!window.location.search.includes('tz_offset=')) {{
-                const offset = new Date().getTimezoneOffset();
-                const url = window.location.href;
-                
-                // --- CORREÇÃO AQUI ---
-                // Verifica se a URL já tem parâmetros. Se sim, usa '&', senão usa '?'.
-                const separator = url.includes('?') ? '&' : '?';
-                
-                // Constrói a nova URL de forma segura.
-                window.location.href = url + separator + 'tz_offset=' + offset;
-            }}
-        </script>
-        """,
-        height=0
-    )
-
-# Passo 3: Se o fuso horário já foi capturado, executa o aplicativo principal.
-else:
-    if 'logged_in' not in st.session_state:
-=======
 # --- GERENCIAMENTO DE SESSÃO E LOGIN ---
 # Inicializa as variáveis de estado da sessão se ainda não existirem.
 if 'logged_in' not in st.session_state:
@@ -125,7 +82,6 @@ else:
     st.sidebar.header(f"Perfil: {st.session_state.current_user}")
     if st.sidebar.button("Trocar Perfil / Sair"):
         auth.clear_last_user()  # Limpa a sessão "permanecer conectado"
->>>>>>> parent of 4cf741a (Fix app timestamp)
         st.session_state.logged_in = False
         st.session_state.current_user = None
         st.rerun()  # Reinicia o script para voltar à tela de login
