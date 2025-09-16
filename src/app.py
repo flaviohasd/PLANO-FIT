@@ -23,19 +23,15 @@ if 'timezone_offset' not in st.session_state:
 # Passo 1: Verifica se o fuso horário foi retornado como um parâmetro na URL.
 if hasattr(st, 'query_params') and 'tz_offset' in st.query_params:
     try:
-        # Se sim, salva na sessão, limpa o parâmetro da URL e re-executa.
         st.session_state.timezone_offset = int(st.query_params['tz_offset'])
-        # A linha abaixo requer Streamlit 1.33+. Se der erro, pode ser removida.
         st.query_params.clear()
         st.rerun()
     except (ValueError, TypeError):
-        # Se o parâmetro for inválido, limpa e tenta de novo.
         st.query_params.clear()
         st.rerun()
 
 # Passo 2: Se o fuso horário ainda não está na sessão, executa o script no navegador.
 if st.session_state.timezone_offset is None:
-    # Exibe a mensagem de carregamento e o script que irá recarregar a página com o parâmetro.
     st.info("Sincronizando fuso horário do seu navegador...")
     
     components.html(
@@ -44,8 +40,14 @@ if st.session_state.timezone_offset is None:
             // Evita um loop infinito, só executa se o parâmetro não existir.
             if (!window.location.search.includes('tz_offset=')) {{
                 const offset = new Date().getTimezoneOffset();
-                // Adiciona o parâmetro de fuso horário à URL e recarrega a página.
-                window.location.href = window.location.href + '?tz_offset=' + offset;
+                const url = window.location.href;
+                
+                // --- CORREÇÃO AQUI ---
+                // Verifica se a URL já tem parâmetros. Se sim, usa '&', senão usa '?'.
+                const separator = url.includes('?') ? '&' : '?';
+                
+                // Constrói a nova URL de forma segura.
+                window.location.href = url + separator + 'tz_offset=' + offset;
             }}
         </script>
         """,
