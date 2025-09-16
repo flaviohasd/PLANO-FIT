@@ -5,7 +5,6 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 import streamlit.components.v1 as components
-from streamlit_autorefresh import st_autorefresh
 import config
 import utils
 import os
@@ -17,36 +16,43 @@ from datetime import date, datetime, timedelta
 # A configuração da página deve ser a primeira chamada do Streamlit e executada apenas uma vez.
 st.set_page_config(page_title=config.APP_TITLE, layout="wide")
 
-# --- SINCRONIZAÇÃO DE FUSO HORÁRIO ---
+# --- SINCRONIZAÇÃO DE FUSO HORÁRIO (MÉTODO ROBUSTO VIA URL PARAM) ---
 if 'timezone_offset' not in st.session_state:
     st.session_state.timezone_offset = None
 
+# Passo 1: Verifica se o fuso horário foi retornado como um parâmetro na URL.
+if hasattr(st, 'query_params') and 'tz_offset' in st.query_params:
+    try:
+        # Se sim, salva na sessão, limpa o parâmetro da URL e re-executa.
+        st.session_state.timezone_offset = int(st.query_params['tz_offset'])
+        # A linha abaixo requer Streamlit 1.33+. Se der erro, pode ser removida.
+        st.query_params.clear()
+        st.rerun()
+    except (ValueError, TypeError):
+        # Se o parâmetro for inválido, limpa e tenta de novo.
+        st.query_params.clear()
+        st.rerun()
+
+# Passo 2: Se o fuso horário ainda não está na sessão, executa o script no navegador.
 if st.session_state.timezone_offset is None:
+    # Exibe a mensagem de carregamento e o script que irá recarregar a página com o parâmetro.
     st.info("Sincronizando fuso horário do seu navegador...")
     
-    timezone_value = components.html(
+    components.html(
         f"""
         <script>
-        const offset = new Date().getTimezoneOffset();
-        window.parent.postMessage({{
-            type: 'streamlit:setComponentValue',
-            value: offset
-        }}, '*');
+            // Evita um loop infinito, só executa se o parâmetro não existir.
+            if (!window.location.search.includes('tz_offset=')) {{
+                const offset = new Date().getTimezoneOffset();
+                // Adiciona o parâmetro de fuso horário à URL e recarrega a página.
+                window.location.href = window.location.href + '?tz_offset=' + offset;
+            }}
         </script>
         """,
         height=0
     )
-    
-    if timezone_value is not None:
-        try:
-            st.session_state.timezone_offset = int(timezone_value)
-            st.rerun()
-        except (ValueError, TypeError):
-            pass
 
-    st_autorefresh(interval=2000, limit=1, key="timezone_refresher")
-
-# --- LÓGICA PRINCIPAL DO APP ---
+# Passo 3: Se o fuso horário já foi capturado, executa o aplicativo principal.
 else:
     if 'logged_in' not in st.session_state:
         st.session_state.logged_in = False
