@@ -337,7 +337,7 @@ def render_visao_geral_tab(user_data: Dict[str, Any], RECOMEND: pd.DataFrame):
     semana_no_mes = 0
     plano_semanal_ativo = pd.DataFrame()
     
-    today = pd.to_datetime(date.today())
+    today = pd.to_datetime(utils.get_local_date()) # <-- ALTERAÇÃO AQUI
     df_macro = user_data.get("df_macrociclos", pd.DataFrame())
     df_meso = user_data.get("df_mesociclos", pd.DataFrame())
     df_plano_sem = user_data.get("df_plano_semanal", pd.DataFrame())
@@ -430,7 +430,7 @@ def render_visao_geral_tab(user_data: Dict[str, Any], RECOMEND: pd.DataFrame):
             treino_do_dia = treino_do_dia_series.iloc[0] if not treino_do_dia_series.empty else "Não Planejado"
             with cols[i]:
                 st.markdown(f"**{dia}**")
-                if dia == dias_map_local.get(date.today().weekday()):
+                if dia == dias_map_local.get(utils.get_local_date().weekday()): # <-- ALTERAÇÃO AQUI
                     st.success(treino_do_dia)
                 else:
                     st.info(treino_do_dia)
@@ -1497,7 +1497,7 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
     customizado para corresponder fielmente ao layout do usuário.
     """
     # --- LÓGICA DE DADOS E TIMERS (INICIALIZAÇÃO) ---
-    scheduled_workout = logic.get_workout_for_day(user_data, date.today())
+    scheduled_workout = logic.get_workout_for_day(user_data, utils.get_local_date()) # <-- ALTERAÇÃO AQUI
     df_log_exercicios = user_data.get("df_log_exercicios", pd.DataFrame())
 
     # --- Carrega o banco de dados de exercícios ---
@@ -1815,7 +1815,7 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
         c1_sum, c2_sum, c3_sum = st.columns(3)
         duracao_min_total = c1_sum.number_input("Tempo Total do Treino (min)", min_value=0, value=int(round(st.session_state.elapsed_minutes, 0)), step=1)
         intensidade_tr = c2_sum.selectbox("Intensidade Percebida", config.OPCOES_INTENSIDADE_TREINO, index=1)
-        data_treino = c3_sum.date_input("Data do treino", value=date.today(), key="date_input_main_log")
+        data_treino = c3_sum.date_input("Data do treino", value=utils.get_local_date(), key="date_input_main_log") # <-- ALTERAÇÃO AQUI
 
         if st.button("Salvar Treino", type="primary", width='stretch'):
             # Lógica de salvamento do treino
@@ -1921,7 +1921,7 @@ def render_registro_avulso_form(username: str, user_data: Dict[str, Any]):
     duracao_min = c2.number_input("Tempo (min)", 0, 600, 60, 5, key="duracao_reg_avulso")
     # O campo de carga total agora é desabilitado corretamente quando o toggle muda
     carga_total = c3.number_input("Carga total (kg)", 0.0, step=5.0, value=5000.0, key="carga_reg_avulso", disabled=cardio)
-    data_treino = c4.date_input("Data do treino", value=date.today(), key="date_input_avulso")
+    data_treino = c4.date_input("Data do treino", value=utils.get_local_date(), key="date_input_avulso") # <-- ALTERAÇÃO AQUI
     
     gasto_est = logic.calcular_gasto_treino(cardio, intensidade_tr, duracao_min, carga_total, dados_pessoais.get(config.COL_PESO, 70.0))
     st.metric("Gasto calórico estimado", f"{gasto_est:.0f} kcal")
@@ -1937,7 +1937,7 @@ def render_registro_avulso_form(username: str, user_data: Dict[str, Any]):
         utils.adicionar_registro_df(novo_treino, path_treinos)
         st.toast("Treino avulso adicionado com sucesso!", icon="💪")
         st.rerun()
-
+        
 def render_gerenciar_exercicios_sub_tab():
     """
     Renderiza a sub-aba para cadastro e edição de exercícios na base geral.
@@ -2117,7 +2117,7 @@ def render_evolucao_tab(user_data: Dict[str, Any]):
     with st.expander("Adicionar novas medidas", expanded=False):
         with st.form(key="form_adicionar_medida_evolucao"):
             c1, c2 = st.columns(2)
-            data_med = c1.date_input("Data da Medição", value=date.today())
+            data_med = c1.date_input("Data da Medição", value=utils.get_local_date()) # <-- ALTERAÇÃO AQUI
             peso_in = c2.number_input("Peso (kg)", 0.0, step=0.1, value=dados_pessoais.get(config.COL_PESO, 70.0))
             c3, c4, c5 = st.columns(3)
             gord_corp = c3.number_input("Gordura corporal (%)", 0.0, step=0.1, value=dados_pessoais.get("gordura_corporal", 0.0))

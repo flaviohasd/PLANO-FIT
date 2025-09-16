@@ -15,6 +15,7 @@ import pandas as pd
 import streamlit as st
 import config
 import base64
+from datetime import date, datetime, timedelta, timezone
 
 def get_user_data_path(username: str, filename: str) -> Path:
     """
@@ -113,6 +114,27 @@ def adicionar_registro_df(df_novo: pd.DataFrame, path: Path):
             df_novo.to_csv(path, index=False)
     except Exception as e:
         st.error(f"Erro ao adicionar registro em {path.name}: {e}")
+
+def get_local_date() -> date:
+    """
+    Calcula a data local do usuário ajustando a hora UTC com o fuso horário
+    do navegador, que foi armazenado na sessão.
+    Recorre à data do servidor se o fuso horário não estiver disponível.
+    """
+    offset_minutes = st.session_state.get('timezone_offset')
+    
+    if offset_minutes is None:
+        return date.today()
+
+    try:
+        # Garante que o valor é um inteiro antes de usá-lo no timedelta.
+        offset_minutes_int = int(offset_minutes)
+        utc_now = datetime.now(timezone.utc)
+        local_now = utc_now - timedelta(minutes=offset_minutes_int)
+        return local_now.date()
+    except (ValueError, TypeError):
+        # Fallback se a conversão falhar por algum motivo.
+        return date.today()
 
 @st.cache_data(show_spinner="Carregando tabela de alimentos...")
 def carregar_tabela_alimentacao(path: Path) -> pd.DataFrame:

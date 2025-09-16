@@ -10,6 +10,7 @@ from typing import Dict, Any, List
 import pandas as pd
 import config
 from utils import normalizar_texto
+import utils
 
 # ==============================================================================
 # FUNÇÕES DE LÓGICA DE NEGÓCIO
@@ -342,7 +343,7 @@ def analisar_consistencia_habitos(dft_log: pd.DataFrame, df_plano_semanal_ativo:
     workout_dates = sorted(list(workout_dates), reverse=True)
     
     streak_dias = 0
-    today = date.today()
+    today = utils.get_local_date() # <-- ALTERAÇÃO AQUI
     
     # Se o último treino não foi hoje nem ontem, a sequência é 0.
     if not workout_dates or (today not in workout_dates and (today - timedelta(days=1)) not in workout_dates):
@@ -386,7 +387,7 @@ def analisar_consistencia_habitos(dft_log: pd.DataFrame, df_plano_semanal_ativo:
         "adesao_percentual": adesao_percentual
     }
 
-def get_workout_for_day(user_data: Dict[str, Any], target_date: date) -> Dict[str, Any] or None:
+def get_workout_for_day(user_data: Dict[str, Any], target_date: date) -> Dict[str, Any] or None: # type: ignore
     """
     Encontra o plano de treino e os exercícios associados para uma data específica.
     """
