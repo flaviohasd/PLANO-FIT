@@ -1497,7 +1497,7 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
     customizado para corresponder fielmente ao layout do usuário.
     """
     # --- LÓGICA DE DADOS E TIMERS (INICIALIZAÇÃO) ---
-    workout_today = logic.get_workout_for_day(user_data, date.today())
+    scheduled_workout = logic.get_workout_for_day(user_data, date.today())
     df_log_exercicios = user_data.get("df_log_exercicios", pd.DataFrame())
 
     # --- Carrega o banco de dados de exercícios ---
@@ -1523,54 +1523,30 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                 normalized_name = utils.normalizar_texto(ex_name)
                 exercise_details_map[normalized_name] = ex_data
                 if ex_data.get("images"):
-                    image_paths = [base_image_path / Path(img_file) for img_file in ex_data["images"]]
+                    image_paths = [base_image_path / Path(img_path) for img_path in ex_data["images"]]
                     exercise_image_map[normalized_name] = image_paths
 
-    # --- GERENCIAMENTO DE ESTADO PARA REORDENAÇÃO E TIMERS ---
-    todays_plan_name = workout_today['nome_plano'] if workout_today else None
+    # --- GERENCIAMENTO DE ESTADO E SELEÇÃO DE PLANO ---
+    df_planos_treino = user_data.get("df_planos_treino", pd.DataFrame(columns=['nome_plano']))
+    all_plans = ["Nenhum (Avulso)"] + df_planos_treino['nome_plano'].unique().tolist()
     
-    # Inicializa ou reseta o estado do treino se o plano do dia mudou
-    if 'current_plan_name' not in st.session_state or st.session_state.current_plan_name != todays_plan_name:
-        df_to_load = workout_today['exercicios'].copy() if workout_today else pd.DataFrame()
-        st.session_state.todays_workout_df = df_to_load
-        st.session_state.current_plan_name = todays_plan_name
-        
-        # Inicializa o contador de séries para cada exercício
-        if not df_to_load.empty:
-            st.session_state.workout_sets = {
-                index: int(row.get('series_planejadas', 1))
-                for index, row in df_to_load.iterrows()
-            }
-        else:
-            st.session_state.workout_sets = {}
-        
-        # Reseta o estado de adição de exercício
-        st.session_state.adding_exercise = False
-
-    # CORREÇÃO: Garante que workout_sets sempre exista
-    if 'workout_sets' not in st.session_state:
-        st.session_state.workout_sets = {}
-
-    # Inicializa outros estados se não existirem
-    if 'timer_started' not in st.session_state: st.session_state.timer_started = False
-    if 'start_time' not in st.session_state: st.session_state.start_time = None
-    if 'elapsed_minutes' not in st.session_state: st.session_state.elapsed_minutes = 0.0
-    if 'rest_timer_running' not in st.session_state: st.session_state.rest_timer_running = False
-    if 'rest_end_time' not in st.session_state: st.session_state.rest_end_time = None
-    if 'total_rest_seconds' not in st.session_state: st.session_state.total_rest_seconds = 0
-    if 'current_rest_duration' not in st.session_state: st.session_state.current_rest_duration = 0
-    if 'last_check_time' not in st.session_state: st.session_state.last_check_time = None
-    if 'set_durations' not in st.session_state: st.session_state.set_durations = {}
-    if 'checkbox_states' not in st.session_state: st.session_state.checkbox_states = {}
-
-    with st.sidebar:
-        if st.session_state.timer_started or st.session_state.rest_timer_running:
-            st_autorefresh(interval=1000, key="global_timer_refresher")
-
-    # --- PAINEL DE CONTROLE DO TREINO ---
+    scheduled_plan_name = scheduled_workout['nome_plano'] if scheduled_workout else "Nenhum (Avulso)"
+    
+    # Define o índice padrão para o selectbox.
+    try:
+        default_index = all_plans.index(scheduled_plan_name)
+    except ValueError:
+        default_index = 0
+    
+    # --- PAINEL DE CONTROLE DO TREINO (COM SELECTBOX) ---
     with st.container(border=True):
         col1, col2, col3 = st.columns([2.5, 3, 3])
+        # Coluna 1: Timer
         with col1:
+            if 'timer_started' not in st.session_state: st.session_state.timer_started = False
+            if 'start_time' not in st.session_state: st.session_state.start_time = None
+            if 'elapsed_minutes' not in st.session_state: st.session_state.elapsed_minutes = 0.0
+
             if st.session_state.timer_started and st.session_state.start_time:
                 accumulated_seconds = st.session_state.elapsed_minutes * 60
                 current_elapsed = datetime.now() - st.session_state.start_time
@@ -1583,8 +1559,10 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                 hours, remainder = divmod(int(total_seconds), 3600)
                 minutes, seconds = divmod(remainder, 60)
                 time_str = f"{hours:02}:{minutes:02}:{seconds:02}"
+            
             st.markdown("<p style='font-size: 0.9rem; color: rgba(250, 250, 250, 0.7);'>Tempo Total</p>", unsafe_allow_html=True)
             st.markdown(f"<p style='font-size: 2.5rem; font-weight: bold; margin-top: -10px;'>{time_str}</p>", unsafe_allow_html=True)
+            
             btn_c1, btn_c2, btn_c3 = st.columns(3)
             if btn_c1.button("▶️ Iniciar", width='stretch', disabled=st.session_state.timer_started):
                 st.session_state.timer_started = True
@@ -1609,21 +1587,30 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                 st.session_state.set_durations = {}
                 st.session_state.checkbox_states = {}
                 st.rerun()
+        
+        # Coluna 2: Selectbox do Plano
         with col2:
-            if workout_today:
-                plan_name = workout_today['nome_plano']
-                st.markdown(f"""
-                <div style='display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;'>
-                    <p style='font-size: 1.5rem; font-weight: bold; text-align: center; margin-bottom: -5px;'>Plano de hoje:</p>
-                    <p style='font-size: 1.5rem; font-weight: bold; text-align: center;'>{plan_name}</p>
-                </div>
-                """, unsafe_allow_html=True)
+            st.markdown("<p style='font-size: 0.9rem; color: rgba(250, 250, 250, 0.7);'>Plano de Treino</p>", unsafe_allow_html=True)
+            selected_plan_name = st.selectbox(
+                "Plano de Treino Selecionado", 
+                options=all_plans, 
+                index=default_index, 
+                key="sb_plano_selecionado",
+                label_visibility="collapsed"
+            )
+
+        # Coluna 3: Timer de Descanso
         with col3:
+            if 'rest_timer_running' not in st.session_state: st.session_state.rest_timer_running = False
+            if 'rest_end_time' not in st.session_state: st.session_state.rest_end_time = None
+            if 'total_rest_seconds' not in st.session_state: st.session_state.total_rest_seconds = 0
+            if 'current_rest_duration' not in st.session_state: st.session_state.current_rest_duration = 0
+
             rest_controls_col, rest_display_col = st.columns(2)
             with rest_controls_col:
                 st.markdown("<p style='font-size: 0.9rem; color: rgba(250, 250, 250, 0.7);'>Timer de Descanso</p>", unsafe_allow_html=True)
                 default_rest_time = st.number_input("Segundos", min_value=10, max_value=300, value=60, step=5, label_visibility="collapsed")
-                if st.button("Iniciar Descanso", width='stretch', disabled=st.session_state.rest_timer_running, key="start_rest_button_final_v3"):
+                if st.button("Iniciar Descanso", width='stretch', disabled=st.session_state.rest_timer_running):
                     st.session_state.rest_timer_running = True
                     st.session_state.rest_end_time = time.time() + default_rest_time
                     st.session_state.current_rest_duration = default_rest_time
@@ -1635,11 +1622,11 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                     remaining_time = st.session_state.rest_end_time - time.time()
                     if remaining_time > 0:
                         minutes, seconds = divmod(int(remaining_time), 60)
-                        time_str = f"{minutes:02}:{seconds:02}"
+                        time_str_rest = f"{minutes:02}:{seconds:02}"
                         color = "#FF4B4B" if remaining_time < 11 else "inherit"
                         st.markdown(f"""
                         <div style='display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;'>
-                            <p style='font-size: 3.5rem; color: {color}; font-weight: bold;'>{time_str}</p>
+                            <p style='font-size: 3.5rem; color: {color}; font-weight: bold;'>{time_str_rest}</p>
                             <p style='font-size: 0.9rem; color: rgba(250, 250, 250, 0.7); margin-bottom: 10px;'>Descanso total: {total_rest_str}</p>
                         </div>
                         """, unsafe_allow_html=True)
@@ -1657,23 +1644,51 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                     </div>
                     """, unsafe_allow_html=True)
 
+    # --- LÓGICA PARA ATUALIZAR O TREINO QUANDO O SELECTBOX MUDA ---
+    if 'current_plan_name' not in st.session_state or st.session_state.current_plan_name != selected_plan_name:
+        df_to_load = pd.DataFrame()
+        if selected_plan_name != "Nenhum (Avulso)":
+            df_planos = user_data.get("df_planos_treino", pd.DataFrame())
+            df_exercicios = user_data.get("df_exercicios", pd.DataFrame())
+            
+            if not df_planos.empty and not df_exercicios.empty:
+                plano_info = df_planos[df_planos['nome_plano'] == selected_plan_name]
+                if not plano_info.empty:
+                    id_plano = plano_info['id_plano'].iloc[0]
+                    exercicios_do_plano = df_exercicios[df_exercicios['id_plano'] == id_plano].copy()
+                    if 'ordem' in exercicios_do_plano.columns:
+                        exercicios_do_plano = exercicios_do_plano.sort_values('ordem').reset_index(drop=True)
+                    df_to_load = exercicios_do_plano
+
+        # Reseta o estado da sessão de treino
+        st.session_state.todays_workout_df = df_to_load
+        st.session_state.current_plan_name = selected_plan_name
+        st.session_state.workout_sets = {idx: int(row.get('series_planejadas', 1)) for idx, row in df_to_load.iterrows()} if not df_to_load.empty else {}
+        st.session_state.adding_exercise = False
+        st.session_state.set_durations = {}
+        st.session_state.checkbox_states = {}
+        st.rerun()
+
+    # --- INICIALIZAÇÃO DE ESTADOS RESTANTES ---
+    if 'last_check_time' not in st.session_state: st.session_state.last_check_time = None
+    with st.sidebar:
+        if st.session_state.timer_started or st.session_state.rest_timer_running:
+            st_autorefresh(interval=1000, key="global_timer_refresher")
+
     # --- LÓGICA PARA RENDERIZAR O PLANO DE TREINO ---
     if 'todays_workout_df' in st.session_state and not st.session_state.todays_workout_df.empty:
         exercicios_df = st.session_state.todays_workout_df.copy()
         
         for index, exercicio in exercicios_df.iterrows():
             with st.container(border=True):
-                # MODIFICAÇÃO: Layout principal com duas colunas: conteúdo e controles
                 main_col, controls_col = st.columns([0.9, 0.1])
-
                 with main_col:
-                 
                     with st.popover(f"##### {exercicio['nome_exercicio']}"):
                         nome_normalizado = utils.normalizar_texto(exercicio['nome_exercicio'])
                         exercise_details = exercise_details_map.get(nome_normalizado)
                         image_paths = exercise_image_map.get(nome_normalizado)
 
-                        if image_paths and len(image_paths) == 2:
+                        if image_paths and len(image_paths) >= 2:
                             image_path1, image_path2 = image_paths[0], image_paths[1]
                             if image_path1.exists() and image_path2.exists():
                                 anim_html = utils.get_image_animation_html(image_path1, image_path2, width=300)
@@ -1689,15 +1704,11 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
 
                     tipo_exercicio = exercicio.get('tipo_exercicio', 'Musculação')
                     previous_perf_data = logic.get_previous_performance(df_log_exercicios, exercicio['nome_exercicio'])
-                    
-                    if tipo_exercicio == 'Cardio':
-                        previous_performance_str = f"{previous_perf_data.get('minutos', 0)} min" if previous_perf_data.get('minutos') else "N/A"
-                    else:
-                        previous_performance_str = f"{previous_perf_data.get('kg', 0)} kg x {previous_perf_data.get('reps', 0)}" if previous_perf_data.get('kg') is not None else "N/A"
-
+                    previous_performance_str = f"{previous_perf_data.get('minutos', 0)} min" if tipo_exercicio == 'Cardio' and previous_perf_data.get('minutos') else f"{previous_perf_data.get('kg', 0)} kg x {previous_perf_data.get('reps', 0)}" if previous_perf_data.get('kg') is not None else "N/A"
                     num_series = st.session_state.workout_sets.get(index, 1)
 
                     if tipo_exercicio == 'Cardio':
+                        # Cabeçalho e lógica para Cardio
                         col_header = st.columns([0.4, 0.8, 2, 2, 2.4, 0.8])
                         col_header[0].write("")
                         col_header[1].write("**Série**")
@@ -1712,15 +1723,13 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                                 if st.session_state.workout_sets[index] > 1:
                                     st.session_state.workout_sets[index] -= 1
                                     st.rerun()
-                                else:
-                                    st.toast("Não é possível remover a última série.", icon="⚠️")
-                            
                             cols[1].markdown(f"**{i}**")
                             cols[2].markdown(f"`{previous_performance_str}`")
                             cols[3].markdown(f"`{exercicio['repeticoes_planejadas']}`")
                             cols[4].number_input("Min", key=f"min_{key_base}", min_value=0, step=1, label_visibility="collapsed", value=previous_perf_data.get('minutos', 0))
                             cols[5].checkbox("Feito", key=f"done_{key_base}", label_visibility="collapsed")
                     else: # Musculação
+                        # Cabeçalho e lógica para Musculação
                         col_header = st.columns([0.4, 0.8, 2, 2, 1.2, 1.2, 0.8])
                         col_header[0].write("")
                         col_header[1].write("**Série**")
@@ -1736,9 +1745,6 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                                 if st.session_state.workout_sets[index] > 1:
                                     st.session_state.workout_sets[index] -= 1
                                     st.rerun()
-                                else:
-                                    st.toast("Não é possível remover a última série.", icon="⚠️")
-
                             cols[1].markdown(f"**{i}**")
                             cols[2].markdown(f"`{previous_performance_str}`")
                             cols[3].markdown(f"`{exercicio['repeticoes_planejadas']} reps`")
@@ -1749,15 +1755,13 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                             prev_state = st.session_state.checkbox_states.get(checkbox_key, False)
                             is_checked = cols[6].checkbox("Feito", key=checkbox_key, label_visibility="collapsed")
                             
-                            if is_checked and not prev_state:
-                                if st.session_state.timer_started and st.session_state.last_check_time:
-                                    now = time.time()
-                                    duration_seconds = now - st.session_state.last_check_time
-                                    st.session_state.set_durations[key_base] = duration_seconds / 60
-                                    st.session_state.last_check_time = now
+                            if is_checked and not prev_state and st.session_state.timer_started and st.session_state.last_check_time:
+                                now = time.time()
+                                duration_seconds = now - st.session_state.last_check_time
+                                st.session_state.set_durations[key_base] = duration_seconds / 60
+                                st.session_state.last_check_time = now
                             elif not is_checked and prev_state:
                                 st.session_state.set_durations.pop(key_base, None)
-
                             st.session_state.checkbox_states[checkbox_key] = is_checked
                     
                     if st.button("Adicionar série", key=f"add_set_{index}"):
@@ -1765,30 +1769,19 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                         st.rerun()
                 
                 with controls_col:
-                    # MODIFICAÇÃO: Botões de controle agora estão na mesma coluna
                     if st.button("🗑️", key=f"remove_ex_{index}_main", help="Remover exercício da sessão", width='stretch'):
                         st.session_state.todays_workout_df.drop(index, inplace=True)
                         st.session_state.todays_workout_df.reset_index(drop=True, inplace=True)
-                        st.session_state.workout_sets = {
-                            idx: int(row.get('series_planejadas', 1))
-                            for idx, row in st.session_state.todays_workout_df.iterrows()
-                        }
+                        st.session_state.workout_sets = {idx: int(row.get('series_planejadas', 1)) for idx, row in st.session_state.todays_workout_df.iterrows()}
                         st.rerun()
-
-                    # Adiciona o espaço vertical
                     st.write("<div style='height: 60px;'></div>", unsafe_allow_html=True)
-
-                    is_first = (index == 0)
-                    is_last = (index == len(exercicios_df) - 1)
-                    
-                    if st.button("🔼", key=f"up_{index}", help="Mover para cima", width='stretch', disabled=is_first):
+                    if st.button("🔼", key=f"up_{index}", help="Mover para cima", width='stretch', disabled=(index == 0)):
                         df = st.session_state.todays_workout_df
                         a, b = df.iloc[index-1].copy(), df.iloc[index].copy()
                         df.iloc[index-1], df.iloc[index] = b, a
                         st.session_state.todays_workout_df = df
                         st.rerun()
-
-                    if st.button("🔽", key=f"down_{index}", help="Mover para baixo", width='stretch', disabled=is_last):
+                    if st.button("🔽", key=f"down_{index}", help="Mover para baixo", width='stretch', disabled=(index == len(exercicios_df) - 1)):
                         df = st.session_state.todays_workout_df
                         a, b = df.iloc[index+1].copy(), df.iloc[index].copy()
                         df.iloc[index+1], df.iloc[index] = b, a
@@ -1796,30 +1789,18 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                         st.rerun()
 
         if st.session_state.get('adding_exercise', False):
+            # Lógica para adicionar novo exercício
             with st.form("new_exercise_form"):
                 st.subheader("Adicionar Novo Exercício")
                 new_ex_name = st.selectbox("Selecione o exercício", options=sorted(exercise_name_list))
                 c1, c2 = st.columns(2)
                 new_ex_sets = c1.number_input("Número de séries", min_value=1, value=3)
                 new_ex_reps = c2.text_input("Meta de Reps/Min", value="8-12 reps")
-                
-                submitted = st.form_submit_button("Adicionar Exercício ao Treino")
-                if submitted:
-                    new_exercise_row = pd.DataFrame([{
-                        'nome_exercicio': new_ex_name,
-                        'tipo_exercicio': 'Musculação',
-                        'series_planejadas': new_ex_sets,
-                        'repeticoes_planejadas': new_ex_reps,
-                        'ordem': len(st.session_state.todays_workout_df)
-                    }])
-                    
-                    st.session_state.todays_workout_df = pd.concat(
-                        [st.session_state.todays_workout_df, new_exercise_row],
-                        ignore_index=True
-                    )
+                if st.form_submit_button("Adicionar Exercício ao Treino"):
+                    new_exercise_row = pd.DataFrame([{'nome_exercicio': new_ex_name, 'tipo_exercicio': 'Musculação', 'series_planejadas': new_ex_sets, 'repeticoes_planejadas': new_ex_reps, 'ordem': len(st.session_state.todays_workout_df)}])
+                    st.session_state.todays_workout_df = pd.concat([st.session_state.todays_workout_df, new_exercise_row], ignore_index=True)
                     new_index = len(st.session_state.todays_workout_df) - 1
                     st.session_state.workout_sets[new_index] = new_ex_sets
-                    
                     st.session_state.adding_exercise = False
                     st.rerun()
             if st.button("Cancelar"):
@@ -1837,143 +1818,73 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
         data_treino = c3_sum.date_input("Data do treino", value=date.today(), key="date_input_main_log")
 
         if st.button("Salvar Treino", type="primary", width='stretch'):
-            new_log_entries = []
-            dados_pessoais = user_data.get("dados_pessoais", {})
-            peso_usuario = dados_pessoais.get(config.COL_PESO, 70.0)
-
-            total_calorias_musculacao = 0.0
-            total_calorias_cardio = 0.0
-            total_minutos_cardio = 0
-            
-            untimed_musc_sets = []
+            # Lógica de salvamento do treino
+            new_log_entries, dados_pessoais = [], user_data.get("dados_pessoais", {})
+            peso_usuario, total_calorias_musculacao, total_calorias_cardio, total_minutos_cardio, untimed_musc_sets = dados_pessoais.get(config.COL_PESO, 70.0), 0.0, 0.0, 0, []
             
             for index, exercicio in exercicios_df.iterrows():
                 tipo_exercicio = exercicio.get('tipo_exercicio', 'Musculação')
                 num_series = st.session_state.workout_sets.get(index, 1)
-
                 for i in range(1, num_series + 1):
-                    key_prefix = "cardio" if tipo_exercicio == 'Cardio' else "musc"
-                    key_base = f"{key_prefix}_{exercicio['nome_exercicio']}_{i}_{index}"
-                    
+                    key_prefix, key_base = ("cardio" if tipo_exercicio == 'Cardio' else "musc"), f"{'cardio' if tipo_exercicio == 'Cardio' else 'musc'}_{exercicio['nome_exercicio']}_{i}_{index}"
                     if st.session_state.get(f'done_{key_base}'):
                         log_entry = {'Data': data_treino.strftime("%d/%m/%Y"), 'nome_exercicio': exercicio['nome_exercicio'], 'set': i}
-                        
                         if tipo_exercicio == 'Cardio':
                             minutos = st.session_state.get(f'min_{key_base}', 0)
                             total_minutos_cardio += minutos
                             log_entry.update({'minutos_realizados': minutos, 'kg_realizado': 0, 'reps_realizadas': 0})
-                            
-                            gasto_exercicio = logic.calcular_gasto_treino(
-                                cardio=True, intensidade=intensidade_tr, duracao=minutos, carga=0, peso=peso_usuario
-                            )
-                            total_calorias_cardio += gasto_exercicio
-                        else: # Musculação
-                            kg = st.session_state.get(f'kg_{key_base}', 0.0)
-                            reps = st.session_state.get(f'reps_{key_base}', 0)
-                            carga = kg * reps
+                            total_calorias_cardio += logic.calcular_gasto_treino(cardio=True, intensidade=intensidade_tr, duracao=minutos, carga=0, peso=peso_usuario)
+                        else:
+                            kg, reps, carga = st.session_state.get(f'kg_{key_base}', 0.0), st.session_state.get(f'reps_{key_base}', 0), st.session_state.get(f'kg_{key_base}', 0.0) * st.session_state.get(f'reps_{key_base}', 0)
                             log_entry.update({'kg_realizado': kg, 'reps_realizadas': reps, 'minutos_realizados': 0})
-                            
                             if key_base in st.session_state.set_durations:
-                                duracao = st.session_state.set_durations[key_base]
-                                gasto_exercicio = logic.calcular_gasto_treino(
-                                    cardio=False, intensidade=intensidade_tr, duracao=duracao, carga=carga, peso=peso_usuario
-                                )
-                                total_calorias_musculacao += gasto_exercicio
+                                total_calorias_musculacao += logic.calcular_gasto_treino(cardio=False, intensidade=intensidade_tr, duracao=st.session_state.set_durations[key_base], carga=carga, peso=peso_usuario)
                             else:
                                 untimed_musc_sets.append({'carga': carga})
-                        
                         new_log_entries.append(log_entry)
             
-            if untimed_musc_sets:
-                duracao_musculacao_restante = duracao_min_total - total_minutos_cardio
-                if duracao_musculacao_restante > 0 and len(untimed_musc_sets) > 0:
-                    duracao_por_set_nao_cronometrado = duracao_musculacao_restante / len(untimed_musc_sets)
-                    
-                    for set_data in untimed_musc_sets:
-                        gasto_exercicio = logic.calcular_gasto_treino(
-                            cardio=False, intensidade=intensidade_tr, duracao=duracao_por_set_nao_cronometrado, 
-                            carga=set_data['carga'], peso=peso_usuario
-                        )
-                        total_calorias_musculacao += gasto_exercicio
+            if untimed_musc_sets and (duracao_musculacao_restante := duracao_min_total - total_minutos_cardio) > 0:
+                duracao_por_set = duracao_musculacao_restante / len(untimed_musc_sets)
+                for set_data in untimed_musc_sets:
+                    total_calorias_musculacao += logic.calcular_gasto_treino(cardio=False, intensidade=intensidade_tr, duracao=duracao_por_set, carga=set_data['carga'], peso=peso_usuario)
 
             if not new_log_entries:
                 st.warning("Nenhuma série foi marcada como 'Feito'. O treino não foi salvo.")
             else:
-                path_log_exercicios = utils.get_user_data_path(username, config.FILE_LOG_EXERCICIOS)
-                utils.adicionar_registro_df(pd.DataFrame(new_log_entries), path_log_exercicios)
-
+                utils.adicionar_registro_df(pd.DataFrame(new_log_entries), utils.get_user_data_path(username, config.FILE_LOG_EXERCICIOS))
                 gasto_est_total = total_calorias_musculacao + total_calorias_cardio
+                novo_treino_simples = pd.DataFrame([{'Data': data_treino.strftime("%d/%m/%Y"), 'Plano Executado': st.session_state.current_plan_name, 'Tipo de Treino': "Misto" if total_calorias_cardio > 0 and total_calorias_musculacao > 0 else ("Cardio" if total_calorias_cardio > 0 else "Musculação"), 'Tempo (min)': duracao_min_total, 'Calorias Gastas': round(gasto_est_total, 2)}])
+                utils.adicionar_registro_df(novo_treino_simples, utils.get_user_data_path(username, config.FILE_LOG_TREINOS_SIMPLES))
                 
-                path_treinos_simples = utils.get_user_data_path(username, config.FILE_LOG_TREINOS_SIMPLES)
-                
-                plano_executado_nome = st.session_state.current_plan_name or "Avulso (Modificado)"
-                
-                novo_treino_simples = pd.DataFrame([{
-                    'Data': data_treino.strftime("%d/%m/%Y"),
-                    'Plano Executado': plano_executado_nome,
-                    'Tipo de Treino': "Misto" if total_calorias_cardio > 0 and total_calorias_musculacao > 0 else ("Cardio" if total_calorias_cardio > 0 else "Musculação"),
-                    'Tempo (min)': duracao_min_total,
-                    'Calorias Gastas': round(gasto_est_total, 2)
-                }])
-                
-                utils.adicionar_registro_df(novo_treino_simples, path_treinos_simples)
-                
-                del st.session_state.todays_workout_df
-                del st.session_state.current_plan_name
-                del st.session_state.workout_sets
-                st.session_state.adding_exercise = False
-                st.session_state.timer_started = False
-                st.session_state.start_time = None
-                st.session_state.elapsed_minutes = 0.0
-                st.session_state.rest_timer_running = False
-                st.session_state.rest_end_time = None
-                st.session_state.current_rest_duration = 0
-                st.session_state.last_check_time = None
-                st.session_state.set_durations = {}
-                st.session_state.checkbox_states = {}
-
+                # Limpar estado da sessão
+                for key in ['todays_workout_df', 'current_plan_name', 'workout_sets', 'adding_exercise', 'timer_started', 'start_time', 'elapsed_minutes', 'rest_timer_running', 'rest_end_time', 'current_rest_duration', 'last_check_time', 'set_durations', 'checkbox_states']:
+                    if key in st.session_state: del st.session_state[key]
                 st.toast("Treino salvo com sucesso!", icon="💪")
                 st.rerun()
-
     else:
-        st.info("Nenhum treino planejado para hoje.")
+        st.info("Nenhum treino selecionado para hoje. Escolha um plano no menu acima ou adicione um exercício avulso.")
 
-    exp = True if not workout_today else False
-    with st.expander('Registro Avulso', expanded=exp):
+    with st.expander('Registro Avulso', expanded=(not ('todays_workout_df' in st.session_state and not st.session_state.todays_workout_df.empty))):
         render_registro_avulso_form(username, user_data)
     
-    dft_simples = user_data.get("df_log_treinos", pd.DataFrame())
     with st.expander("Histórico de Treinos Realizados"):
+        dft_simples = user_data.get("df_log_treinos", pd.DataFrame())
         if not dft_simples.empty:           
             dft_simples_sorted = dft_simples.copy()
             dft_simples_sorted[config.COL_DATA] = pd.to_datetime(dft_simples_sorted[config.COL_DATA], format="%d/%m/%Y")
             dft_simples_sorted = dft_simples_sorted.sort_values(by=config.COL_DATA, ascending=False).reset_index(drop=True)
-            
-            dft_editado = st.data_editor(
-                dft_simples_sorted,
-                num_rows="dynamic",
-                width='stretch',
-                key="editor_treinos_realizados",
-                hide_index=True,
-                column_config={
-                    "Calorias Gastas": st.column_config.NumberColumn("Calorias Gastas (kcal)", format="%.0f")
-                }
-            )
+            dft_editado = st.data_editor(dft_simples_sorted, num_rows="dynamic", width='stretch', key="editor_treinos_realizados", hide_index=True, column_config={"Calorias Gastas": st.column_config.NumberColumn("Calorias Gastas (kcal)", format="%.0f")})
             
             if st.button("💾 Salvar Alterações no Histórico", key="salvar_historico_treino"):
+                # Lógica de salvamento do histórico
                 original_dates = set(pd.to_datetime(dft_simples[config.COL_DATA], format="%d/%m/%Y").dt.strftime('%d/%m/%Y'))
                 edited_dates = set(pd.to_datetime(dft_editado[config.COL_DATA]).dt.strftime('%d/%m/%Y'))
-
                 deleted_dates = original_dates - edited_dates
-
                 if deleted_dates:
-                    path_log_exercicios = utils.get_user_data_path(username, config.FILE_LOG_EXERCICIOS)
-                    df_log_exercicios_completo = utils.carregar_df(path_log_exercicios)
-                    
+                    path_log_exercicios, df_log_exercicios_completo = utils.get_user_data_path(username, config.FILE_LOG_EXERCICIOS), utils.carregar_df(path_log_exercicios)
                     if not df_log_exercicios_completo.empty and 'Data' in df_log_exercicios_completo.columns:
                         df_log_exercicios_filtrado = df_log_exercicios_completo[~df_log_exercicios_completo['Data'].isin(deleted_dates)]
                         utils.salvar_df(df_log_exercicios_filtrado, path_log_exercicios)
-
                 dft_editado[config.COL_DATA] = pd.to_datetime(dft_editado[config.COL_DATA]).dt.strftime('%d/%m/%Y')
                 utils.salvar_df(dft_editado, utils.get_user_data_path(username, config.FILE_LOG_TREINOS_SIMPLES))
                 st.toast("Histórico de treinos atualizado!", icon="💾")
