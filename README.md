@@ -8,6 +8,10 @@ PLANO FIT é uma aplicação web, construída com Streamlit, projetada para ser 
   <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWZwcXZqdDlnM2M1eWt0ZnZ5cThsaDA4NnhvZWZlN3BvMXdoend6bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/5g6ijNORnMoqoJ2o1X/giphy.gif" alt="-Finja que há uma imagem motivadora aqui" width="500" />
   </p>
 
+## 🔎 Experimente com um exemplo
+  [PLANO-FIT no Streamlit](https://plano-fit.streamlit.app/)
+
+
 ## ✨ Funcionalidades Principais
 
 O PLANO FIT foi desenvolvido com uma arquitetura modular e robusta, oferecendo um conjunto completo de ferramentas:
@@ -95,7 +99,8 @@ O PLANO FIT foi desenvolvido com uma arquitetura modular e robusta, oferecendo u
         <summary>Exemplo</summary>
         <img width="1215" height="617" alt="image" src="https://github.com/user-attachments/assets/e2a827a1-0d97-4dba-a926-1191c3529cd7" />
       </details>
-      
+
+
 ## 🚀 Vantagens e Diferenciais
 
 * **Centralização Total:** Esqueça as planilhas e múltiplos apps. O PLANO FIT integra planejamento, registro e análise em um único lugar.
