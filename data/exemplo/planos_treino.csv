@@ -1,26 +1,50 @@
 id_plano,nome_plano
-3,A - Cardio HIIT
-6,A - Core
-4,A - Costas e bíceps
-7,"A - Peito, ombro e tríceps"
-5,A - Posteriores e glúteos
-2,A - Quadríceps e panturrilha
-22,D - Cardio HIIT
-25,D - Core
-23,D - Costas e bíceps
-20,"D - Peito, ombro e tríceps"
-24,D - Posteriores e glúteos
-21,D - Quadríceps e panturrilha
-16,F - Cardio HIIT
-19,F - Core
-17,F - Costas e bíceps
-14,"F - Peito, ombro e tríceps"
-18,F - Posteriores e glúteos
-15,F - Quadríceps e panturrilha
-10,H - Cardio HIIT
-13,H - Core
-11,H - Costas e bíceps
-8,"H - Peito, ombro e tríceps"
-12,H - Posteriores e glúteos
-9,H - Quadríceps e panturrilha
-27,R - Caminhada
+1,"Superior A - Peito, Ombros, Costas, Tríceps (Adaptação Anatômica)"
+2,"Inferior A - Quadríceps, Posteriores, Glúteos (Adaptação Anatômica)"
+3,"Superior B - Costas, Peito, Bíceps (Adaptação Anatômica)"
+4,"Inferior B - Posteriores, Glúteos, Quadríceps (Adaptação Anatômica)"
+5,"Superior A - Peito, Ombros, Costas, Tríceps (Hipertrofia)"
+6,"Inferior A - Quadríceps, Glúteos, Posteriores (Hipertrofia)"
+7,"Superior B - Costas, Peito, Bíceps (Hipertrofia)"
+8,"Inferior B - Posteriores, Glúteos, Adutores (Hipertrofia)"
+9,"Superior - Peito, Costas, Tríceps (Força)"
+10,"Inferior - Quadríceps, Posteriores, Glúteos (Força)"
+11,"Superior - Ombros, Costas, Peito (Força)"
+12,"Inferior - Posteriores, Glúteos, Quadríceps, Lombar (Força)"
+13,"Superior A - Peito, Costas, Ombros, Braços (Choque Metabólico)"
+14,"Inferior A - Quadríceps, Glúteos, Posteriores (Choque Metabólico)"
+15,"Superior B - Costas, Peito, Ombros (Choque Metabólico)"
+16,"Inferior B - Quadríceps, Posteriores, Glúteos (Choque Metabólico)"
+17,"Superior A - Peito, Costas, Ombros, Bíceps (Adaptação)"
+18,"Inferior A - Quadríceps, Posteriores, Glúteos (Adaptação)"
+19,"Superior B - Costas, Tríceps, Peito, Ombros (Adaptação)"
+20,"Inferior B - Posteriores, Glúteos, Quadríceps (Adaptação)"
+21,"Superior A - Peito, Costas, Ombros, Tríceps (Hipertrofia Powerbuilding)"
+22,"Inferior A - Quadríceps, Posteriores, Glúteos (Hipertrofia Powerbuilding)"
+23,"Superior B - Costas, Peito, Bíceps (Hipertrofia Powerbuilding)"
+24,"Inferior B - Posteriores, Glúteos, Quadríceps (Hipertrofia Powerbuilding)"
+25,"Superior A - Peito (Foco), Costas (Força Powerbuilding)"
+26,"Inferior A - Quadríceps (Foco), Posteriores, Glúteos (Força Powerbuilding)"
+27,"Superior B - Ombros (Foco), Costas (Força Powerbuilding)"
+28,"Inferior B - Corpo Inteiro (Foco Terra) (Força Powerbuilding)"
+29,"Superior A - Peito, Costas, Ombros, Tríceps (Choque Powerbuilding)"
+30,"Inferior A - Quadríceps (Ênfase) (Choque Powerbuilding)"
+31,"Superior B - Costas, Ombros, Peito, Braços (Choque Powerbuilding)"
+32,"Inferior B - Posteriores, Glúteos (Choque Powerbuilding)"
+33,"Superior A - Peito, Costas, Ombros, Bíceps (Adaptação Escultor)"
+34,"Inferior A - Quadríceps, Posteriores, Adutores (Adaptação Escultor)"
+35,"Superior B - Costas, Peito, Tríceps (Adaptação Escultor)"
+36,"Inferior B - Quadríceps, Posteriores, Glúteos (Adaptação Escultor)"
+37,"Superior A - Peito, Costas, Ombros (Hipertrofia Escultor)"
+38,"Inferior A - Quadríceps, Posteriores, Glúteos (Hipertrofia Escultor)"
+39,"Superior B - Costas, Peito, Bíceps (Hipertrofia Escultor)"
+40,"Inferior B - Quadríceps, Glúteos (Hipertrofia Escultor)"
+41,"Superior A - Peito, Costas, Ombros (Força-Resistência)"
+42,"Inferior A - Quadríceps, Posteriores, Glúteos (Força-Resistência)"
+43,"Superior B - Costas, Peito, Ombros (Força-Resistência)"
+44,"Inferior B - Quadríceps, Posteriores, Glúteos (Força-Resistência)"
+45,"Superior A - Peito, Ombros, Braços (Choque Escultor)"
+46,"Inferior A - Quadríceps, Posteriores, Adutores, Abdutores (Choque Escultor)"
+47,"Superior B - Costas, Peito, Ombros, Braços (Choque Escultor)"
+48,"Inferior B - Quadríceps, Posteriores, Glúteos (Choque Escultor)"
+49,"Full Body (Recuperação Ativa / Deload)"

@@ -1,138 +1,230 @@
 id_plano,nome_exercicio,tipo_exercicio,series_planejadas,repeticoes_planejadas,ordem
-10,Corrida na Esteira,Cardio,1.0,60,
-16,Corrida na Esteira,Cardio,1.0,60,
-22,Corrida Leve na Esteira (Jogging),Cardio,1.0,60,
-2,Aquecimento,Cardio,1.0,10,0.0
-2,Agachamento Hack,Musculação,3.0,12-15,1.0
-2,Cadeira Extensora,Musculação,3.0,12-15,2.0
-2,Afundo com Halteres,Musculação,3.0,12-15,3.0
-2,Elevação de Panturrilha em Pé,Musculação,3.0,12-15,4.0
-2,Puxada do Rack (Rack Pull),Musculação,3.0,12-15,5.0
-5,Aquecimento,Cardio,1.0,10,0.0
-5,Cadeira Flexora,Musculação,3.0,12-15,1.0
-5,Cadeira Adutora,Musculação,3.0,12-15,2.0
-5,Cadeira Abdutora,Musculação,3.0,12-15,3.0
-5,Elevação Pélvica (Ponte),Musculação,3.0,12-15,4.0
-5,Coice (Glute Kickback),Musculação,3.0,12-15,5.0
-7,Aquecimento,Cardio,1.0,10,0.0
-7,Supino Reto com Barra - Pegada Média,Musculação,3.0,12-15,1.0
-7,Voador (Butterfly),Musculação,3.0,12-15,2.0
-7,Tríceps Pulley com Corda,Musculação,3.0,12-15,3.0
-7,Elevação Lateral,Musculação,3.0,12-15,4.0
-7,Elevação Frontal com Halteres,Musculação,3.0,12-15,5.0
-7,Encolhimento com Halteres,Musculação,3.0,12-15,6.0
-8,Aquecimento,Cardio,1.0,10,0.0
-8,Supino Reto com Barra - Pegada Média,Musculação,3.0,8-12,1.0
-8,Voador (Butterfly),Musculação,3.0,8-12,2.0
-8,Tríceps Pulley com Corda,Musculação,3.0,8-12,3.0
-8,Elevação Lateral,Musculação,3.0,8-12,4.0
-8,Elevação Frontal com Halteres,Musculação,3.0,8-12,5.0
-8,Encolhimento com Halteres,Musculação,3.0,8-12,6.0
-9,Aquecimento,Cardio,1.0,10,0.0
-9,Agachamento Hack,Musculação,3.0,8-12,1.0
-9,Cadeira Extensora,Musculação,3.0,8-12,2.0
-9,Afundo com Halteres,Musculação,3.0,8-12,3.0
-9,Elevação de Panturrilha em Pé,Musculação,3.0,8-12,4.0
-9,Puxada do Rack (Rack Pull),Musculação,3.0,8-12,5.0
-11,Aquecimento,Cardio,1.0,10,0.0
-11,Remada no Cabo com Pés Elevados,Musculação,3.0,8-12,1.0
-11,Remada Isolateral na Máquina Articulada,Musculação,3.0,8-12,2.0
-11,Puxada Frontal (Pegada Aberta),Musculação,3.0,8-12,3.0
-11,Remada Alta na Máquina Articulada,Musculação,3.0,8-12,4.0
-11,Remada Alta no Cabo,Musculação,3.0,8-12,5.0
-11,Puxada no Rosto (Face Pull),Musculação,3.0,8-12,6.0
-11,Rosca Martelo Alternada,Musculação,3.0,8-12,7.0
-12,Aquecimento,Cardio,1.0,10,0.0
-12,Cadeira Flexora,Musculação,3.0,8-12,1.0
-12,Cadeira Adutora,Musculação,3.0,8-12,2.0
-12,Cadeira Abdutora,Musculação,3.0,8-12,3.0
-12,Elevação Pélvica (Ponte),Musculação,3.0,8-12,4.0
-12,Coice (Glute Kickback),Musculação,3.0,8-12,5.0
-13,Aquecimento,Cardio,1.0,10,0.0
-13,Abdominal 3/4,Musculação,3.0,8-12,1.0
-13,Bicicleta no Ar,Musculação,3.0,8-12,2.0
-13,Toque de Calcanhar Alternado,Musculação,3.0,8-12,3.0
-13,Elevação de Quadril com Joelhos Flexionados,Musculação,3.0,8-12,4.0
-13,Elevação de Quadril (Butt-Ups),Musculação,3.0,8-12,5.0
-14,Aquecimento,Cardio,1.0,10,0.0
-14,Supino Reto com Barra - Pegada Média,Musculação,4.0,4-6,1.0
-14,Voador (Butterfly),Musculação,4.0,4-6,2.0
-14,Tríceps Pulley com Corda,Musculação,4.0,4-6,3.0
-14,Elevação Lateral,Musculação,4.0,4-6,4.0
-14,Elevação Frontal com Halteres,Musculação,4.0,4-6,5.0
-14,Encolhimento com Halteres,Musculação,4.0,4-6,6.0
-15,Aquecimento,Cardio,1.0,10,0.0
-15,Agachamento Hack,Musculação,4.0,4-6,1.0
-15,Cadeira Extensora,Musculação,4.0,4-6,2.0
-15,Afundo com Halteres,Musculação,4.0,4-6,3.0
-15,Elevação de Panturrilha em Pé,Musculação,4.0,4-6,4.0
-15,Puxada do Rack (Rack Pull),Musculação,4.0,4-6,5.0
-17,Aquecimento,Cardio,1.0,10,0.0
-17,Remada no Cabo com Pés Elevados,Musculação,4.0,4-6,1.0
-17,Remada Isolateral na Máquina Articulada,Musculação,4.0,4-6,2.0
-17,Puxada Frontal (Pegada Aberta),Musculação,4.0,4-6,3.0
-17,Remada Alta na Máquina Articulada,Musculação,4.0,4-6,4.0
-17,Remada Alta no Cabo,Musculação,4.0,4-6,5.0
-17,Puxada no Rosto (Face Pull),Musculação,4.0,4-6,6.0
-17,Rosca Martelo Alternada,Musculação,4.0,4-6,7.0
-18,Aquecimento,Cardio,1.0,10,0.0
-18,Cadeira Flexora,Musculação,4.0,4-6,1.0
-18,Cadeira Adutora,Musculação,4.0,4-6,2.0
-18,Cadeira Abdutora,Musculação,4.0,4-6,3.0
-18,Elevação Pélvica (Ponte),Musculação,4.0,4-6,4.0
-18,Coice (Glute Kickback),Musculação,4.0,4-6,5.0
-19,Aquecimento,Cardio,1.0,10,0.0
-19,Abdominal 3/4,Musculação,4.0,4-6,1.0
-19,Bicicleta no Ar,Musculação,4.0,4-6,2.0
-19,Toque de Calcanhar Alternado,Musculação,4.0,4-6,3.0
-19,Elevação de Quadril com Joelhos Flexionados,Musculação,4.0,4-6,4.0
-19,Elevação de Quadril (Butt-Ups),Musculação,4.0,4-6,5.0
-20,Aquecimento,Cardio,1.0,10,0.0
-20,Supino Reto com Barra - Pegada Média,Musculação,3.0,10-12,1.0
-20,Voador (Butterfly),Musculação,3.0,10-12,2.0
-20,Tríceps Pulley com Corda,Musculação,3.0,10-12,3.0
-20,Elevação Lateral,Musculação,3.0,10-12,4.0
-20,Elevação Frontal com Halteres,Musculação,3.0,10-12,5.0
-20,Encolhimento com Halteres,Musculação,3.0,10-12,6.0
-21,Aquecimento,Cardio,1.0,10,0.0
-21,Agachamento Hack,Musculação,3.0,10-12,1.0
-21,Cadeira Extensora,Musculação,3.0,10-12,2.0
-21,Afundo com Halteres,Musculação,3.0,10-12,3.0
-21,Elevação de Panturrilha em Pé,Musculação,3.0,10-12,4.0
-21,Puxada do Rack (Rack Pull),Musculação,3.0,10-12,5.0
-23,Aquecimento,Cardio,1.0,10,0.0
-23,Remada no Cabo com Pés Elevados,Musculação,4.0,10-12,1.0
-23,Remada Isolateral na Máquina Articulada,Musculação,4.0,10-12,2.0
-23,Puxada Frontal (Pegada Aberta),Musculação,4.0,10-12,3.0
-23,Remada Alta na Máquina Articulada,Musculação,4.0,10-12,4.0
-23,Remada Alta no Cabo,Musculação,4.0,10-12,5.0
-23,Puxada no Rosto (Face Pull),Musculação,4.0,10-12,6.0
-23,Rosca Martelo Alternada,Musculação,4.0,10-12,7.0
-24,Aquecimento,Cardio,1.0,10,0.0
-24,Cadeira Flexora,Musculação,3.0,10-12,1.0
-24,Cadeira Adutora,Musculação,3.0,10-12,2.0
-24,Cadeira Abdutora,Musculação,3.0,10-12,3.0
-24,Elevação Pélvica (Ponte),Musculação,3.0,10-12,4.0
-24,Coice (Glute Kickback),Musculação,3.0,10-12,5.0
-25,Aquecimento,Cardio,1.0,10,0.0
-25,Abdominal 3/4,Musculação,3.0,10-12,1.0
-25,Bicicleta no Ar,Musculação,3.0,10-12,2.0
-25,Toque de Calcanhar Alternado,Musculação,3.0,10-12,3.0
-25,Elevação de Quadril com Joelhos Flexionados,Musculação,3.0,10-12,4.0
-25,Elevação de Quadril (Butt-Ups),Musculação,3.0,10-12,5.0
-4,Remada no Cabo com Pés Elevados,Musculação,3.0,12-15,1.0
-4,Aquecimento,Cardio,1.0,10,0.0
-4,Remada Isolateral na Máquina Articulada,Musculação,3.0,12-15,2.0
-4,Puxada Frontal (Pegada Aberta),Musculação,3.0,12-15,3.0
-4,Remada Alta na Máquina Articulada,Musculação,3.0,12-15,4.0
-4,Remada Alta no Cabo,Musculação,3.0,12-15,5.0
-4,Puxada no Rosto (Face Pull),Musculação,3.0,12-15,6.0
-4,Rosca Martelo Alternada,Musculação,3.0,12-15,7.0
-3,Corrida na Esteira,Cardio,1.0,60,0.0
-6,Abdominal 3/4,Musculação,3.0,12-15,1.0
-6,Aquecimento,Cardio,1.0,10,0.0
-6,Bicicleta no Ar,Musculação,3.0,12-15,2.0
-6,Toque de Calcanhar Alternado,Musculação,3.0,12-15,3.0
-6,Elevação de Quadril com Joelhos Flexionados,Musculação,3.0,12-15,4.0
-6,Elevação de Quadril (Butt-Ups),Musculação,3.0,12-15,5.0
-27,Corrida/Caminhada em Trilha,Cardio,1.0,30,0.0
+1,Aquecimento,Cardio,1.0,10,1.0
+1,Supino Inclinado com Halteres,Musculação,3.0,12-15,2.0
+1,Desenvolvimento com Halteres Sentado,Musculação,3.0,12-15,3.0
+1,Remada Curvada com Halteres,Musculação,3.0,12-15,4.0
+1,Elevação Lateral,Musculação,3.0,12-15,5.0
+1,Tríceps Pulley,Musculação,3.0,12-15,6.0
+2,Aquecimento,Cardio,1.0,10,1.0
+2,Agachamento Taça (Goblet Squat),Musculação,3.0,12-15,2.0
+2,Prensa de perna,Musculação,3.0,12-15,3.0
+2,Cadeira Extensora,Musculação,3.0,12-15,4.0
+2,Levantamento Terra Stiff com Halteres,Musculação,3.0,12-15,5.0
+2,Elevação de Panturrilha em Pé com Barra,Musculação,3.0,12-15,6.0
+3,Aquecimento,Cardio,1.0,10,1.0
+3,Puxada Frontal (Pegada Aberta),Musculação,3.0,12-15,2.0
+3,Remada Sentado no Cabo,Musculação,3.0,12-15,3.0
+3,Supino na Máquina Articulada,Musculação,3.0,12-15,4.0
+3,Crucifixo Invertido na Máquina,Musculação,3.0,12-15,5.0
+3,Rosca Bíceps com Halteres,Musculação,3.0,12-15,6.0
+4,Aquecimento,Cardio,1.0,10,1.0
+4,Levantamento Terra Stiff com Barra,Musculação,3.0,12-15,2.0
+4,Afundo com Halteres,Musculação,3.0,12-15,3.0
+4,Flexão de Perna (deitado),Musculação,3.0,12-15,4.0
+4,Elevação Pélvica (Ponte),Musculação,3.0,12-15,5.0
+4,Cadeira Abdutora,Musculação,3.0,12-15,6.0
+5,Aquecimento,Cardio,1.0,10,1.0
+5,Supino Reto com Barra - Pegada Média,Musculação,3.0,8-12,2.0
+5,Desenvolvimento Militar em Pé,Musculação,3.0,8-12,3.0
+5,Remada Curvada com Barra,Musculação,3.0,8-12,4.0
+5,Mergulho (Foco no Peito),Musculação,3.0,8-12,5.0
+5,Elevação Lateral,Musculação,3.0,8-12,6.0
+6,Aquecimento,Cardio,1.0,10,1.0
+6,Agachamento com Barra,Musculação,3.0,8-12,2.0
+6,Prensa de perna,Musculação,3.0,8-12,3.0
+6,Agachamento Búlgaro na Máquina Smith,Musculação,3.0,8-12,4.0
+6,Levantamento Terra Stiff com Barra,Musculação,3.0,8-12,5.0
+6,Elevação de Panturrilha Sentado (Máquina),Musculação,3.0,8-12,6.0
+7,Aquecimento,Cardio,1.0,10,1.0
+7,Pullups,Musculação,3.0,8-12,2.0
+7,Remada Unilateral com Halter (Serrote),Musculação,3.0,8-12,3.0
+7,Supino Inclinado com Halteres,Musculação,3.0,8-12,4.0
+7,Puxada no Rosto (Face Pull),Musculação,3.0,8-12,5.0
+7,Rosca com Barra EZ (Pegada Fechada),Musculação,3.0,8-12,6.0
+8,Aquecimento,Cardio,1.0,10,1.0
+8,Levantamento Terra Stiff com Barra,Musculação,3.0,8-12,2.0
+8,Flexão de Perna (deitado),Musculação,3.0,8-12,3.0
+8,Elevação Pélvica com Barra,Musculação,3.0,8-12,4.0
+8,Cadeira Adutora,Musculação,3.0,8-12,5.0
+8,Panturrilha no Leg Press,Musculação,3.0,8-12,6.0
+9,Aquecimento,Cardio,1.0,10,1.0
+9,Supino Reto com Barra - Pegada Média,Musculação,4.0,4-6,2.0
+9,Remada Curvada com Barra,Musculação,4.0,6-8,3.0
+9,Supino Fechado com Barra,Musculação,3.0,6-8,4.0
+10,Aquecimento,Cardio,1.0,10,1.0
+10,Agachamento com Barra,Musculação,4.0,4-6,2.0
+10,Levantamento Terra Stiff com Barra,Musculação,4.0,6-8,3.0
+10,Prensa de perna,Musculação,3.0,8-10,4.0
+11,Aquecimento,Cardio,1.0,10,1.0
+11,Desenvolvimento Militar em Pé,Musculação,4.0,4-6,2.0
+11,Pullups,Musculação,4.0,6-8,3.0
+11,Supino Inclinado com Halteres,Musculação,3.0,6-8,4.0
+12,Aquecimento,Cardio,1.0,10,1.0
+12,Levantamento Terra com Barra,Musculação,4.0,3-5,2.0
+12,Agachamento Frontal com Barra,Musculação,4.0,6-8,3.0
+12,Elevação Pélvica com Barra,Musculação,3.0,6-8,4.0
+13,Aquecimento,Cardio,1.0,10,1.0
+13,Supino Inclinado na Máquina Smith,Musculação,3.0,12-15,2.0
+13,Remada Unilateral com Halter (Serrote),Musculação,3.0,12-15,3.0
+13,Elevação Lateral,Musculação,3.0,12-15,4.0
+13,Elevação Frontal com Halteres,Musculação,3.0,12-15,5.0
+13,Tríceps Pulley,Musculação,3.0,12-15,6.0
+13,Rosca Bíceps no Cabo em Pé,Musculação,3.0,12-15,7.0
+14,Aquecimento,Cardio,1.0,10,1.0
+14,Prensa de perna,Musculação,3.0,12-15,2.0
+14,Afundo com Barra,Musculação,3.0,12-15,3.0
+14,Cadeira Extensora,Musculação,3.0,12-15,4.0
+14,Flexão de Perna (deitado),Musculação,3.0,12-15,5.0
+15,Aquecimento,Cardio,1.0,10,1.0
+15,Puxador Articulado,Musculação,3.0,12-15,2.0
+15,Crucifixo no Cabo (Crossover),Musculação,3.0,12-15,3.0
+15,Desenvolvimento Arnold com Halteres,Musculação,3.0,12-15,4.0
+15,Crucifixo Invertido com Halteres (Cabeça no banco),Musculação,3.0,12-15,5.0
+16,Aquecimento,Cardio,1.0,10,1.0
+16,Agachamento Hack,Musculação,3.0,12-15,2.0
+16,Levantamento Terra Stiff com Halteres,Musculação,3.0,12-15,3.0
+16,Elevação Pélvica (Ponte),Musculação,3.0,12-15,4.0
+16,Cadeira Adutora,Musculação,3.0,12-15,5.0
+16,Cadeira Abdutora,Musculação,3.0,12-15,6.0
+17,Aquecimento,Cardio,1.0,10,1.0
+17,Supino Reto com Barra - Pegada Média,Musculação,3.0,10-12,2.0
+17,Remada Pendlay,Musculação,3.0,10-12,3.0
+17,Desenvolvimento Militar em Pé,Musculação,3.0,10-12,4.0
+17,Rosca Direta com Barra,Musculação,3.0,10-12,5.0
+18,Aquecimento,Cardio,1.0,10,1.0
+18,Agachamento com Barra,Musculação,3.0,10-12,2.0
+18,Levantamento Terra Stiff com Barra,Musculação,3.0,10-12,3.0
+18,Elevação de Panturrilha em Pé com Barra,Musculação,3.0,10-12,4.0
+19,Aquecimento,Cardio,1.0,10,1.0
+19,Pullups,Musculação,3.0,10-12,2.0
+19,Supino Fechado com Barra,Musculação,3.0,10-12,3.0
+19,Remada Alta com Barra,Musculação,3.0,10-12,4.0
+19,Tríceps Testa com Barra EZ,Musculação,3.0,10-12,5.0
+20,Aquecimento,Cardio,1.0,10,1.0
+20,Levantamento Terra Romeno,Musculação,3.0,10-12,2.0
+20,Agachamento Frontal com Barra,Musculação,3.0,10-12,3.0
+20,Elevação Pélvica (Ponte),Musculação,3.0,10-12,4.0
+21,Aquecimento,Cardio,1.0,10,1.0
+21,Supino Reto com Barra - Pegada Média,Musculação,3.0,8-10,2.0
+21,Remada Curvada com Barra,Musculação,3.0,8-10,3.0
+21,Desenvolvimento Militar em Pé,Musculação,3.0,8-10,4.0
+21,Mergulho (Foco no Peito),Musculação,3.0,8-10,5.0
+22,Aquecimento,Cardio,1.0,10,1.0
+22,Agachamento com Barra,Musculação,3.0,8-10,2.0
+22,Bom Dia (Good Morning),Musculação,3.0,8-10,3.0
+22,Prensa de perna,Musculação,3.0,8-10,4.0
+23,Aquecimento,Cardio,1.0,10,1.0
+23,Pullups,Musculação,3.0,8-10,2.0
+23,Remada Unilateral com Halter (Serrote),Musculação,3.0,8-10,3.0
+23,Supino Inclinado com Halteres,Musculação,3.0,8-10,4.0
+23,Rosca Scott,Musculação,3.0,8-10,5.0
+24,Aquecimento,Cardio,1.0,10,1.0
+24,Levantamento Terra Stiff com Barra,Musculação,3.0,8-10,2.0
+24,Agachamento Búlgaro na Máquina Smith,Musculação,3.0,8-10,3.0
+24,Cadeira Flexora,Musculação,3.0,8-10,4.0
+25,Aquecimento,Cardio,1.0,10,1.0
+25,Supino Reto com Barra - Pegada Média,Musculação,5.0,3-5,2.0
+25,Remada Pendlay,Musculação,5.0,5,3.0
+26,Aquecimento,Cardio,1.0,10,1.0
+26,Agachamento com Barra,Musculação,5.0,3-5,2.0
+26,Levantamento Terra Stiff com Barra,Musculação,5.0,3-5,3.0
+27,Aquecimento,Cardio,1.0,10,1.0
+27,Desenvolvimento Militar em Pé,Musculação,5.0,3-5,2.0
+27,Pullups,Musculação,5.0,5,3.0
+28,Aquecimento,Cardio,1.0,10,1.0
+28,Levantamento Terra com Barra,Musculação,5.0,3-5,2.0
+29,Aquecimento,Cardio,1.0,10,1.0
+29,Supino Inclinado com Halteres,Musculação,3.0,10-15,2.0
+29,Remada Cavalinho,Musculação,3.0,10-15,3.0
+29,Desenvolvimento Arnold com Halteres,Musculação,3.0,10-15,4.0
+29,Supino Fechado com Barra,Musculação,3.0,10-15,5.0
+30,Aquecimento,Cardio,1.0,10,1.0
+30,Prensa de perna,Musculação,3.0,10-15,2.0
+30,Agachamento Hack,Musculação,3.0,10-15,3.0
+30,Cadeira Extensora,Musculação,3.0,10-15,4.0
+31,Aquecimento,Cardio,1.0,10,1.0
+31,Puxada Frontal (Pegada Fechada),Musculação,3.0,10-15,2.0
+31,Remada Alta com Halteres em Pé,Musculação,3.0,10-15,3.0
+31,Mergulho (Foco no Peito),Musculação,3.0,10-15,4.0
+31,Rosca Martelo Alternada,Musculação,3.0,10-15,5.0
+32,Aquecimento,Cardio,1.0,10,1.0
+32,Levantamento Terra Stiff com Halteres,Musculação,3.0,10-15,2.0
+32,Cadeira Flexora,Musculação,3.0,10-15,3.0
+32,Elevação Pélvica (Ponte),Musculação,3.0,10-15,4.0
+33,Aquecimento,Cardio,1.0,10,1.0
+33,Crucifixo Inclinado com Halteres,Musculação,3.0,12-15,2.0
+33,Puxada no Cabo (Pegada Invertida),Musculação,3.0,12-15,3.0
+33,Elevação Lateral na Polia,Musculação,3.0,12-15,4.0
+33,Rosca Martelo no Cabo com Corda,Musculação,3.0,12-15,5.0
+34,Aquecimento,Cardio,1.0,10,1.0
+34,Agachamento na Máquina Smith,Musculação,3.0,12-15,2.0
+34,Cadeira Flexora,Musculação,3.0,12-15,3.0
+34,Cadeira Adutora,Musculação,3.0,12-15,4.0
+35,Aquecimento,Cardio,1.0,10,1.0
+35,Remada na Máquina Articulada,Musculação,3.0,12-15,2.0
+35,Supino Declinado com Halteres,Musculação,3.0,12-15,3.0
+35,Crucifixo Invertido na Polia,Musculação,3.0,12-15,4.0
+35,Tríceps Pulley com Corda,Musculação,3.0,12-15,5.0
+36,Aquecimento,Cardio,1.0,10,1.0
+36,Afundo com Barra,Musculação,3.0,12-15,2.0
+36,Flexão de Perna (deitado),Musculação,3.0,12-15,3.0
+36,Cadeira Abdutora,Musculação,3.0,12-15,4.0
+37,Aquecimento,Cardio,1.0,10,1.0
+37,Supino Inclinado com Halteres,Musculação,3.0,10-12,2.0
+37,Remada Unilateral com Halter (Serrote),Musculação,3.0,10-12,3.0
+37,Pulldown com Braços Estendidos,Musculação,3.0,10-12,4.0
+37,Elevação Lateral,Musculação,3.0,10-12,5.0
+38,Aquecimento,Cardio,1.0,10,1.0
+38,Agachamento Hack,Musculação,3.0,10-12,2.0
+38,Levantamento Terra Stiff com Halteres,Musculação,3.0,10-12,3.0
+38,Cadeira Extensora,Musculação,3.0,10-12,4.0
+38,Cadeira Flexora,Musculação,3.0,10-12,5.0
+39,Aquecimento,Cardio,1.0,10,1.0
+39,Puxada Frontal (Pegada Fechada),Musculação,3.0,10-12,2.0
+39,Supino Reto com Halteres,Musculação,3.0,10-12,3.0
+39,Crucifixo no Cabo (Crossover),Musculação,3.0,10-12,4.0
+39,Flexão de Braço (Pegada Aberta),Musculação,3.0,10-12,5.0
+39,Rosca 21s,Musculação,3.0,10-12,6.0
+40,Aquecimento,Cardio,1.0,10,1.0
+40,Prensa de perna,Musculação,3.0,10-12,2.0
+40,Agachamento Búlgaro na Máquina Smith,Musculação,3.0,10-12,3.0
+40,Elevação Pélvica com Barra,Musculação,3.0,10-12,4.0
+41,Aquecimento,Cardio,1.0,10,1.0
+41,Supino na Máquina Articulada,Musculação,4.0,6-8,2.0
+41,Remada Cavalinho,Musculação,4.0,6-8,3.0
+41,Desenvolvimento Arnold com Halteres,Musculação,4.0,6-8,4.0
+42,Aquecimento,Cardio,1.0,10,1.0
+42,Agachamento Hack,Musculação,4.0,6-8,2.0
+42,Levantamento Terra Stiff com Halteres,Musculação,4.0,6-8,3.0
+42,Elevação de Panturrilha em Pé com Barra,Musculação,4.0,6-8,4.0
+43,Aquecimento,Cardio,1.0,10,1.0
+43,Puxador Articulado,Musculação,4.0,6-8,2.0
+43,Supino Inclinado na Máquina Smith,Musculação,4.0,6-8,3.0
+43,Elevação Lateral,Musculação,4.0,6-8,4.0
+44,Aquecimento,Cardio,1.0,10,1.0
+44,Prensa de perna,Musculação,4.0,6-8,2.0
+44,Flexão de Perna (deitado),Musculação,4.0,6-8,3.0
+44,Elevação Pélvica com Barra,Musculação,4.0,6-8,4.0
+45,Aquecimento,Cardio,1.0,10,1.0
+45,Crucifixo no Cabo (Crossover),Musculação,3.0,15-20,2.0
+45,Remada Alta com Barra,Musculação,3.0,15-20,3.0
+45,Elevação Frontal com Halteres,Musculação,3.0,15-20,4.0
+45,Elevação Lateral,Musculação,3.0,15-20,5.0
+45,Rosca Bíceps no Cabo em Pé,Musculação,3.0,15-20,6.0
+45,Tríceps Pulley,Musculação,3.0,15-20,7.0
+46,Aquecimento,Cardio,1.0,10,1.0
+46,Cadeira Extensora,Musculação,3.0,15-20,2.0
+46,Cadeira Flexora,Musculação,3.0,15-20,3.0
+46,Cadeira Adutora,Musculação,3.0,15-20,4.0
+46,Cadeira Abdutora,Musculação,3.0,15-20,5.0
+47,Aquecimento,Cardio,1.0,10,1.0
+47,Pulldown com Braços Estendidos,Musculação,3.0,15-20,2.0
+47,Voador (Butterfly),Musculação,3.0,15-20,3.0
+47,Desenvolvimento de Ombros na Máquina,Musculação,3.0,15-20,4.0
+47,Rosca Martelo Alternada,Musculação,3.0,15-20,5.0
+47,Tríceps Pulley com Corda,Musculação,3.0,15-20,6.0
+48,Aquecimento,Cardio,1.0,10,1.0
+48,Prensa de perna,Musculação,3.0,15-20,2.0
+48,Levantamento Terra Stiff com Halteres,Musculação,3.0,15-20,3.0
+48,Elevação Pélvica (Ponte),Musculação,3.0,15-20,4.0
+49,Caminhada,Cardio,1.0,30,1.0

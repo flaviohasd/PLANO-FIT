@@ -1,101 +1,365 @@
-dia_da_semana,plano_treino,id_mesociclo,semana_numero
-"Segunda,""A - Peito, ombro e tríceps"",1,1",,,
-"Segunda,""A - Peito, ombro e tríceps"",1,3",,,
-"Segunda,""A - Peito, ombro e tríceps"",1,4",,,
-"Segunda,""H - Peito, ombro e tríceps"",2,1",,,
-"Terça,""H - Peito, ombro e tríceps"",2,1",,,
-"Segunda,""H - Peito, ombro e tríceps"",2,2",,,
-"Terça,""H - Peito, ombro e tríceps"",2,2",,,
-"Segunda,""H - Peito, ombro e tríceps"",2,3",,,
-"Terça,""H - Peito, ombro e tríceps"",2,3",,,
-"Segunda,""H - Peito, ombro e tríceps"",2,4",,,
-"Terça,""H - Peito, ombro e tríceps"",2,4",,,
-"Segunda,""F - Peito, ombro e tríceps"",3,1",,,
-"Segunda,""F - Peito, ombro e tríceps"",3,2",,,
-"Segunda,""F - Peito, ombro e tríceps"",3,3",,,
-"Segunda,""D - Peito, ombro e tríceps"",4,1",,,
-"Segunda,""A - Peito, ombro e tríceps"",1,2",,,
-Segunda,"A - Peito, ombro e tríceps",1.0,4.0
-Terça,A - Quadríceps e panturrilha,1.0,4.0
-Quarta,A - Cardio HIIT,1.0,4.0
-Quinta,A - Costas e bíceps,1.0,4.0
-Sexta,A - Posteriores e glúteos,1.0,4.0
-Sábado,A - Core,1.0,4.0
-Domingo,Descanso,1.0,4.0
-Segunda,"A - Peito, ombro e tríceps",1.0,3.0
-Terça,A - Quadríceps e panturrilha,1.0,3.0
-Quarta,A - Cardio HIIT,1.0,3.0
-Quinta,A - Costas e bíceps,1.0,3.0
-Sexta,A - Posteriores e glúteos,1.0,3.0
-Sábado,A - Core,1.0,3.0
-Domingo,Descanso,1.0,3.0
-Segunda,"A - Peito, ombro e tríceps",1.0,2.0
-Terça,A - Quadríceps e panturrilha,1.0,2.0
-Quarta,A - Cardio HIIT,1.0,2.0
-Quinta,A - Costas e bíceps,1.0,2.0
-Sexta,A - Posteriores e glúteos,1.0,2.0
-Sábado,A - Core,1.0,2.0
-Domingo,Descanso,1.0,2.0
-Segunda,"A - Peito, ombro e tríceps",1.0,1.0
-Terça,A - Quadríceps e panturrilha,1.0,1.0
-Quarta,A - Cardio HIIT,1.0,1.0
-Quinta,A - Costas e bíceps,1.0,1.0
-Sexta,A - Posteriores e glúteos,1.0,1.0
-Sábado,A - Core,1.0,1.0
-Domingo,Descanso,1.0,1.0
-Segunda,"D - Peito, ombro e tríceps",4.0,1.0
-Terça,D - Quadríceps e panturrilha,4.0,1.0
-Quarta,Descanso,4.0,1.0
-Quinta,D - Costas e bíceps,4.0,1.0
-Sexta,D - Posteriores e glúteos,4.0,1.0
-Sábado,Descanso,4.0,1.0
-Domingo,Descanso,4.0,1.0
-Segunda,"F - Peito, ombro e tríceps",3.0,1.0
-Terça,F - Quadríceps e panturrilha,3.0,1.0
-Quarta,Descanso,3.0,1.0
-Quinta,F - Costas e bíceps,3.0,1.0
-Sexta,F - Costas e bíceps,3.0,1.0
-Sábado,Descanso,3.0,1.0
-Domingo,Descanso,3.0,1.0
-Segunda,"F - Peito, ombro e tríceps",3.0,2.0
-Terça,F - Quadríceps e panturrilha,3.0,2.0
-Quarta,Descanso,3.0,2.0
-Quinta,F - Costas e bíceps,3.0,2.0
-Sexta,F - Costas e bíceps,3.0,2.0
-Sábado,Descanso,3.0,2.0
-Domingo,Descanso,3.0,2.0
-Segunda,"F - Peito, ombro e tríceps",3.0,3.0
-Terça,F - Quadríceps e panturrilha,3.0,3.0
-Quarta,Descanso,3.0,3.0
-Quinta,F - Costas e bíceps,3.0,3.0
-Sexta,F - Costas e bíceps,3.0,3.0
-Sábado,Descanso,3.0,3.0
-Domingo,Descanso,3.0,3.0
-Segunda,"H - Peito, ombro e tríceps",2.0,1.0
-Terça,H - Quadríceps e panturrilha,2.0,1.0
-Quarta,H - Cardio HIIT,2.0,1.0
-Quinta,H - Costas e bíceps,2.0,1.0
-Sexta,H - Posteriores e glúteos,2.0,1.0
-Sábado,H - Core,2.0,1.0
-Domingo,Descanso,2.0,1.0
-Segunda,"H - Peito, ombro e tríceps",2.0,2.0
-Terça,H - Quadríceps e panturrilha,2.0,2.0
-Quarta,H - Cardio HIIT,2.0,2.0
-Quinta,H - Costas e bíceps,2.0,2.0
-Sexta,H - Posteriores e glúteos,2.0,2.0
-Sábado,H - Core,2.0,2.0
-Domingo,Descanso,2.0,2.0
-Segunda,"H - Peito, ombro e tríceps",2.0,3.0
-Terça,H - Quadríceps e panturrilha,2.0,3.0
-Quarta,H - Cardio HIIT,2.0,3.0
-Quinta,H - Costas e bíceps,2.0,3.0
-Sexta,H - Posteriores e glúteos,2.0,3.0
-Sábado,H - Core,2.0,3.0
-Domingo,Descanso,2.0,3.0
-Segunda,"H - Peito, ombro e tríceps",2.0,4.0
-Terça,H - Quadríceps e panturrilha,2.0,4.0
-Quarta,H - Cardio HIIT,2.0,4.0
-Quinta,H - Costas e bíceps,2.0,4.0
-Sexta,H - Posteriores e glúteos,2.0,4.0
-Sábado,H - Core,2.0,4.0
-Domingo,Descanso,2.0,4.0
+dia_da_semana,plano_treino,id_macrociclo,id_mesociclo,semana_numero
+Segunda,"Superior A - Peito, Ombros, Costas, Tríceps (Adaptação Anatômica)",,1,1
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Adaptação Anatômica)",,1,1
+Quarta,Descanso,,1,1
+Quinta,"Superior B - Costas, Peito, Bíceps (Adaptação Anatômica)",,1,1
+Sexta,"Inferior B - Posteriores, Glúteos, Quadríceps (Adaptação Anatômica)",,1,1
+Sábado,Descanso,,1,1
+Domingo,Descanso,,1,1
+Segunda,"Superior A - Peito, Ombros, Costas, Tríceps (Adaptação Anatômica)",,1,2
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Adaptação Anatômica)",,1,2
+Quarta,Descanso,,1,2
+Quinta,"Superior B - Costas, Peito, Bíceps (Adaptação Anatômica)",,1,2
+Sexta,"Inferior B - Posteriores, Glúteos, Quadríceps (Adaptação Anatômica)",,1,2
+Sábado,Descanso,,1,2
+Domingo,Descanso,,1,2
+Segunda,"Superior A - Peito, Ombros, Costas, Tríceps (Adaptação Anatômica)",,1,3
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Adaptação Anatômica)",,1,3
+Quarta,Descanso,,1,3
+Quinta,"Superior B - Costas, Peito, Bíceps (Adaptação Anatômica)",,1,3
+Sexta,"Inferior B - Posteriores, Glúteos, Quadríceps (Adaptação Anatômica)",,1,3
+Sábado,Descanso,,1,3
+Domingo,Descanso,,1,3
+Segunda,"Superior A - Peito, Ombros, Costas, Tríceps (Adaptação Anatômica)",,1,4
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Adaptação Anatômica)",,1,4
+Quarta,Descanso,,1,4
+Quinta,"Superior B - Costas, Peito, Bíceps (Adaptação Anatômica)",,1,4
+Sexta,"Inferior B - Posteriores, Glúteos, Quadríceps (Adaptação Anatômica)",,1,4
+Sábado,Descanso,,1,4
+Domingo,Descanso,,1,4
+Segunda,"Superior A - Peito, Ombros, Costas, Tríceps (Hipertrofia)",,2,1
+Terça,"Inferior A - Quadríceps, Glúteos, Posteriores (Hipertrofia)",,2,1
+Quarta,Descanso,,2,1
+Quinta,"Superior B - Costas, Peito, Bíceps (Hipertrofia)",,2,1
+Sexta,"Inferior B - Posteriores, Glúteos, Adutores (Hipertrofia)",,2,1
+Sábado,Descanso,,2,1
+Domingo,Descanso,,2,1
+Segunda,"Superior A - Peito, Ombros, Costas, Tríceps (Hipertrofia)",,2,2
+Terça,"Inferior A - Quadríceps, Glúteos, Posteriores (Hipertrofia)",,2,2
+Quarta,Descanso,,2,2
+Quinta,"Superior B - Costas, Peito, Bíceps (Hipertrofia)",,2,2
+Sexta,"Inferior B - Posteriores, Glúteos, Adutores (Hipertrofia)",,2,2
+Sábado,Descanso,,2,2
+Domingo,Descanso,,2,2
+Segunda,"Superior A - Peito, Ombros, Costas, Tríceps (Hipertrofia)",,2,3
+Terça,"Inferior A - Quadríceps, Glúteos, Posteriores (Hipertrofia)",,2,3
+Quarta,Descanso,,2,3
+Quinta,"Superior B - Costas, Peito, Bíceps (Hipertrofia)",,2,3
+Sexta,"Inferior B - Posteriores, Glúteos, Adutores (Hipertrofia)",,2,3
+Sábado,Descanso,,2,3
+Domingo,Descanso,,2,3
+Segunda,"Superior A - Peito, Ombros, Costas, Tríceps (Hipertrofia)",,2,4
+Terça,"Inferior A - Quadríceps, Glúteos, Posteriores (Hipertrofia)",,2,4
+Quarta,Descanso,,2,4
+Quinta,"Superior B - Costas, Peito, Bíceps (Hipertrofia)",,2,4
+Sexta,"Inferior B - Posteriores, Glúteos, Adutores (Hipertrofia)",,2,4
+Sábado,Descanso,,2,4
+Domingo,Descanso,,2,4
+Segunda,"Superior - Peito, Costas, Tríceps (Força)",,3,1
+Terça,"Inferior - Quadríceps, Posteriores, Glúteos (Força)",,3,1
+Quarta,Descanso,,3,1
+Quinta,"Superior - Ombros, Costas, Peito (Força)",,3,1
+Sexta,"Inferior - Posteriores, Glúteos, Quadríceps, Lombar (Força)",,3,1
+Sábado,Descanso,,3,1
+Domingo,Descanso,,3,1
+Segunda,"Superior - Peito, Costas, Tríceps (Força)",,3,2
+Terça,"Inferior - Quadríceps, Posteriores, Glúteos (Força)",,3,2
+Quarta,Descanso,,3,2
+Quinta,"Superior - Ombros, Costas, Peito (Força)",,3,2
+Sexta,"Inferior - Posteriores, Glúteos, Quadríceps, Lombar (Força)",,3,2
+Sábado,Descanso,,3,2
+Domingo,Descanso,,3,2
+Segunda,"Superior - Peito, Costas, Tríceps (Força)",,3,3
+Terça,"Inferior - Quadríceps, Posteriores, Glúteos (Força)",,3,3
+Quarta,Descanso,,3,3
+Quinta,"Superior - Ombros, Costas, Peito (Força)",,3,3
+Sexta,"Inferior - Posteriores, Glúteos, Quadríceps, Lombar (Força)",,3,3
+Sábado,Descanso,,3,3
+Domingo,Descanso,,3,3
+Segunda,"Superior A - Peito, Costas, Ombros, Braços (Choque Metabólico)",,4,1
+Terça,"Inferior A - Quadríceps, Glúteos, Posteriores (Choque Metabólico)",,4,1
+Quarta,Descanso,,4,1
+Quinta,"Superior B - Costas, Peito, Ombros (Choque Metabólico)",,4,1
+Sexta,"Inferior B - Quadríceps, Posteriores, Glúteos (Choque Metabólico)",,4,1
+Sábado,Descanso,,4,1
+Domingo,Descanso,,4,1
+Segunda,"Superior A - Peito, Costas, Ombros, Braços (Choque Metabólico)",,4,2
+Terça,"Inferior A - Quadríceps, Glúteos, Posteriores (Choque Metabólico)",,4,2
+Quarta,Descanso,,4,2
+Quinta,"Superior B - Costas, Peito, Ombros (Choque Metabólico)",,4,2
+Sexta,"Inferior B - Quadríceps, Posteriores, Glúteos (Choque Metabólico)",,4,2
+Sábado,Descanso,,4,2
+Domingo,Descanso,,4,2
+Segunda,"Superior A - Peito, Costas, Ombros, Braços (Choque Metabólico)",,4,3
+Terça,"Inferior A - Quadríceps, Glúteos, Posteriores (Choque Metabólico)",,4,3
+Quarta,Descanso,,4,3
+Quinta,"Superior B - Costas, Peito, Ombros (Choque Metabólico)",,4,3
+Sexta,"Inferior B - Quadríceps, Posteriores, Glúteos (Choque Metabólico)",,4,3
+Sábado,Descanso,,4,3
+Domingo,Descanso,,4,3
+Segunda,"Full Body (Recuperação Ativa / Deload)",,5,1
+Terça,Descanso,,5,1
+Quarta,"Full Body (Recuperação Ativa / Deload)",,5,1
+Quinta,Descanso,,5,1
+Sexta,"Full Body (Recuperação Ativa / Deload)",,5,1
+Sábado,Descanso,,5,1
+Domingo,Descanso,,5,1
+Segunda,"Superior A - Peito, Costas, Ombros, Bíceps (Adaptação)",,6,1
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Adaptação)",,6,1
+Quarta,Descanso,,6,1
+Quinta,"Superior B - Costas, Tríceps, Peito, Ombros (Adaptação)",,6,1
+Sexta,"Inferior B - Posteriores, Glúteos, Quadríceps (Adaptação)",,6,1
+Sábado,Descanso,,6,1
+Domingo,Descanso,,6,1
+Segunda,"Superior A - Peito, Costas, Ombros, Bíceps (Adaptação)",,6,2
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Adaptação)",,6,2
+Quarta,Descanso,,6,2
+Quinta,"Superior B - Costas, Tríceps, Peito, Ombros (Adaptação)",,6,2
+Sexta,"Inferior B - Posteriores, Glúteos, Quadríceps (Adaptação)",,6,2
+Sábado,Descanso,,6,2
+Domingo,Descanso,,6,2
+Segunda,"Superior A - Peito, Costas, Ombros, Bíceps (Adaptação)",,6,3
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Adaptação)",,6,3
+Quarta,Descanso,,6,3
+Quinta,"Superior B - Costas, Tríceps, Peito, Ombros (Adaptação)",,6,3
+Sexta,"Inferior B - Posteriores, Glúteos, Quadríceps (Adaptação)",,6,3
+Sábado,Descanso,,6,3
+Domingo,Descanso,,6,3
+Segunda,"Superior A - Peito, Costas, Ombros, Bíceps (Adaptação)",,6,4
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Adaptação)",,6,4
+Quarta,Descanso,,6,4
+Quinta,"Superior B - Costas, Tríceps, Peito, Ombros (Adaptação)",,6,4
+Sexta,"Inferior B - Posteriores, Glúteos, Quadríceps (Adaptação)",,6,4
+Sábado,Descanso,,6,4
+Domingo,Descanso,,6,4
+Segunda,"Superior A - Peito, Costas, Ombros, Tríceps (Hipertrofia Powerbuilding)",,7,1
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Hipertrofia Powerbuilding)",,7,1
+Quarta,Descanso,,7,1
+Quinta,"Superior B - Costas, Peito, Bíceps (Hipertrofia Powerbuilding)",,7,1
+Sexta,"Inferior B - Posteriores, Glúteos, Quadríceps (Hipertrofia Powerbuilding)",,7,1
+Sábado,Descanso,,7,1
+Domingo,Descanso,,7,1
+Segunda,"Superior A - Peito, Costas, Ombros, Tríceps (Hipertrofia Powerbuilding)",,7,2
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Hipertrofia Powerbuilding)",,7,2
+Quarta,Descanso,,7,2
+Quinta,"Superior B - Costas, Peito, Bíceps (Hipertrofia Powerbuilding)",,7,2
+Sexta,"Inferior B - Posteriores, Glúteos, Quadríceps (Hipertrofia Powerbuilding)",,7,2
+Sábado,Descanso,,7,2
+Domingo,Descanso,,7,2
+Segunda,"Superior A - Peito, Costas, Ombros, Tríceps (Hipertrofia Powerbuilding)",,7,3
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Hipertrofia Powerbuilding)",,7,3
+Quarta,Descanso,,7,3
+Quinta,"Superior B - Costas, Peito, Bíceps (Hipertrofia Powerbuilding)",,7,3
+Sexta,"Inferior B - Posteriores, Glúteos, Quadríceps (Hipertrofia Powerbuilding)",,7,3
+Sábado,Descanso,,7,3
+Domingo,Descanso,,7,3
+Segunda,"Superior A - Peito, Costas, Ombros, Tríceps (Hipertrofia Powerbuilding)",,7,4
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Hipertrofia Powerbuilding)",,7,4
+Quarta,Descanso,,7,4
+Quinta,"Superior B - Costas, Peito, Bíceps (Hipertrofia Powerbuilding)",,7,4
+Sexta,"Inferior B - Posteriores, Glúteos, Quadríceps (Hipertrofia Powerbuilding)",,7,4
+Sábado,Descanso,,7,4
+Domingo,Descanso,,7,4
+Segunda,"Superior A - Peito (Foco), Costas (Força Powerbuilding)",,8,1
+Terça,"Inferior A - Quadríceps (Foco), Posteriores, Glúteos (Força Powerbuilding)",,8,1
+Quarta,Descanso,,8,1
+Quinta,"Superior B - Ombros (Foco), Costas (Força Powerbuilding)",,8,1
+Sexta,"Inferior B - Corpo Inteiro (Foco Terra) (Força Powerbuilding)",,8,1
+Sábado,Descanso,,8,1
+Domingo,Descanso,,8,1
+Segunda,"Superior A - Peito (Foco), Costas (Força Powerbuilding)",,8,2
+Terça,"Inferior A - Quadríceps (Foco), Posteriores, Glúteos (Força Powerbuilding)",,8,2
+Quarta,Descanso,,8,2
+Quinta,"Superior B - Ombros (Foco), Costas (Força Powerbuilding)",,8,2
+Sexta,"Inferior B - Corpo Inteiro (Foco Terra) (Força Powerbuilding)",,8,2
+Sábado,Descanso,,8,2
+Domingo,Descanso,,8,2
+Segunda,"Superior A - Peito (Foco), Costas (Força Powerbuilding)",,8,3
+Terça,"Inferior A - Quadríceps (Foco), Posteriores, Glúteos (Força Powerbuilding)",,8,3
+Quarta,Descanso,,8,3
+Quinta,"Superior B - Ombros (Foco), Costas (Força Powerbuilding)",,8,3
+Sexta,"Inferior B - Corpo Inteiro (Foco Terra) (Força Powerbuilding)",,8,3
+Sábado,Descanso,,8,3
+Domingo,Descanso,,8,3
+Segunda,"Superior A - Peito (Foco), Costas (Força Powerbuilding)",,8,4
+Terça,"Inferior A - Quadríceps (Foco), Posteriores, Glúteos (Força Powerbuilding)",,8,4
+Quarta,Descanso,,8,4
+Quinta,"Superior B - Ombros (Foco), Costas (Força Powerbuilding)",,8,4
+Sexta,"Inferior B - Corpo Inteiro (Foco Terra) (Força Powerbuilding)",,8,4
+Sábado,Descanso,,8,4
+Domingo,Descanso,,8,4
+Segunda,"Superior A - Peito, Costas, Ombros, Tríceps (Choque Powerbuilding)",,9,1
+Terça,"Inferior A - Quadríceps (Ênfase) (Choque Powerbuilding)",,9,1
+Quarta,Descanso,,9,1
+Quinta,"Superior B - Costas, Ombros, Peito, Braços (Choque Powerbuilding)",,9,1
+Sexta,"Inferior B - Posteriores, Glúteos (Choque Powerbuilding)",,9,1
+Sábado,Descanso,,9,1
+Domingo,Descanso,,9,1
+Segunda,"Superior A - Peito, Costas, Ombros, Tríceps (Choque Powerbuilding)",,9,2
+Terça,"Inferior A - Quadríceps (Ênfase) (Choque Powerbuilding)",,9,2
+Quarta,Descanso,,9,2
+Quinta,"Superior B - Costas, Ombros, Peito, Braços (Choque Powerbuilding)",,9,2
+Sexta,"Inferior B - Posteriores, Glúteos (Choque Powerbuilding)",,9,2
+Sábado,Descanso,,9,2
+Domingo,Descanso,,9,2
+Segunda,"Full Body (Recuperação Ativa / Deload)",,10,1
+Terça,Descanso,,10,1
+Quarta,"Full Body (Recuperação Ativa / Deload)",,10,1
+Quinta,Descanso,,10,1
+Sexta,"Full Body (Recuperação Ativa / Deload)",,10,1
+Sábado,Descanso,,10,1
+Domingo,Descanso,,10,1
+Segunda,"Superior A - Peito, Costas, Ombros, Bíceps (Adaptação Escultor)",,11,1
+Terça,"Inferior A - Quadríceps, Posteriores, Adutores (Adaptação Escultor)",,11,1
+Quarta,Descanso,,11,1
+Quinta,"Superior B - Costas, Peito, Tríceps (Adaptação Escultor)",,11,1
+Sexta,"Inferior B - Quadríceps, Posteriores, Glúteos (Adaptação Escultor)",,11,1
+Sábado,Descanso,,11,1
+Domingo,Descanso,,11,1
+Segunda,"Superior A - Peito, Costas, Ombros, Bíceps (Adaptação Escultor)",,11,2
+Terça,"Inferior A - Quadríceps, Posteriores, Adutores (Adaptação Escultor)",,11,2
+Quarta,Descanso,,11,2
+Quinta,"Superior B - Costas, Peito, Tríceps (Adaptação Escultor)",,11,2
+Sexta,"Inferior B - Quadríceps, Posteriores, Glúteos (Adaptação Escultor)",,11,2
+Sábado,Descanso,,11,2
+Domingo,Descanso,,11,2
+Segunda,"Superior A - Peito, Costas, Ombros, Bíceps (Adaptação Escultor)",,11,3
+Terça,"Inferior A - Quadríceps, Posteriores, Adutores (Adaptação Escultor)",,11,3
+Quarta,Descanso,,11,3
+Quinta,"Superior B - Costas, Peito, Tríceps (Adaptação Escultor)",,11,3
+Sexta,"Inferior B - Quadríceps, Posteriores, Glúteos (Adaptação Escultor)",,11,3
+Sábado,Descanso,,11,3
+Domingo,Descanso,,11,3
+Segunda,"Superior A - Peito, Costas, Ombros, Bíceps (Adaptação Escultor)",,11,4
+Terça,"Inferior A - Quadríceps, Posteriores, Adutores (Adaptação Escultor)",,11,4
+Quarta,Descanso,,11,4
+Quinta,"Superior B - Costas, Peito, Tríceps (Adaptação Escultor)",,11,4
+Sexta,"Inferior B - Quadríceps, Posteriores, Glúteos (Adaptação Escultor)",,11,4
+Sábado,Descanso,,11,4
+Domingo,Descanso,,11,4
+Segunda,"Superior A - Peito, Costas, Ombros (Hipertrofia Escultor)",,12,1
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Hipertrofia Escultor)",,12,1
+Quarta,Descanso,,12,1
+Quinta,"Superior B - Costas, Peito, Bíceps (Hipertrofia Escultor)",,12,1
+Sexta,"Inferior B - Quadríceps, Glúteos (Hipertrofia Escultor)",,12,1
+Sábado,Descanso,,12,1
+Domingo,Descanso,,12,1
+Segunda,"Superior A - Peito, Costas, Ombros (Hipertrofia Escultor)",,12,2
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Hipertrofia Escultor)",,12,2
+Quarta,Descanso,,12,2
+Quinta,"Superior B - Costas, Peito, Bíceps (Hipertrofia Escultor)",,12,2
+Sexta,"Inferior B - Quadríceps, Glúteos (Hipertrofia Escultor)",,12,2
+Sábado,Descanso,,12,2
+Domingo,Descanso,,12,2
+Segunda,"Superior A - Peito, Costas, Ombros (Hipertrofia Escultor)",,12,3
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Hipertrofia Escultor)",,12,3
+Quarta,Descanso,,12,3
+Quinta,"Superior B - Costas, Peito, Bíceps (Hipertrofia Escultor)",,12,3
+Sexta,"Inferior B - Quadríceps, Glúteos (Hipertrofia Escultor)",,12,3
+Sábado,Descanso,,12,3
+Domingo,Descanso,,12,3
+Segunda,"Superior A - Peito, Costas, Ombros (Hipertrofia Escultor)",,12,4
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Hipertrofia Escultor)",,12,4
+Quarta,Descanso,,12,4
+Quinta,"Superior B - Costas, Peito, Bíceps (Hipertrofia Escultor)",,12,4
+Sexta,"Inferior B - Quadríceps, Glúteos (Hipertrofia Escultor)",,12,4
+Sábado,Descanso,,12,4
+Domingo,Descanso,,12,4
+Segunda,"Superior A - Peito, Costas, Ombros (Força-Resistência)",,13,1
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Força-Resistência)",,13,1
+Quarta,Descanso,,13,1
+Quinta,"Superior B - Costas, Peito, Ombros (Força-Resistência)",,13,1
+Sexta,"Inferior B - Quadríceps, Posteriores, Glúteos (Força-Resistência)",,13,1
+Sábado,Descanso,,13,1
+Domingo,Descanso,,13,1
+Segunda,"Superior A - Peito, Costas, Ombros (Força-Resistência)",,13,2
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Força-Resistência)",,13,2
+Quarta,Descanso,,13,2
+Quinta,"Superior B - Costas, Peito, Ombros (Força-Resistência)",,13,2
+Sexta,"Inferior B - Quadríceps, Posteriores, Glúteos (Força-Resistência)",,13,2
+Sábado,Descanso,,13,2
+Domingo,Descanso,,13,2
+Segunda,"Superior A - Peito, Costas, Ombros (Força-Resistência)",,13,3
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Força-Resistência)",,13,3
+Quarta,Descanso,,13,3
+Quinta,"Superior B - Costas, Peito, Ombros (Força-Resistência)",,13,3
+Sexta,"Inferior B - Quadríceps, Posteriores, Glúteos (Força-Resistência)",,13,3
+Sábado,Descanso,,13,3
+Domingo,Descanso,,13,3
+Segunda,"Superior A - Peito, Costas, Ombros (Força-Resistência)",,13,4
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Força-Resistência)",,13,4
+Quarta,Descanso,,13,4
+Quinta,"Superior B - Costas, Peito, Ombros (Força-Resistência)",,13,4
+Sexta,"Inferior B - Quadríceps, Posteriores, Glúteos (Força-Resistência)",,13,4
+Sábado,Descanso,,13,4
+Domingo,Descanso,,13,4
+Segunda,"Superior A - Peito, Ombros, Braços (Choque Escultor)",,14,1
+Terça,"Inferior A - Quadríceps, Posteriores, Adutores, Abdutores (Choque Escultor)",,14,1
+Quarta,Descanso,,14,1
+Quinta,"Superior B - Costas, Peito, Ombros, Braços (Choque Escultor)",,14,1
+Sexta,"Inferior B - Quadríceps, Posteriores, Glúteos (Choque Escultor)",,14,1
+Sábado,Descanso,,14,1
+Domingo,Descanso,,14,1
+Segunda,"Superior A - Peito, Ombros, Braços (Choque Escultor)",,14,2
+Terça,"Inferior A - Quadríceps, Posteriores, Adutores, Abdutores (Choque Escultor)",,14,2
+Quarta,Descanso,,14,2
+Quinta,"Superior B - Costas, Peito, Ombros, Braços (Choque Escultor)",,14,2
+Sexta,"Inferior B - Quadríceps, Posteriores, Glúteos (Choque Escultor)",,14,2
+Sábado,Descanso,,14,2
+Domingo,Descanso,,14,2
+Segunda,"Full Body (Recuperação Ativa / Deload)",,15,1
+Terça,Descanso,,15,1
+Quarta,"Full Body (Recuperação Ativa / Deload)",,15,1
+Quinta,Descanso,,15,1
+Sexta,"Full Body (Recuperação Ativa / Deload)",,15,1
+Sábado,Descanso,,15,1
+Domingo,Descanso,,15,1
+Segunda,"Full Body (Recuperação Ativa / Deload)",,16,1
+Terça,Descanso,,16,1
+Quarta,"Full Body (Recuperação Ativa / Deload)",,16,1
+Quinta,Descanso,,16,1
+Sexta,"Full Body (Recuperação Ativa / Deload)",,16,1
+Sábado,Descanso,,16,1
+Domingo,Descanso,,16,1
+Segunda,"Full Body (Recuperação Ativa / Deload)",,16,2
+Terça,Descanso,,16,2
+Quarta,"Full Body (Recuperação Ativa / Deload)",,16,2
+Quinta,Descanso,,16,2
+Sexta,"Full Body (Recuperação Ativa / Deload)",,16,2
+Sábado,Descanso,,16,2
+Domingo,Descanso,,16,2
+Segunda,"Superior A - Peito, Ombros, Costas, Tríceps (Adaptação Anatômica)",,17,1
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Adaptação Anatômica)",,17,1
+Quarta,Descanso,,17,1
+Quinta,"Superior B - Costas, Peito, Bíceps (Adaptação Anatômica)",,17,1
+Sexta,"Inferior B - Posteriores, Glúteos, Quadríceps (Adaptação Anatômica)",,17,1
+Sábado,Descanso,,17,1
+Domingo,Descanso,,17,1
+Segunda,"Superior A - Peito, Ombros, Costas, Tríceps (Adaptação Anatômica)",,17,2
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Adaptação Anatômica)",,17,2
+Quarta,Descanso,,17,2
+Quinta,"Superior B - Costas, Peito, Bíceps (Adaptação Anatômica)",,17,2
+Sexta,"Inferior B - Posteriores, Glúteos, Quadríceps (Adaptação Anatômica)",,17,2
+Sábado,Descanso,,17,2
+Domingo,Descanso,,17,2
+Segunda,"Superior A - Peito, Ombros, Costas, Tríceps (Adaptação Anatômica)",,17,3
+Terça,"Inferior A - Quadríceps, Posteriores, Glúteos (Adaptação Anatômica)",,17,3
+Quarta,Descanso,,17,3
+Quinta,"Superior B - Costas, Peito, Bíceps (Adaptação Anatômica)",,17,3
+Sexta,"Inferior B - Posteriores, Glúteos, Quadríceps (Adaptação Anatômica)",,17,3
+Sábado,Descanso,,17,3
+Domingo,Descanso,,17,3
+Segunda,Descanso,,18,1
+Terça,Descanso,,18,1
+Quarta,Descanso,,18,1
+Quinta,Descanso,,18,1
+Sexta,Descanso,,18,1
+Sábado,Descanso,,18,1
+Domingo,Descanso,,18,1
+Segunda,Descanso,,18,2
+Terça,Descanso,,18,2
+Quarta,Descanso,,18,2
+Quinta,Descanso,,18,2
+Sexta,Descanso,,18,2
+Sábado,Descanso,,18,2
+Domingo,Descanso,,18,2

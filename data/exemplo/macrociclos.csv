@@ -1,2 +1,5 @@
-id_macrociclo,nome,objetivo_principal,data_inicio,data_fim
-1,GET LEAN,Emagrecimento e aumento de massa magra,2025-09-01,2025-12-09
+﻿id_macrociclo,nome,objetivo_principal,data_inicio,data_fim
+1,"A FUNDAÇÃO","Força e Hipertrofia Balanceada. O objetivo é construir a base sólida de força e massa muscular que servirá de alicerce para todo o ano.","2025-09-01","2025-12-14"
+2,"O FORJADOR DE FORÇA","Powerbuilding (Força máxima com foco em hipertrofia). O foco muda para a força bruta e a densidade muscular, utilizando predominantemente barras e pesos livres.","2025-12-15","2026-03-29"
+3,"O ESCULTOR MUSCULAR","Hipertrofia Máxima e Estética. O foco é 100% na qualidade muscular e conexão mente-músculo, usando mais halteres, cabos e técnicas de intensidade.","2026-03-30","2026-07-12"
+4,"TRANSIÇÃO E POTENCIAÇÃO","Recuperação Estratégica. Após 45 semanas intensas, este bloco final garante a recuperação total para que o próximo ano comece ainda mais forte.","2026-07-13","2026-08-30"
