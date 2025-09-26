@@ -1277,7 +1277,7 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
                                         st.markdown(anim_html, unsafe_allow_html=True)
                                 elif images:
                                     image_path = base_image_path / Path(images[0])
-                                    if image_path.exists(): st.image(str(image_path), use_column_width=True)
+                                    if image_path.exists(): st.image(str(image_path), width='stretch')
 
                                 st.markdown("<br/>", unsafe_allow_html=True)
                                 col_1, col_2 = st.columns([1, 1])
@@ -1545,6 +1545,10 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
     Renderiza a sub-aba para registrar treinos, com um painel de controle
     customizado para corresponder fielmente ao layout do usuário.
     """
+    if st.session_state.get("revert_plan_selection", False):
+        st.session_state.sb_plano_selecionado = st.session_state.current_plan_name
+        st.session_state.revert_plan_selection = False
+
     # --- LÓGICA DE DADOS E TIMERS (INICIALIZAÇÃO) ---
     scheduled_workout = logic.get_workout_for_day(user_data, date.today())
     df_log_exercicios = user_data.get("df_log_exercicios", pd.DataFrame())
@@ -1579,14 +1583,11 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
     df_planos_treino = user_data.get("df_planos_treino", pd.DataFrame(columns=['nome_plano']))
     all_plans = ["Nenhum (Avulso)"] + df_planos_treino['nome_plano'].unique().tolist()
     
-    if 'current_plan_name' in st.session_state:
-        scheduled_plan_name = st.session_state.current_plan_name
-    else:
-        scheduled_plan_name = scheduled_workout['nome_plano'] if scheduled_workout else "Nenhum (Avulso)"
+    if 'current_plan_name' not in st.session_state:
+        st.session_state.current_plan_name = scheduled_workout['nome_plano'] if scheduled_workout else "Nenhum (Avulso)"
     
-    # Define o índice padrão para o selectbox.
     try:
-        default_index = all_plans.index(scheduled_plan_name)
+        default_index = all_plans.index(st.session_state.current_plan_name)
     except ValueError:
         default_index = 0
     
@@ -1638,6 +1639,10 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                 st.session_state.last_check_time = None
                 st.session_state.set_durations = {}
                 st.session_state.checkbox_states = {}
+                # Limpa também os widgets de treino ao zerar
+                keys_to_delete = [k for k in st.session_state if k.startswith(('done_', 'kg_', 'reps_', 'min_'))]
+                for key in keys_to_delete:
+                    del st.session_state[key]
                 st.rerun()
         
         # Coluna 2: Selectbox do Plano
@@ -1696,9 +1701,24 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                     </div>
                     """, unsafe_allow_html=True)
 
-    # --- LÓGICA PARA ATUALIZAR O TREINO QUANDO O SELECTBOX MUDA ---
-    selection_changed = 'current_plan_name' in st.session_state and st.session_state.current_plan_name != selected_plan_name
-    if 'todays_workout_df' not in st.session_state or selection_changed:
+    selection_changed = st.session_state.current_plan_name != selected_plan_name
+    
+    workout_in_progress = any(st.session_state.get(key, False) for key in st.session_state if key.startswith('done_'))
+            
+    if selection_changed and workout_in_progress:
+        st.warning("Você tem um treino em andamento. Trocar de plano irá descartar os dados não salvos. Deseja continuar?")
+        col1, col2, _ = st.columns([1,1,2])
+        if col1.button("Sim, descartar e trocar", key="confirm_discard"):
+            st.session_state.current_plan_name = selected_plan_name
+            for key in ['todays_workout_df', 'workout_sets', 'set_durations', 'checkbox_states']:
+                if key in st.session_state:
+                    del st.session_state[key]
+            st.rerun()
+        if col2.button("Não, continuar treino", key="cancel_discard"):
+            st.session_state.revert_plan_selection = True
+            st.rerun()
+
+    elif 'todays_workout_df' not in st.session_state or selection_changed:
         df_to_load = pd.DataFrame()
         if selected_plan_name != "Nenhum (Avulso)":
             df_planos = user_data.get("df_planos_treino", pd.DataFrame())
@@ -1713,22 +1733,26 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                         exercicios_do_plano = exercicios_do_plano.sort_values('ordem').reset_index(drop=True)
                     df_to_load = exercicios_do_plano
 
-        # Reseta o estado da sessão de treino
         st.session_state.todays_workout_df = df_to_load
         st.session_state.current_plan_name = selected_plan_name
         st.session_state.workout_sets = {idx: int(row.get('series_planejadas', 1)) for idx, row in df_to_load.iterrows()} if not df_to_load.empty else {}
         st.session_state.adding_exercise = False
         st.session_state.set_durations = {}
         st.session_state.checkbox_states = {}
+
+        # --- CORREÇÃO DO BUG ---
+        # Limpeza completa do estado de widgets de treino anteriores para evitar "fantasmas"
+        keys_to_delete = [k for k in st.session_state if k.startswith(('done_', 'kg_', 'reps_', 'min_'))]
+        for key in keys_to_delete:
+            del st.session_state[key]
+        
         st.rerun()
 
-    # --- INICIALIZAÇÃO DE ESTADOS RESTANTES ---
     if 'last_check_time' not in st.session_state: st.session_state.last_check_time = None
     with st.sidebar:
         if st.session_state.timer_started or st.session_state.rest_timer_running:
             st_autorefresh(interval=1000, key="global_timer_refresher")
 
-    # --- LÓGICA PARA RENDERIZAR O PLANO DE TREINO ---
     if 'todays_workout_df' in st.session_state and not st.session_state.todays_workout_df.empty:
         exercicios_df = st.session_state.todays_workout_df.copy()
         
@@ -1761,7 +1785,6 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                     num_series = st.session_state.workout_sets.get(index, 1)
 
                     if tipo_exercicio == 'Cardio':
-                        # Cabeçalho e lógica para Cardio
                         col_header = st.columns([0.4, 0.8, 2, 2, 2.4, 0.8])
                         col_header[0].write("")
                         col_header[1].write("**Série**")
@@ -1781,8 +1804,7 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                             cols[3].markdown(f"`{exercicio['repeticoes_planejadas']}`")
                             cols[4].number_input("Min", key=f"min_{key_base}", min_value=0, step=1, label_visibility="collapsed", value=previous_perf_data.get('minutos', 0))
                             cols[5].checkbox("Feito", key=f"done_{key_base}", label_visibility="collapsed")
-                    else: # Musculação
-                        # Cabeçalho e lógica para Musculação
+                    else: 
                         col_header = st.columns([0.4, 0.8, 2, 2, 1.2, 1.2, 0.8])
                         col_header[0].write("")
                         col_header[1].write("**Série**")
@@ -1842,7 +1864,6 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                         st.rerun()
 
         if st.session_state.get('adding_exercise', False):
-            # Lógica para adicionar novo exercício
             with st.form("new_exercise_form"):
                 st.subheader("Adicionar Novo Exercício")
                 new_ex_name = st.selectbox("Selecione o exercício", options=sorted(exercise_name_list))
@@ -1871,7 +1892,6 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
         data_treino = c3_sum.date_input("Data do treino", value=date.today(), key="date_input_main_log")
 
         if st.button("Salvar Treino", type="primary", width='stretch'):
-            # Lógica de salvamento do treino
             new_log_entries, dados_pessoais = [], user_data.get("dados_pessoais", {})
             peso_usuario, total_calorias_musculacao, total_calorias_cardio, total_minutos_cardio, untimed_musc_sets = dados_pessoais.get(config.COL_PESO, 70.0), 0.0, 0.0, 0, []
             
@@ -1909,7 +1929,6 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                 novo_treino_simples = pd.DataFrame([{'Data': data_treino.strftime("%d/%m/%Y"), 'Plano Executado': st.session_state.current_plan_name, 'Tipo de Treino': "Misto" if total_calorias_cardio > 0 and total_calorias_musculacao > 0 else ("Cardio" if total_calorias_cardio > 0 else "Musculação"), 'Tempo (min)': duracao_min_total, 'Calorias Gastas': round(gasto_est_total, 2)}])
                 utils.adicionar_registro_df(novo_treino_simples, utils.get_user_data_path(username, config.FILE_LOG_TREINOS_SIMPLES))
                 
-                # Limpar estado da sessão
                 for key in ['todays_workout_df', 'current_plan_name', 'workout_sets', 'adding_exercise', 'timer_started', 'start_time', 'elapsed_minutes', 'rest_timer_running', 'rest_end_time', 'current_rest_duration', 'last_check_time', 'set_durations', 'checkbox_states']:
                     if key in st.session_state: del st.session_state[key]
                 st.toast("Treino salvo com sucesso!", icon="💪")
@@ -1929,7 +1948,6 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
             dft_editado = st.data_editor(dft_simples_sorted, num_rows="dynamic", width='stretch', key="editor_treinos_realizados", hide_index=True, column_config={"Calorias Gastas": st.column_config.NumberColumn("Calorias Gastas (kcal)", format="%.0f")})
             
             if st.button("💾 Salvar Alterações no Histórico", key="salvar_historico_treino"):
-                # Lógica de salvamento do histórico
                 original_dates = set(pd.to_datetime(dft_simples[config.COL_DATA], format="%d/%m/%Y").dt.strftime('%d/%m/%Y'))
                 edited_dates = set(pd.to_datetime(dft_editado[config.COL_DATA]).dt.strftime('%d/%m/%Y'))
                 deleted_dates = original_dates - edited_dates
@@ -1942,7 +1960,6 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                 utils.salvar_df(dft_editado, utils.get_user_data_path(username, config.FILE_LOG_TREINOS_SIMPLES))
                 st.toast("Histórico de treinos atualizado!", icon="💾")
                 st.rerun()
-
 
 def render_registro_avulso_form(username: str, user_data: Dict[str, Any]):
     """Renderiza o formulário simples para registrar um treino avulso."""

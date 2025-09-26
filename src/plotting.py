@@ -22,6 +22,11 @@ def plot_energy_composition(tmb: float, tdee: float, alvo: float):
         tdee (float): Gasto Energético Diário Total.
         alvo (float): Alvo calórico diário.
     """
+    # (MELHORIA ITEM 7) Adiciona verificação de dados de entrada
+    if not all(isinstance(x, (int, float)) and x > 0 for x in [tmb, tdee, alvo]):
+        st.info("Dados de gasto energético insuficientes para gerar o gráfico.")
+        return
+
     gasto_atividade = tdee - tmb
     
     fig = go.Figure()
@@ -89,7 +94,7 @@ def plot_energy_composition(tmb: float, tdee: float, alvo: float):
     )
     fig.update_yaxes(showticklabels=False)
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width='stretch')
 
 def plot_composition_range(title: str, current_value: float, normal_range: Tuple[float, float], total_range: Tuple[float, float]):
     """
@@ -102,6 +107,11 @@ def plot_composition_range(title: str, current_value: float, normal_range: Tuple
         normal_range (Tuple[float, float]): A tupla (min, max) da faixa considerada normal.
         total_range (Tuple[float, float]): A tupla (min, max) da faixa total do gráfico.
     """
+    # (MELHORIA ITEM 7) Adiciona verificação de dados de entrada
+    if not isinstance(current_value, (int, float)) or not all(isinstance(x, tuple) and len(x) == 2 for x in [normal_range, total_range]):
+        st.info(f"Dados insuficientes para o gráfico '{title}'.")
+        return
+
     fig = go.Figure()
 
     # Adiciona a barra de fundo (faixa total)
@@ -144,4 +154,4 @@ def plot_composition_range(title: str, current_value: float, normal_range: Tuple
         plot_bgcolor='rgba(0,0,0,0)',
     )
 
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width='stretch')
