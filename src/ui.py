@@ -1359,23 +1359,70 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
     st.subheader("Passo 2: Estruture a Periodização dos Treinos")
     st.markdown("##### 1. Macrociclo")
     if 'nome' not in df_macro.columns:
-        df_macro = pd.DataFrame(columns=['nome']).sort_values('nome')
-    df_macro = df_macro.sort_values('nome')
+        df_macro = pd.DataFrame(columns=['id_macrociclo', 'nome', 'objetivo_principal', 'data_inicio', 'data_fim'])
+    
+    if not df_macro.empty:
+        df_macro['data_inicio'] = pd.to_datetime(df_macro['data_inicio'])
+        df_macro['data_fim'] = pd.to_datetime(df_macro['data_fim'])
+        df_macro = df_macro.sort_values('data_inicio', ascending=False)
+    
     lista_macros = ["-- Criar Novo Macrociclo --"] + df_macro['nome'].tolist() if 'nome' in df_macro.columns else ["-- Criar Novo Macrociclo --"]
     macro_selecionado_nome = st.selectbox("Selecione um Macrociclo para gerenciar ou crie um novo", options=lista_macros, key="macro_select_planning")
 
     if macro_selecionado_nome == "-- Criar Novo Macrociclo --":
         with st.form("form_novo_macro"):
             st.write(f"Crie um novo grande ciclo de treino (ex: Preparação Verão {datetime.today().year}).")
+            
+            macros_existentes = ["Nenhum"] + df_macro['nome'].tolist()
+            macro_anterior_nome = st.selectbox(
+                "Começar após qual Macrociclo?",
+                options=macros_existentes,
+                index=0,
+                help="Selecione um macrociclo para que o novo comece automaticamente no dia seguinte ao término dele."
+            )
+            
+            data_inicio_sugerida = date.today()
+            if macro_anterior_nome != "Nenhum" and not df_macro.empty:
+                data_fim_anterior = df_macro.loc[df_macro['nome'] == macro_anterior_nome, 'data_fim'].iloc[0]
+                data_inicio_sugerida = data_fim_anterior.date() + timedelta(days=1)
+
             st.text_input("Nome do Macrociclo", key="nome_macro_input")
             st.text_area("Objetivo Principal", key="objetivo_macro_input")
             col1, col2 = st.columns(2)
-            col1.date_input("Data de Início", value=date.today(), key="data_inicio_macro_input")
-            col2.date_input("Data de Fim", value=date.today() + pd.DateOffset(months=3), key="data_fim_macro_input")
+            col1.date_input("Data de Início", value=data_inicio_sugerida, key="data_inicio_macro_input")
+            col2.date_input("Data de Fim", value=data_inicio_sugerida + pd.DateOffset(months=3), key="data_fim_macro_input")
             st.form_submit_button("Criar Macrociclo", on_click=callback_criar_macro)
     
     elif macro_selecionado_nome:
-        id_macro_ativo = df_macro[df_macro['nome'] == macro_selecionado_nome]['id_macrociclo'].iloc[0]
+        macro_ativo_df = df_macro[df_macro['nome'] == macro_selecionado_nome].iloc[0]
+        id_macro_ativo = macro_ativo_df['id_macrociclo']
+
+        with st.form(key=f"form_edit_macro_{id_macro_ativo}"):
+            st.text_input("Nome do Macrociclo", value=macro_ativo_df['nome'], key=f"edit_nome_{id_macro_ativo}")
+            st.text_area("Objetivo Principal", value=macro_ativo_df['objetivo_principal'], key=f"edit_objetivo_{id_macro_ativo}")
+            col1, col2 = st.columns(2)
+            col1.date_input("Data de Início", value=macro_ativo_df['data_inicio'].date(), key=f"edit_data_inicio_{id_macro_ativo}")
+            col2.date_input("Data de Fim", value=macro_ativo_df['data_fim'].date(), key=f"edit_data_fim_{id_macro_ativo}")
+            
+            if st.form_submit_button("💾 Salvar Alterações"):
+                nome_editado = st.session_state[f"edit_nome_{id_macro_ativo}"]
+                objetivo_editado = st.session_state[f"edit_objetivo_{id_macro_ativo}"]
+                data_inicio_editada = st.session_state[f"edit_data_inicio_{id_macro_ativo}"]
+                data_fim_editada = st.session_state[f"edit_data_fim_{id_macro_ativo}"]
+
+                if nome_editado and data_inicio_editada < data_fim_editada:
+                    idx = df_macro.index[df_macro['id_macrociclo'] == id_macro_ativo][0]
+                    df_macro.at[idx, 'nome'] = nome_editado
+                    df_macro.at[idx, 'objetivo_principal'] = objetivo_editado
+                    df_macro.at[idx, 'data_inicio'] = pd.to_datetime(data_inicio_editada)
+                    df_macro.at[idx, 'data_fim'] = pd.to_datetime(data_fim_editada)
+                    utils.salvar_df(df_macro, path_macro)
+                    st.toast("Macrociclo atualizado com sucesso!", icon="✅")
+                    st.session_state.macro_select_planning = nome_editado
+                    st.rerun()
+                else:
+                    st.error("O nome não pode ser vazio e a data de início deve ser anterior à data de fim.")
+
         if st.button(f"🗑️ Apagar Macrociclo '{macro_selecionado_nome}'", type="secondary"):
             st.session_state[f'confirm_delete_macro_{id_macro_ativo}'] = True
         
@@ -1422,6 +1469,8 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
             column_config={
                 "id_mesociclo": None, 
                 "id_macrociclo": None,
+                "semana_inicio": None,
+                "semana_fim": None,
                 "nome": st.column_config.TextColumn("Nome do Mesociclo", required=True),
                 "ordem": st.column_config.NumberColumn("Ordem", min_value=1, required=True),
                 "duracao_semanas": st.column_config.NumberColumn("Duração (Semanas)", min_value=1, required=True, default=4),
@@ -1476,7 +1525,7 @@ def render_planejamento_sub_tab(username: str, user_data: Dict[str, Any]):
                     if st.button("💾 Salvar Plano da Semana"):
                         df_plano_sem_outros = df_plano_sem.drop(plano_semanal_salvo.index) if not plano_semanal_salvo.empty else df_plano_sem
                         novo_plano_semanal = plano_semanal_editado.copy()
-                        novo_plano_semanal['id_mesociclo'], novo_plano_semanal['semana_numero'] = id_meso_ativo, semana_num
+                        novo_plano_semanal['id_mesociclo'], novo_plano_semanal['semana_numero'], novo_plano_semanal['id_macrociclo'] = id_meso_ativo, semana_num, id_macro_ativo
                         df_final_semanal = pd.concat([df_plano_sem_outros, novo_plano_semanal], ignore_index=True)
                         utils.salvar_df(df_final_semanal, path_plano_sem)
                         st.toast(f"Plano para a Semana {semana_num} salvo!", icon="🗓️")
@@ -1530,7 +1579,10 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
     df_planos_treino = user_data.get("df_planos_treino", pd.DataFrame(columns=['nome_plano']))
     all_plans = ["Nenhum (Avulso)"] + df_planos_treino['nome_plano'].unique().tolist()
     
-    scheduled_plan_name = scheduled_workout['nome_plano'] if scheduled_workout else "Nenhum (Avulso)"
+    if 'current_plan_name' in st.session_state:
+        scheduled_plan_name = st.session_state.current_plan_name
+    else:
+        scheduled_plan_name = scheduled_workout['nome_plano'] if scheduled_workout else "Nenhum (Avulso)"
     
     # Define o índice padrão para o selectbox.
     try:
@@ -1645,7 +1697,8 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                     """, unsafe_allow_html=True)
 
     # --- LÓGICA PARA ATUALIZAR O TREINO QUANDO O SELECTBOX MUDA ---
-    if 'current_plan_name' not in st.session_state or st.session_state.current_plan_name != selected_plan_name:
+    selection_changed = 'current_plan_name' in st.session_state and st.session_state.current_plan_name != selected_plan_name
+    if 'todays_workout_df' not in st.session_state or selection_changed:
         df_to_load = pd.DataFrame()
         if selected_plan_name != "Nenhum (Avulso)":
             df_planos = user_data.get("df_planos_treino", pd.DataFrame())
@@ -1889,6 +1942,7 @@ def render_registro_sub_tab(username: str, user_data: Dict[str, Any]):
                 utils.salvar_df(dft_editado, utils.get_user_data_path(username, config.FILE_LOG_TREINOS_SIMPLES))
                 st.toast("Histórico de treinos atualizado!", icon="💾")
                 st.rerun()
+
 
 def render_registro_avulso_form(username: str, user_data: Dict[str, Any]):
     """Renderiza o formulário simples para registrar um treino avulso."""
